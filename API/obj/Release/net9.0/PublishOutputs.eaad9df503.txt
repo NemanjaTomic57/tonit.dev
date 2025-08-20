@@ -1,9 +1,0 @@
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/API
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/appsettings.Development.json
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/appsettings.json
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/API.dll
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/API.deps.json
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/API.runtimeconfig.json
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/API.pdb
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/Microsoft.AspNetCore.OpenApi.dll
-/home/nemo/Desktop/workspace/prj_freelancer/tonit.dev/API/app/publish/Microsoft.OpenApi.dll
