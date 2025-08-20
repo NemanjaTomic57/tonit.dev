@@ -1,0 +1,8 @@
+{
+    "name": "Tonit",
+    "dockerComposeFile": "docker-compose.yaml",
+    "service": "dev",
+    "workspaceFolder": "/workspace",
+    "postCreateCommand": "bash .devcontainer/postCreate.sh",
+    "shutdownAction": "stopCompose"
+}

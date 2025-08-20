@@ -1,18 +1,26 @@
 services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    depends_on:
+      - api
+      - frontend
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    volumes:
+      - ../API:/workspace/API:cached 
+    working_dir: /workspace/API
+  
   frontend:
     build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-    restart: always
-    depends_on:
-      - backend
-  
-  backend:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
-    ports:
-      - 5010:5010
-    restart: always
+      context: .
+      dockerfile: Dockerfile 
+    volumes:
+      - ../frontend:/workspace/frontend:cached 
+    working_dir: /workspace/frontend
