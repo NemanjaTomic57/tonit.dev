@@ -24,4 +24,9 @@ jobs:
         context: ./API
         push: true
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-aspnet-api:latest 
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:latest 
+      with:
+        context: ./frontend
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:latest

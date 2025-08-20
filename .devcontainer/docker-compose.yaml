@@ -8,6 +8,9 @@ services:
     depends_on:
       - api
       - frontend
+    ports:
+      - "3000:3000"
+      - "5010:5010"
   
   api:
     build:
