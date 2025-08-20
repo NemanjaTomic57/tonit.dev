@@ -18,13 +18,16 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
-    - name: Build and push Docker image 
+    - name: Build and push API Docker image 
       uses: docker/build-push-action@v6
       with:
         context: ./API
         push: true
         tags: |
           ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:latest 
+          
+    - name: Build and push frontend Docker image 
+      uses: docker/build-push-action@v6
       with:
         context: ./frontend
         push: true
