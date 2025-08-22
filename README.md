@@ -5,12 +5,12 @@ and aquire customers for contract work.
 
 ## Technologies
 
-Next.js
-Asp.Net Core
-PostgreSQL
-Docker
-Kubernetes
-Kustomize
+- Next.js
+- Asp.Net Core
+- PostgreSQL
+- Docker
+- Kubernetes
+- Kustomize
 
 ## Todos
 
