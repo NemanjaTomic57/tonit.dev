@@ -1,0 +1,86 @@
+name: Tonit
+
+on: [push]
+
+jobs:
+  # ----------------- Test Job -----------------
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ---- API (.NET Core) ----
+      - name: Setup .NET 
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0"
+
+      - name: Restore API dependencies
+        working-directory: ./API
+        run: dotnet restore 
+
+      - name: Build API 
+        working-directory: ./API
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Lint API (dotnet format check)
+        working-directory: ./API
+        run: dotnet format --verify-no-changes
+
+      - name: Run API tests
+        working-directory: ./API
+        run: dotnet test --no-build --verbosity normal
+
+      # ---- Frontend (Next.js) ----
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+      - name: Check formatting (Prettier)
+        working-directory: ./frontend
+        run: npm run format:check
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+  # ----------------- Docker Job -----------------
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Build and push API Docker image 
+      uses: docker/build-push-action@v6
+      with:
+        context: ./API
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:latest 
+          
+    - name: Build and push frontend Docker image 
+      uses: docker/build-push-action@v6
+      with:
+        context: ./frontend
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:latest
