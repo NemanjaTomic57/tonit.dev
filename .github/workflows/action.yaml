@@ -130,4 +130,8 @@ jobs:
           kubectl set image deployment/nextjs \
             nextjs=${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }} \
             -n app
+          kubectl set image deployment/dotnet \
+            dotnet=${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:${{ github.sha }} \
+            -n app
           kubectl rollout status deployment/nextjs -n app
+          kubectl rollout status deployment/dotnet -n app
