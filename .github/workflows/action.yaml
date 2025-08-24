@@ -118,21 +118,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Configure Kubeconfig
-      uses: azure/k8s-set-context@v4
+    - name: SSH into VPS and update deployment
+      uses: appleboy/ssh-action@v1
       with:
-        method: kubeconfig 
-        kubeconfig: ${{ secrets.KUBECONFIG }}
-
-    - name: Install Kustomize
-      run: |
-        curl -sLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.2/kustomize_v5.4.2_linux_amd64.tar.gz
-        tar -xzf kustomize.tar.gz
-        sudo mv kustomize /usr/local/bin/
-
-    - name: Deploy with Kustomize
-      working-directory: ./.github/k8s
-      run: |
-        kustomize edit set image tonit-nextjs=${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }}
-        kustomize edit set image tonit-dotnet=${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:${{ github.sha }}
-        kustomize build ./ | kubectl apply -f -
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          kubectl set image deployment/nextjs \
+            nextjs=${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }} \
+            -n app
+          kubectl rollout status deployment/nextjs-deployment -n app
