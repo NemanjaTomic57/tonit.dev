@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Deploy all manifests in k8s/
+resources:
+  - .
+
+# Add default images (will be overridden by CI/CD)
+images:
+  - name: tonit-nextjs
+    newName: <DOCKERHUB_USERNAME>/tonit-nextjs
+    newTag: latest
+  - name: tonit-dotnet
+    newName: <DOCKERHUB_USERNAME>/tonit-dotnet
+    newTag: latest

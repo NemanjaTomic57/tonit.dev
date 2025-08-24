@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nextjs
+  name: nextjs
+  namespace: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nextjs
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nextjs
+    spec:
+      containers:
+      - image: 456546456123/tonit-nextjs:TAG
+        name: tonit-nextjs
+        resources: {}
+status: {}
