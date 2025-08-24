@@ -1,10 +1,21 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var Cors = "_cors";
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: Cors,
+        policy =>
+        {
+            policy.WithOrigins("http://127.0.0.1:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        }
+    );
+});
 
 var app = builder.Build();
 
@@ -14,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// app.UseHttpsRedirection();
+app.UseCors(Cors);
 
 app.UseAuthorization();
 
