@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   # ----------------- Test Job -----------------
-  test:
+  test-api:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,6 +32,13 @@ jobs:
         working-directory: ./API
         run: dotnet test --no-build --verbosity normal
 
+    # ----------------- Test Nextjs -----------------
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       # ---- Frontend (Next.js) ----
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -54,10 +61,11 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-  # ----------------- Docker Job -----------------
-  docker:
+
+  # ----------------- Push API Image -----------------
+  docker-api:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test-api
 
     steps:
     - name: Checkout code
@@ -75,7 +83,23 @@ jobs:
         context: ./API
         push: true
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:latest 
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:${{ github.sha }}
+
+  # ----------------- Push Nextjs Image -----------------
+  docker-frontend:
+    runs-on: ubuntu-latest
+    needs: test-frontend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
           
     - name: Build and push frontend Docker image 
       uses: docker/build-push-action@v6
@@ -84,3 +108,34 @@ jobs:
         push: true
         tags: |
           ${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [docker-api, docker-frontend]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure Kubeconfig
+      uses: azure/k8s-set-context@v4
+      with:
+        method: kubeconfig 
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+    - name: Install Kustomize
+      run: |
+        curl -sLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.2/kustomize_v5.4.2_linux_amd64.tar.gz
+        tar -xzf kustomize.tar.gz
+        sudo mv kustomize /usr/local/bin/
+
+    - name: Patch image tags with commit SHA
+      working-directory: ./k8s
+      run: |
+        kustomize edit set image tonit-nextjs=${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }}
+        kustomize edit set image tonit-dotnet=${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:${{ github.sha }}
+
+    - name: Deploy with Kustomize
+      run: |
+        kustomize build ./k8s | kubectl apply -f -
