@@ -130,12 +130,9 @@ jobs:
         tar -xzf kustomize.tar.gz
         sudo mv kustomize /usr/local/bin/
 
-    - name: Patch image tags with commit SHA
+    - name: Deploy with Kustomize
       working-directory: ./.github/k8s
       run: |
         kustomize edit set image tonit-nextjs=${{ secrets.DOCKERHUB_USERNAME }}/tonit-nextjs:${{ github.sha }}
         kustomize edit set image tonit-dotnet=${{ secrets.DOCKERHUB_USERNAME }}/tonit-dotnet:${{ github.sha }}
-
-    - name: Deploy with Kustomize
-      run: |
-        kustomize build ./k8s | kubectl apply -f -
+        kustomize build ./ | kubectl apply -f -
