@@ -15,7 +15,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-    .AllowAnyOrigin());
+    .WithOrigins("http://127.0.0.1:3000", "https://tonit.dev", "https://www.tonit.dev"));
 
 app.UseAuthorization();
 
