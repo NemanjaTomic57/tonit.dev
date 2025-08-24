@@ -3,7 +3,7 @@ kind: Kustomization
 
 # Deploy all manifests in k8s/
 resources:
-  - .
+  - ./base
 
 # Add default images (will be overridden by CI/CD)
 images:
