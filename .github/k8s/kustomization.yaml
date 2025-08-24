@@ -3,7 +3,9 @@ kind: Kustomization
 
 # Deploy all manifests in k8s/
 resources:
-  - ./base
+  - app-namespace.yaml
+  - nextjs-service.yaml
+  - nextjs.yaml
 
 # Add default images (will be overridden by CI/CD)
 images:
