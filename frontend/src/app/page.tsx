@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { apiUrl } from "@/environment";
 import axios from "axios";
@@ -7,13 +7,13 @@ import { useEffect } from "react";
 
 export default function Home() {
   const fetchRequest = async () => {
-    const result = await axios.get(apiUrl + 'weatherforecast');
+    const result = await axios.get(apiUrl + "weatherforecast");
     console.log(result.data[0].date);
-  }
+  };
 
   useEffect(() => {
     fetchRequest();
-  })
+  });
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
