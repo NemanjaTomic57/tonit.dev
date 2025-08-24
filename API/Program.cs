@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
         name: Cors,
         policy =>
         {
-            policy.WithOrigins("http://127.0.0.1:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            policy.WithOrigins("http://127.0.0.1:3000", "https://tonit.dev", "https://www.tonit.dev").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
         }
     );
 });
