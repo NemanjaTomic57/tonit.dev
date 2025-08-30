@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/ui/button";
 import { routes } from "@/routes";
 
@@ -7,14 +5,14 @@ export default function Home() {
     return (
         <div>
             <div className="h-[60dvh] relative">
-                <div className="absolute w-full h-full">
+                <div className="absolute w-full h-full -z-10">
                     <img
                         src="/images/hero__background.svg"
                         alt="Streaming binary code"
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="absolute h-[600px] w-[800px] left-1/2 -translate-x-1/2">
+                <div className="absolute h-[600px] w-[800px] left-1/2 -translate-x-1/2 -z-10">
                     <img
                         src="/images/hero__ellipses-white.png"
                         className="w-full h-full object-cover"
@@ -37,7 +35,7 @@ export default function Home() {
             </div>
 
             <div className="relative">
-                <div className="absolute left-0 -top-[600px] z-10">
+                <div className="absolute left-0 -top-[600px] -z-10">
                     <img
                         src="/images/hero__ellipses-blue.png"
                         alt="Blue ellipses"

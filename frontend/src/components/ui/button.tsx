@@ -25,7 +25,7 @@ export default function Button({ href, onClick, className, children }: Props) {
             ) : (
                 <button
                     onClick={onClick}
-                    className={clsx(className, btnClassName, "cursor-pointer!")}
+                    className={clsx(className, btnClassName)}
                 >
                     {children}
                 </button>
