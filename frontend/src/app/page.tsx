@@ -1,17 +1,20 @@
+"use client";
+
+import { ResumePopupContext } from "@/components/contextProviders/resumePopupProvider";
 import Button from "@/components/ui/button";
-import Image from "next/image";
 import { routes } from "@/routes";
+import Image from "next/image";
+import { useContext } from "react";
 
 export default function Home() {
+    const { setShowResumePopup } = useContext(ResumePopupContext);
+
     return (
-        <div>
+        <>
             <div className="h-[60dvh] relative">
-                <div className="-z-10 absolute top-0 w-full h-[400px] -translate-y-[70px]">
-                    <Image src="/images/hero__overlay.png" alt="" fill />
-                </div>
                 <div className="absolute w-full h-full -z-10">
                     <Image
-                        src="/images/hero__background.svg"
+                        src="/images/hero__binary-code.png"
                         alt="Streaming binary code"
                         fill
                         className="w-full h-full object-cover"
@@ -55,7 +58,10 @@ export default function Home() {
                         <h2>About Me</h2>
                         <p className="mb-2">{introText1}</p>
                         <p className="mb-5">{introText2}</p>
-                        <Button className="btn-fill-primary btn-lg">
+                        <Button
+                            className="btn-fill-primary btn-lg"
+                            onClick={() => setShowResumePopup(true)}
+                        >
                             Download Resume
                         </Button>
                     </div>
@@ -82,7 +88,7 @@ export default function Home() {
                     </Button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -93,20 +99,7 @@ const heroItems = [
     "IT Consultancy",
 ];
 
-const introText1 = `
-Hello, my name is Nemanja, and I am a software developer specializing in cloud
-infrastructure and web development. With my senior experience, your business
-project will benefit from creative and innovative solutions to your unsolved
-problems. You don't just hire a professional developer with me. You also gain a
-true team player.
-`;
-
-const introText2 = `
-Your team will greatly benefit in various ways from my services. Flexibility,
-engagement and communication are vital to success in today's world of business,
-and this is where I excel at. I speak both the language of technology and
-business, making me a key communicator and essential contributor in any IT
-project. My knowledge is broad and extensive. Whatever you need, I can deliver.
-On top of that, I'm fluent in German, English, Spanish and Serbian, ensuring
-smooth collaboration within international teams.
-`;
+const introText1 =
+    "Hello, my name is Nemanja, and I am a software developer specializing in cloud infrastructure and web development. With my senior experience, your IT project will benefit from creative and innovative solutions to your unsolved problems. You don't just hire a professional developer with me. You also gain a true team player.";
+const introText2 =
+    "Your team will greatly benefit in various ways from my services. Flexibility, engagement and communication are vital to success in today's world of business, and this is where I excel at. I speak both the language of technology and business, making me a key communicator and essential contributor in any IT project. My knowledge is broad and extensive. Whatever you need, I can deliver. On top of that, I'm fluent in German, English, Spanish and Serbian, ensuring smooth collaboration within international teams.";

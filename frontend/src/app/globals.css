@@ -2,14 +2,27 @@
 
 @font-face {
     font-family: Aenotik Trial;
+    src: url("/public/fonts/aeoniktrial-light.otf");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Aenotik Trial;
     src: url("/fonts/aeoniktrial-regular.otf");
     font-weight: 400;
+}
+
+@font-face {
+    font-family: Aenotik Trial;
+    src: url("/fonts/aeoniktrial-bold.otf");
+    font-weight: 700;
 }
 
 :root {
     /*------ COLORS ------*/
     --primary: #008cff;
     --primary-tint: #e6f4ff;
+    --gray-tint: #9ba8bd;
     --white-transparent-tint: rgba(255, 255, 255, 0.2);
     --white-transparent-tone: rgba(255, 255, 255, 0.4);
     --background: #ffffff;
@@ -22,6 +35,7 @@
 @theme inline {
     --color-primary: var(--primary);
     --color-primary-tint: var(--primary-tint);
+    --color-gray-tint: var(--gray-tint);
     --color-white-transparent-tint: var(--white-transparent-tint);
     --color-white-transparent-tone: var(--white-transparent-tone);
     --color-background: var(--background);
