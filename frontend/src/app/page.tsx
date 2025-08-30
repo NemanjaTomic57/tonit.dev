@@ -1,20 +1,27 @@
 import Button from "@/components/ui/button";
+import Image from "next/image";
 import { routes } from "@/routes";
 
 export default function Home() {
     return (
         <div>
             <div className="h-[60dvh] relative">
+                <div className="-z-10 absolute top-0 w-full h-[400px] -translate-y-[70px]">
+                    <Image src="/images/hero__overlay.png" alt="" fill />
+                </div>
                 <div className="absolute w-full h-full -z-10">
-                    <img
+                    <Image
                         src="/images/hero__background.svg"
                         alt="Streaming binary code"
+                        fill
                         className="w-full h-full object-cover"
                     />
                 </div>
                 <div className="absolute h-[600px] w-[800px] left-1/2 -translate-x-1/2 -z-10">
-                    <img
+                    <Image
                         src="/images/hero__ellipses-white.png"
+                        alt=""
+                        fill
                         className="w-full h-full object-cover"
                     />
                 </div>
@@ -35,42 +42,29 @@ export default function Home() {
             </div>
 
             <div className="relative">
-                <div className="absolute left-0 -top-[600px] -z-10">
-                    <img
+                <div className="absolute left-0 -top-[200px] -z-10">
+                    <Image
                         src="/images/hero__ellipses-blue.png"
-                        alt="Blue ellipses"
+                        alt=""
+                        height={800}
+                        width={400}
                     />
                 </div>
                 <div className="flex items-center gap-16 container-sm mx-auto py-container-sm-vert">
                     <div>
                         <h2>About Me</h2>
-                        <p className="mb-2">
-                            Hello, my name is Nemanja, and I am a software
-                            developer specializing in cloud infrastructure and
-                            web development. With my senior experience, your
-                            business project will benefit from creative and
-                            innovative solutions to your unsolved problems. You
-                            don't just hire a professional developer with me.
-                            You also gain a true team player.
-                        </p>
-                        <p className="mb-5">
-                            Your team will greatly benefit in various ways from
-                            my services. Flexibility, engagement and
-                            communication are vital to success in today's world
-                            of business, and this is where I excel at. I speak
-                            both the language of technology and business, making
-                            me a key communicator and essential contributor in
-                            any IT project. My knowledge is broad and extensive.
-                            Whatever you need, I can deliver. On top of that,
-                            I'm fluent in German, English, Spanish and Serbian,
-                            ensuring smooth collaboration within international
-                            teams.
-                        </p>
+                        <p className="mb-2">{introText1}</p>
+                        <p className="mb-5">{introText2}</p>
                         <Button className="btn-fill-primary btn-lg">
                             Download Resume
                         </Button>
                     </div>
-                    <img src="/images/headshot.png" width={400} />
+                    <Image
+                        src="/images/headshot.png"
+                        width={400}
+                        height={500}
+                        alt="Headshot of Nemanja Tomic"
+                    />
                 </div>
             </div>
 
@@ -98,3 +92,21 @@ const heroItems = [
     "Cloud Architecture",
     "IT Consultancy",
 ];
+
+const introText1 = `
+Hello, my name is Nemanja, and I am a software developer specializing in cloud
+infrastructure and web development. With my senior experience, your business
+project will benefit from creative and innovative solutions to your unsolved
+problems. You don't just hire a professional developer with me. You also gain a
+true team player.
+`;
+
+const introText2 = `
+Your team will greatly benefit in various ways from my services. Flexibility,
+engagement and communication are vital to success in today's world of business,
+and this is where I excel at. I speak both the language of technology and
+business, making me a key communicator and essential contributor in any IT
+project. My knowledge is broad and extensive. Whatever you need, I can deliver.
+On top of that, I'm fluent in German, English, Spanish and Serbian, ensuring
+smooth collaboration within international teams.
+`;
