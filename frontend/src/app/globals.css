@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: Aenotik Trial;
+    src: url("/fonts/aeoniktrial-regular.otf");
+    font-weight: 400;
+}
+
 :root {
+    /*------ COLORS ------*/
+    --primary: #008cff;
+    --primary-tint: #e6f4ff;
+    --white-transparent-tint: rgba(255, 255, 255, 0.2);
+    --white-transparent-tone: rgba(255, 255, 255, 0.4);
     --background: #ffffff;
-    --foreground: #171717;
+    --foreground: #000000;
+
+    /*------ SPACING ------*/
+    --container-sm-vert: 90px;
 }
 
 @theme inline {
+    --color-primary: var(--primary);
+    --color-primary-tint: var(--primary-tint);
+    --color-white-transparent-tint: var(--white-transparent-tint);
+    --color-white-transparent-tone: var(--white-transparent-tone);
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+    --spacing-container-sm-vert: var(--container-sm-vert);
 }
 
 body {
     background: var(--background);
     color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Aenotik Trial,
+        Helvetica,
+        sans-serif;
+}
+
+/*------ CONTAINERS ------*/
+.container-sm {
+    @apply px-8 max-w-[1200px] mx-auto;
+}
+
+.container {
+    @apply px-8 max-w-full;
+}
+
+/*------ HEADINGS ------*/
+h1 {
+    font-size: 5.75rem;
+    line-height: 6.35rem;
+}
+
+h2 {
+    font-size: 4.5rem;
+    line-height: 4.5rem;
+    margin-bottom: 1rem;
+}
+
+/*------ BUTTONS ------*/
+.btn-fill-primary {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+.btn-base {
+    @apply py-2 px-6;
+}
+
+.btn-lg {
+    @apply py-3 px-8;
 }
