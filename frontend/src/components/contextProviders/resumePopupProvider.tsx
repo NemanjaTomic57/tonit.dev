@@ -24,7 +24,7 @@ export const ResumePopupContext = createContext<ResumePopupContextProps>({
 });
 
 export default function ResumePopupProvider({ children }: Props) {
-    const [showResumePopup, setShowResumePopup] = useState(true);
+    const [showResumePopup, setShowResumePopup] = useState(false);
 
     useDisableScroll(showResumePopup);
 

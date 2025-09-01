@@ -8,16 +8,18 @@ This project is the codebase for my homepage tonit.dev, where I run my blog and 
 - Asp.Net Core
 - PostgreSQL
 - Docker
+- GitHub Actions
+- SMTP
 - Kubernetes
-- Kustomize
 
-## Todos
+## Functionality
 
-- Add PostgreSQL to the project.
-- Make sure the containers in development can communicate with each other.
-- Set up the infrastructure on the VPS with the corresponding images and a gateway to the frontend. Utilize Kustomize for this.
-- Set up the CI/CD pipeline to build the new images and update the infrastructure when pushing to git.
-- Add Monitoring with Prometheus and Grafana.
+- REST Api with CRUD operations
+- Server-side rendering for lightning fast loading speeds
+- Contact form with client-side validation
+- Devcontainers - works the same in every environment
+- Fully fledged CI/CD pipeline with GitHub Actions
+- Self-hosted SMTP server
 
 ## How to run locally
 

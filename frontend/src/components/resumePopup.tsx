@@ -4,6 +4,7 @@ import z from "zod";
 import Overlay from "./overlay";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { zodResolver } from "@hookform/resolvers/zod";
+import InputText from "./ui/inputText";
 
 interface Props {
     show: boolean;
@@ -11,9 +12,7 @@ interface Props {
 }
 
 const emailSchema = z.object({
-    email: z
-        .email("Please enter a valid email adress")
-        .nonempty("Please enter your email adress"),
+    email: z.email("Please enter a valid email adress"),
 });
 
 type EmailSchema = z.infer<typeof emailSchema>;
@@ -22,9 +21,6 @@ export default function ResumePopup({ show, setShow }: Props) {
     const ref = useRef(null);
     const methods = useForm<EmailSchema>({
         resolver: zodResolver(emailSchema),
-        defaultValues: {
-            email: "",
-        },
     });
     const { handleSubmit } = methods;
 
@@ -50,20 +46,11 @@ export default function ResumePopup({ show, setShow }: Props) {
 
                         <FormProvider {...methods}>
                             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                                <div className="relative bg-gray-tint/10 border-1 border-gray-tint rounded-full">
-                                    <label className="absolute text-sm top-1/2 -translate-y-1/2 pointer-events-none text-gray-tint pl-5">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        className="h-full w-full py-3 px-5 outline-none"
-                                    />
-
-                                    <button className="btn-fill-primary rounded-full absolute right-1 top-1 bottom-1 px-8 text-sm font-bold cursor-pointer">
-                                        Submit
-                                    </button>
-                                </div>
+                                <InputText
+                                    label="Email"
+                                    inputName="email"
+                                    button
+                                />
                             </form>
                         </FormProvider>
                     </div>
