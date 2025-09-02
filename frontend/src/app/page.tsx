@@ -5,6 +5,10 @@ import Button from "@/components/ui/button";
 import { routes } from "@/routes";
 import Image from "next/image";
 import { useContext } from "react";
+import headshot from "/public/images/headshot.png";
+import teamMeeting from "/public/images/team-meeting.png";
+import codeSnippet from "/public/images/code-snippet.png";
+import TechStack from "@/components/techStack";
 
 export default function Home() {
     const { setShowResumePopup } = useContext(ResumePopupContext);
@@ -53,11 +57,11 @@ export default function Home() {
                         width={400}
                     />
                 </div>
-                <div className="flex items-center gap-16 container-sm mx-auto py-container-sm-vert">
+                <div className="grid grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px] items-center gap-16 container-sm mx-auto py-container-sm-vert">
                     <div>
                         <h2>About Me</h2>
-                        <p className="mb-2">{introText1}</p>
-                        <p className="mb-5">{introText2}</p>
+                        <p>{introText0}</p>
+                        <p className="mb-5!">{introText1}</p>
                         <Button
                             className="btn-fill-primary btn-lg"
                             onClick={() => setShowResumePopup(true)}
@@ -65,12 +69,7 @@ export default function Home() {
                             Download Resume
                         </Button>
                     </div>
-                    <Image
-                        src="/images/headshot.png"
-                        width={400}
-                        height={500}
-                        alt="Headshot of Nemanja Tomic"
-                    />
+                    <Image src={headshot} alt="Headshot of Nemanja Tomic" />
                 </div>
             </div>
 
@@ -89,11 +88,11 @@ export default function Home() {
                         </Button>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                         {whyYouShouldChooseMe.map((item, index) => (
                             <div
                                 key={index}
-                                className="shadow-lg rounded-xl p-4 pb-6 bg-background group hover:-translate-y-3 transition-all duration-200"
+                                className="shadow-lg rounded-lg p-4 pb-6 bg-background group hover:-translate-y-1.5 lg:hover:-translate-y-3 transition-all duration-200"
                             >
                                 <div className="grid place-items-center h-[75px] w-[75px] mb-6 bg-foreground/5 border-1 border-primary rounded-full group-hover:bg-primary-tint transition-all duration-200">
                                     <div className="relative h-[40px] w-[40px]">
@@ -112,8 +111,41 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="container-sm py-container-sm-vert">
-                <h2 className="text-center">Tech Stack</h2>
+            <TechStack />
+
+            <div className="bg-primary-tint">
+                <div className="container-sm py-container-sm-vert grid grid-cols-2 items-center gap-8">
+                    <Image src={teamMeeting} alt="Team working on a project" />
+
+                    <div>
+                        <h2>My Risk-Free Promise</h2>
+                        <p>{satisfactionGuarantee0}</p>
+                        <p>{satisfactionGuarantee1}</p>
+                        <p className="font-bold text-primary">
+                            Together, We Can Do It!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container-sm py-container-sm-vert grid grid-cols-[1.2fr_1fr] items-center gap-16">
+                <div>
+                    <h2 className="pb-2">Experience And Education</h2>
+                    <ul className="blue-checkmark">
+                        {experienceItems.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))}
+                    </ul>
+
+                    <Button
+                        className="btn-fill-primary btn-lg mt-2"
+                        onClick={() => setShowResumePopup(true)}
+                    >
+                        Download Resume
+                    </Button>
+                </div>
+
+                <Image src={codeSnippet} alt="Team working on a project" />
             </div>
         </>
     );
@@ -126,7 +158,7 @@ const heroItems = [
     "IT Consultancy",
 ];
 
-const introText1 = (
+const introText0 = (
     <>
         Hello, my name is Nemanja, and I am a software developer specializing in
         cloud infrastructure and web development. With my senior experience,
@@ -136,7 +168,7 @@ const introText1 = (
     </>
 );
 
-const introText2 = (
+const introText1 = (
     <>
         Your team will greatly benefit in various ways from my services.
         Flexibility, engagement and communication are vital to success in
@@ -156,10 +188,8 @@ const whyYouShouldChooseMe = [
         text: (
             <>
                 You have full control over contract duration, weekly hours, and
-                future collaboration. Make use of my flexible pay as you go
-                model and be sure that you don't overspend your budged if you
-                have a variable workload. You can cancel the contract within a
-                short notice at any time.
+                future collaboration. You can cancel the contract within a short
+                notice at any time.
             </>
         ),
     },
@@ -170,11 +200,9 @@ const whyYouShouldChooseMe = [
             <>
                 My job is delivering high-quality work, and not only do I love
                 this job. I am also very good at it. And to prove that to you, I
-                have prepared a special guarantee.{" "}
-                <strong>
-                    If you cancel the contract within the first 100 hours, you
-                    will receive a full refund.
-                </strong>
+                have prepared a special guarantee. If you cancel the contract
+                within the first 100 hours of work,
+                <strong> you will receive a full refund.</strong>
             </>
         ),
     },
@@ -196,10 +224,56 @@ const whyYouShouldChooseMe = [
         text: (
             <>
                 You will have the possibility to contact me at any time from the
-                beginning of our relationship. Whatever you need or want to
-                know, all you have to do is make one call and you will receive
-                an answer in no time.
+                beginning of our relationship. Whatever you need, all you have
+                to do is make one call and you will receive an answer in no
+                time.
             </>
         ),
     },
+];
+
+const satisfactionGuarantee0 = (
+    <>
+        I am confident in my abilities to help your project succeed. To prove
+        that, I offer a guarantee to every one of my clients.{" "}
+    </>
+);
+
+const satisfactionGuarantee1 = (
+    <>
+        If you’re not fully satisfied after the first 100 hours, you can cancel
+        the contract and receive a <strong>full refund</strong>. You have
+        complete freedom to decide whether or not you’d like to continue working
+        with us after that trial period — no hard feelings, no strings attached.
+        Together, we can do it!
+    </>
+);
+
+const experienceItems = [
+    <>
+        <strong>4+ years of hands-on experience in large-scale projects</strong>
+    </>,
+    <>
+        <strong>DevOps Engineer Expert</strong> - Microsoft
+    </>,
+    <>
+        <strong>Certified Kubernetes Administrator (CKA)</strong> - Linux
+        Foundation
+    </>,
+    <>
+        <strong>Certified Calico Operator: Level 1</strong> - Tigera
+    </>,
+    // <>
+    //     <strong>Prometheus Certified Associate (PCA)</strong> - Linux Foundation
+    // </>,
+    <>
+        <strong>ISTQB Certified Tester Foundation Level (CTFL)</strong> - German
+        Testing Board
+    </>,
+    <>
+        <strong>Certified Data Scientist</strong> - DBE Academy
+    </>,
+    <>
+        <strong>B.Sc. Business and Computer Science</strong> - DHBW Stuttgart
+    </>,
 ];

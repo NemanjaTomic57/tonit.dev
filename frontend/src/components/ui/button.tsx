@@ -10,7 +10,8 @@ interface Props {
 }
 
 export default function Button({ href, onClick, className, children }: Props) {
-    const btnClassName = "rounded-full font-bold cursor-pointer";
+    const btnClassName =
+        "rounded-sm font-bold cursor-pointer transition-all transition-duration-200";
 
     return (
         <>

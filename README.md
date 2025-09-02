@@ -1,6 +1,6 @@
 # Project tonit.dev
 
-This project is the codebase for my homepage tonit.dev, where I run my blog and aquire customers for contract work.
+This project is the codebase for my homepage tonit.dev, where I run my blog and aquire customers for contract work. Everything is open-source, and I take best practices very seriously. Take a look and if you like what you see, let's work together!
 
 ## Technologies
 
@@ -8,18 +8,20 @@ This project is the codebase for my homepage tonit.dev, where I run my blog and 
 - Asp.Net Core
 - PostgreSQL
 - Docker
+- Azure Key Vault
 - GitHub Actions
 - SMTP
 - Kubernetes
 
 ## Functionality
 
-- REST Api with CRUD operations
-- Server-side rendering for lightning fast loading speeds
-- Contact form with client-side validation
 - Devcontainers - works the same in every environment
+- REST API with CRUD operations and authentication/authorization
+- Server-side rendering for lightning fast loading speeds
+- Contact form with client-side and server-side validation
+- Azure Key Vault for maximum password security
 - Fully fledged CI/CD pipeline with GitHub Actions
-- Self-hosted SMTP server
+- Self-hosted SMTP server for reliable email delivery
 
 ## How to run locally
 

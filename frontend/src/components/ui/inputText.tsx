@@ -17,9 +17,9 @@ export default function InputText({ label, inputName, button }: Props) {
     const errorMessage = errors[inputName]?.message as string;
 
     return (
-        <div className="relative bg-gray-tint/10 border-1 border-gray-tint rounded-full">
+        <div className="relative bg-gray-tint/10 border-1 border-gray-tint rounded-sm">
             {value === "" && (
-                <label className="absolute text-sm top-1/2 -translate-y-1/2 pointer-events-none text-gray-tint pl-5">
+                <label className="absolute  top-1/2 -translate-y-1/2 pointer-events-none text-gray-tint pl-5">
                     {label}
                 </label>
             )}
@@ -29,7 +29,7 @@ export default function InputText({ label, inputName, button }: Props) {
                 className="h-full w-full py-3 px-5 outline-none"
             />
             {button && (
-                <button className="btn-fill-primary rounded-full absolute right-1 top-1 bottom-1 px-8 text-sm font-bold cursor-pointer">
+                <button className="btn-fill-primary rounded-sm absolute right-1 top-1 bottom-1 px-8 text-sm font-bold cursor-pointer">
                     Submit
                 </button>
             )}
