@@ -1,7 +1,15 @@
-export default function InputValidationError({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return <p className="text-red-500 text-sm absolute">{children}</p>;
+import clsx from "clsx";
+import { ReactNode } from "react";
+
+interface Props {
+    children: ReactNode;
+    className?: string;
+}
+
+export default function InputValidationError({ children, className }: Props) {
+    return (
+        <p className={clsx("text-red-500 text-sm mb-0!", className)}>
+            {children}
+        </p>
+    );
 }

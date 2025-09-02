@@ -37,9 +37,9 @@ export default function ResumePopup({ show, setShow }: Props) {
                     <Overlay />
                     <div
                         ref={ref}
-                        className="fixed p-18 top-3/7 left-1/2 -translate-1/2 rounded-4xl bg-white/80 border-1 border-gray-tint z-50 w-[700px]"
+                        className="fixed p-4 sm:p-6 md:p-18 inset-0 m-auto rounded-2xl md:rounded-4xl bg-white/80 border-1 border-gray-tint z-50 w-[310px] sm:w-[480px] md:w-[700px] h-fit"
                     >
-                        <p className="text-center text-3xl mb-8">
+                        <p className="text-center md:text-3xl mb-8">
                             Enter your email to receive my resume and my
                             certifications for free!
                         </p>

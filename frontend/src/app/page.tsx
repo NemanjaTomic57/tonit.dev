@@ -15,8 +15,8 @@ export default function Home() {
 
     return (
         <>
-            <div className="h-[60dvh] relative">
-                <div className="absolute w-full h-full -z-10">
+            <div className="mt-8 sm:mt-0 sm:h-[60dvh] relative">
+                <div className="absolute w-full h-full -z-10 hidden sm:block">
                     <Image
                         src="/images/hero__binary-code.png"
                         alt="Streaming binary code"
@@ -24,7 +24,7 @@ export default function Home() {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="absolute h-[600px] w-[800px] left-1/2 -translate-x-1/2 -z-10">
+                <div className="absolute md:h-[600px] md:w-[800px] left-1/2 -translate-x-1/2 -z-10 hidden sm:block">
                     <Image
                         src="/images/hero__ellipses-white.png"
                         alt=""
@@ -32,14 +32,14 @@ export default function Home() {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="container grid absolute place-items-center top-2/8 left-1/2 -translate-x-1/2 text-center">
+                <div className="container sm:grid sm:absolute place-items-center top-2/8 left-1/2 sm:-translate-x-1/2 sm:text-center">
                     <h1>Making Sure</h1>
                     <h1 className="mb-2">IT Works</h1>
-                    <div className="flex gap-3">
+                    <div className="flex gap-2 flex-wrap">
                         {heroItems.map((item, index) => (
                             <p
                                 key={index}
-                                className="border-1 rounded-full px-4 py-0.5"
+                                className="border-1 rounded-full px-4 py-0.5 m-0! bg-background shadow-sm"
                             >
                                 {item}
                             </p>
@@ -57,7 +57,7 @@ export default function Home() {
                         width={400}
                     />
                 </div>
-                <div className="grid grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px] items-center gap-16 container-sm mx-auto py-container-sm-vert">
+                <div className="grid md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px] items-center gap-6 sm:gap-8 lg:gap-16 container-sm mx-auto py-container-sm-vert">
                     <div>
                         <h2>About Me</h2>
                         <p>{introText0}</p>
@@ -69,13 +69,15 @@ export default function Home() {
                             Download Resume
                         </Button>
                     </div>
-                    <Image src={headshot} alt="Headshot of Nemanja Tomic" />
+                    <div className="row-start-1 md:row-start-auto max-w-[300px] md:max-w-full justify-self-center">
+                        <Image src={headshot} alt="Headshot of Nemanja Tomic" />
+                    </div>
                 </div>
             </div>
 
             <div className="bg-primary-tint ">
                 <div className="container-sm py-container-sm-vert">
-                    <div className="flex justify-between items-end mb-8">
+                    <div className="justify-between items-end mb-8 hidden sm:flex">
                         <div>
                             <h2 className="mb-0!">Why You Should</h2>
                             <h2 className="mb-0!">Choose Me</h2>
@@ -88,13 +90,15 @@ export default function Home() {
                         </Button>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                    <h2 className="sm:hidden">Why You Should Choose Me</h2>
+
+                    <div className="grid sm:grid-cols-2 gap-3 lg:grid-cols-4">
                         {whyYouShouldChooseMe.map((item, index) => (
                             <div
                                 key={index}
-                                className="shadow-lg rounded-lg p-4 pb-6 bg-background group hover:-translate-y-1.5 lg:hover:-translate-y-3 transition-all duration-200"
+                                className="shadow-lg rounded-lg p-4 pb-6 bg-background group sm:hover:-translate-y-1.5 lg:hover:-translate-y-3 transition-all duration-200"
                             >
-                                <div className="grid place-items-center h-[75px] w-[75px] mb-6 bg-foreground/5 border-1 border-primary rounded-full group-hover:bg-primary-tint transition-all duration-200">
+                                <div className="grid place-items-center h-[75px] w-[75px] mb-3 sm:mb-6 bg-foreground/5 border-1 border-primary rounded-full group-hover:bg-primary-tint transition-all duration-200">
                                     <div className="relative h-[40px] w-[40px]">
                                         <Image
                                             src={item.icon}
@@ -114,21 +118,25 @@ export default function Home() {
             <TechStack />
 
             <div className="bg-primary-tint">
-                <div className="container-sm py-container-sm-vert grid grid-cols-2 items-center gap-8">
-                    <Image src={teamMeeting} alt="Team working on a project" />
+                <div className="container-sm py-container-sm-vert grid md:grid-cols-2 items-center gap-8">
+                    <Image
+                        src={teamMeeting}
+                        alt="Team working on a project"
+                        className="justify-self-center"
+                    />
 
                     <div>
                         <h2>My Risk-Free Promise</h2>
                         <p>{satisfactionGuarantee0}</p>
                         <p>{satisfactionGuarantee1}</p>
-                        <p className="font-bold text-primary">
+                        <p className="font-bold text-primary mb-0!">
                             Together, We Can Do It!
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div className="container-sm py-container-sm-vert grid grid-cols-[1.2fr_1fr] items-center gap-16">
+            <div className="container-sm py-container-sm-vert grid lg:grid-cols-[1.2fr_1fr] items-center gap-16">
                 <div>
                     <h2 className="pb-2">Experience And Education</h2>
                     <ul className="blue-checkmark">
@@ -138,14 +146,18 @@ export default function Home() {
                     </ul>
 
                     <Button
-                        className="btn-fill-primary btn-lg mt-2"
+                        className="btn-fill-primary btn-lg mt-8"
                         onClick={() => setShowResumePopup(true)}
                     >
                         Download Resume
                     </Button>
                 </div>
 
-                <Image src={codeSnippet} alt="Team working on a project" />
+                <Image
+                    src={codeSnippet}
+                    alt="Team working on a project"
+                    className="hidden lg:block"
+                />
             </div>
         </>
     );
