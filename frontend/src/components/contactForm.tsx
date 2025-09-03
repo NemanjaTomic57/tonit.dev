@@ -32,7 +32,7 @@ export default function ContactForm() {
     };
 
     return (
-        <div className="bg-primary-tint mb-100">
+        <div id="contact" className="bg-primary-tint">
             <div className="container-sm py-container-sm-vert">
                 <div className="text-center mb-8">
                     <h2>Talk To Me</h2>
@@ -46,7 +46,7 @@ export default function ContactForm() {
                     <FormProvider {...methods}>
                         <form
                             onSubmit={handleSubmit(onSubmit)}
-                            className="grid md:grid-cols-2 gap-1 md:gap-2 md:text-[0.9rem] lg:text-base"
+                            className="grid md:grid-cols-2 gap-2 md:gap-2 md:text-[0.9rem] lg:text-base"
                         >
                             <InputText label="Name" inputName="name" />
                             <InputText label="Email" inputName="email" />
@@ -56,7 +56,7 @@ export default function ContactForm() {
                                 initialText="Choose an available date and time"
                                 options={timeOptions}
                             />
-                            <div className="md:col-span-2 mt-1 md:mt-0.5">
+                            <div className="md:col-span-2 mt-0.5">
                                 <InputTextarea
                                     label="Message (optional)"
                                     inputName="message"

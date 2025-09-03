@@ -47,7 +47,7 @@ export default function ResumePopup({ show, setShow }: Props) {
                         <FormProvider {...methods}>
                             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                                 <InputText
-                                    label="Email"
+                                    label="Enter Email Adress"
                                     inputName="email"
                                     button
                                     className="bg-gray-tint/10"

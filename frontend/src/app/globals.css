@@ -143,6 +143,15 @@ ul.blue-checkmark li::before {
     background-color: var(--primary-shade);
 }
 
+.btn-fill-background {
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.btn-fill-background:hover {
+    background-color: var(--white-transparent-tone);
+}
+
 .btn-base {
     @apply pb-[6px] pt-[7px] px-6 shadow-sm;
 }

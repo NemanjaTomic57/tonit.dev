@@ -10,6 +10,7 @@ import teamMeeting from "/public/images/team-meeting.png";
 import codeSnippet from "/public/images/code-snippet.png";
 import TechStack from "@/components/techStack";
 import ContactForm from "@/components/contactForm";
+import Footer from "@/components/footer";
 
 export default function Home() {
     const { setShowResumePopup } = useContext(ResumePopupContext);
@@ -120,13 +121,12 @@ export default function Home() {
                                 className="shadow-lg rounded-lg p-4 pb-6 bg-background group sm:hover:-translate-y-1.5 lg:hover:-translate-y-3 transition-all duration-200"
                             >
                                 <div className="grid place-items-center h-[75px] w-[75px] mb-3 sm:mb-6 bg-foreground/5 border-1 border-primary rounded-full group-hover:bg-primary-tint transition-all duration-200">
-                                    <div className="relative h-[40px] w-[40px]">
-                                        <Image
-                                            src={item.icon}
-                                            alt="Icon"
-                                            fill
-                                        />
-                                    </div>
+                                    <Image
+                                        src={item.icon}
+                                        alt="Icon"
+                                        width={40}
+                                        height={40}
+                                    />
                                 </div>
                                 <h5>{item.heading}</h5>
                                 <p>{item.text}</p>
@@ -194,6 +194,8 @@ export default function Home() {
             </div>
 
             <ContactForm />
+
+            <Footer />
         </>
     );
 }

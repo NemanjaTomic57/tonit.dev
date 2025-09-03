@@ -108,7 +108,7 @@ export default function InputDropdown({
                 </div>
 
                 {showDd && (
-                    <div className="absolute z-10 border-1 border-t-0 border-gray-tint/80 rounded-b-lg bg-background grid w-full overflow-auto">
+                    <div className="absolute z-10 border-1 border-t-0 border-gray-tint/80 rounded-b-lg bg-background grid w-full">
                         {options.map((option, index) => (
                             <Fragment key={index}>
                                 <div className="h-[1px] mx-2 bg-gray-tint/20 last:hidden"></div>

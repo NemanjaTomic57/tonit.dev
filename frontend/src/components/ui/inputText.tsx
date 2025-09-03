@@ -9,6 +9,8 @@ interface Props {
     label: string;
     inputName: string;
     button?: boolean;
+    buttonClassName?: string;
+    inputClassName?: string;
     className?: string;
     errorClassName?: string;
 }
@@ -17,6 +19,8 @@ export default function InputText({
     label,
     inputName,
     button,
+    buttonClassName = "btn-fill-primary",
+    inputClassName,
     className,
     errorClassName,
 }: Props) {
@@ -36,9 +40,15 @@ export default function InputText({
                     placeholder={placeholder}
                     onFocus={() => setPlaceholder("")}
                     onBlur={() => setPlaceholder(label)}
+                    className={inputClassName}
                 />
                 {button && (
-                    <button className="btn-fill-primary rounded-md absolute right-1 top-1 bottom-1 px-4 sm:px-8 text-sm font-bold cursor-pointer">
+                    <button
+                        className={clsx(
+                            "rounded-md absolute right-1 top-1 bottom-1 px-4 sm:px-8 text-sm font-bold cursor-pointer",
+                            buttonClassName,
+                        )}
+                    >
                         Submit
                     </button>
                 )}
