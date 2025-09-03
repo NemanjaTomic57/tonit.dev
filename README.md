@@ -30,6 +30,6 @@ Perform the following steps to run this project locally:
 
 1. Clone the project.
 2. Open the project in VScode.
-3. Download the extensions "Dev Containers" and reopen the project in a devcontainer. For this to work, you need to have Docker Desktop installed on your machine.
+3. Download the extensions "Dev Containers" and reopen the project in a devcontainer. For this to work, you need to have Docker Desktop installed on your machine. Click this (link)[https://docs.docker.com/desktop/setup/install/linux/] for instructions on how to install Docker Desktop.
 4. In a terminal, run `dotnet watch`.
 5. In a second terminal, run `npm run dev` and open the link in your browser.
