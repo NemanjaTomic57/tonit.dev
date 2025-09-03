@@ -75,7 +75,10 @@ export default function TechStack() {
                     spaceBetween={20}
                     slidesPerView={1}
                     className="tech-stack flex!"
-                    pagination
+                    pagination={{
+                        el: ".tech-stack__pagination",
+                        clickable: true,
+                    }}
                     modules={[Pagination]}
                 >
                     {techStack.map((item) => (
@@ -100,6 +103,8 @@ export default function TechStack() {
                         </SwiperSlide>
                     ))}
                 </Swiper>
+
+                <div className="tech-stack__pagination flex justify-center gap-3"></div>
             </div>
         </>
     );

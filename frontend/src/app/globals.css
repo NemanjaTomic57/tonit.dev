@@ -200,7 +200,6 @@ textarea::placeholder {
 }
 
 .tech-stack {
-    overflow-y: visible !important;
     padding-inline: 16px !important;
     padding-bottom: 14px !important;
 }

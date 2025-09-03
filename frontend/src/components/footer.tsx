@@ -48,22 +48,24 @@ export default function Footer() {
 
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                            <InputText
-                                label="Enter Email Adress"
-                                inputName="email"
-                                inputClassName="placeholder-background!"
-                                button
-                                buttonClassName="btn-fill-background"
-                                errorClassName="md:absolute text-background!"
-                                className="bg-primary/30 border-background! placeholder-background!"
-                            />
+                            <div className="max-w-[700px] mx-auto">
+                                <InputText
+                                    label="Enter Email Adress"
+                                    inputName="email"
+                                    inputClassName="placeholder-background!"
+                                    button
+                                    buttonClassName="btn-fill-background"
+                                    errorClassName="md:absolute text-background!"
+                                    className="bg-primary/30 border-background! placeholder-background!"
+                                />
+                            </div>
                         </form>
                     </FormProvider>
                 </div>
             </div>
 
-            <div className="container relative flex justify-end items-center">
-                <div className="absolute left-1/2 -translate-x-1/2 flex gap-12 text-sm">
+            <div className="container relative flex justify-end items-center h-[80px]">
+                <div className="absolute left-1/2 -translate-x-1/2 flex gap-6 sm:gap-12 text-sm">
                     <Link href={routes.home} className="hover:underline">
                         Home
                     </Link>
@@ -78,9 +80,9 @@ export default function Footer() {
                 <Image
                     src={toTopButton}
                     alt="Navigate to top"
-                    width={70}
-                    height={70}
-                    className="py-4 cursor-pointer"
+                    width={60}
+                    height={60}
+                    className="cursor-pointer hidden sm:block rounded-full"
                     onClick={() =>
                         window.scrollTo({ top: 0, behavior: "smooth" })
                     }
@@ -91,7 +93,7 @@ export default function Footer() {
                 <div className="w-full border-b-1"></div>
             </div>
 
-            <div className="container flex justify-center gap-4 text-sm my-4">
+            <div className="container flex justify-center gap-4 text-sm my-8">
                 <div>© {currentYear} Nemanja Tomic. All rights reserved.</div>
             </div>
         </>
