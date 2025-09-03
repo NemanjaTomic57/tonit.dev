@@ -1,43 +1,51 @@
+"use client";
+
 import { useFormContext } from "react-hook-form";
 import InputValidationError from "./inputValidationError";
+import clsx from "clsx";
+import { useState } from "react";
 
 interface Props {
     label: string;
     inputName: string;
     button?: boolean;
+    className?: string;
+    errorClassName?: string;
 }
 
-export default function InputText({ label, inputName, button }: Props) {
+export default function InputText({
+    label,
+    inputName,
+    button,
+    className,
+    errorClassName,
+}: Props) {
     const {
         register,
         formState: { errors },
-        watch,
     } = useFormContext();
-    const value = watch(inputName);
+    const [placeholder, setPlaceholder] = useState(label);
     const errorMessage = errors[inputName]?.message as string;
 
     return (
-        <>
-            <div className="relative bg-gray-tint/10 border-1 border-gray-tint rounded-sm">
-                {value === "" && (
-                    <label className="absolute top-1/2 -translate-y-1/2 pointer-events-none text-gray-tint pl-2 sm:pl-5">
-                        {label}
-                    </label>
-                )}
+        <div>
+            <div className={clsx("form-input-standard", className)}>
                 <input
                     {...register(inputName)}
                     type="text"
-                    className="h-full w-full py-2 sm:py-3 px-2 sm:px-5 outline-none"
+                    placeholder={placeholder}
+                    onFocus={() => setPlaceholder("")}
+                    onBlur={() => setPlaceholder(label)}
                 />
                 {button && (
-                    <button className="btn-fill-primary rounded-sm absolute right-0.5 top-0.5 bottom-0.5 px-4 sm:px-8 text-sm font-bold cursor-pointer">
+                    <button className="btn-fill-primary rounded-md absolute right-1 top-1 bottom-1 px-4 sm:px-8 text-sm font-bold cursor-pointer">
                         Submit
                     </button>
                 )}
             </div>
-            <InputValidationError className="md:absolute">
+            <InputValidationError className={errorClassName}>
                 {errorMessage}
             </InputValidationError>
-        </>
+        </div>
     );
 }

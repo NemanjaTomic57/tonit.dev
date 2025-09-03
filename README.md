@@ -19,6 +19,7 @@ This project is the codebase for my homepage tonit.dev, where I run my blog and 
 - REST API with CRUD operations and authentication/authorization
 - Server-side rendering for lightning fast loading speeds
 - Contact form with client-side and server-side validation
+- Fully accessible for keyboard users
 - Azure Key Vault for maximum password security
 - Fully fledged CI/CD pipeline with GitHub Actions
 - Self-hosted SMTP server for reliable email delivery

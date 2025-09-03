@@ -31,7 +31,7 @@ export default function TechStack() {
                                         : "cursor-pointer border-transparent hover:bg-foreground/5",
                                 )}
                             >
-                                <p className="text-center pointer-events-none">
+                                <p className="text-center pointer-events-none mb-0!">
                                     {section.heading}
                                 </p>
                             </div>
@@ -79,7 +79,10 @@ export default function TechStack() {
                     modules={[Pagination]}
                 >
                     {techStack.map((item) => (
-                        <SwiperSlide className="p-6 border border-foreground/15 shadow-card rounded-lg">
+                        <SwiperSlide
+                            key={item.id}
+                            className="p-6 border border-foreground/15 shadow-card rounded-lg"
+                        >
                             <div className="flex flex-col h-full">
                                 <h3>{item.heading}</h3>
                                 <ul className="blue-checkmark grid gap-1 mb-4">

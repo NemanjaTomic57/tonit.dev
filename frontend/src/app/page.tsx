@@ -9,6 +9,7 @@ import headshot from "/public/images/headshot.png";
 import teamMeeting from "/public/images/team-meeting.png";
 import codeSnippet from "/public/images/code-snippet.png";
 import TechStack from "@/components/techStack";
+import ContactForm from "@/components/contactForm";
 
 export default function Home() {
     const { setShowResumePopup } = useContext(ResumePopupContext);
@@ -60,8 +61,28 @@ export default function Home() {
                 <div className="grid md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px] items-center gap-6 sm:gap-8 lg:gap-16 container-sm mx-auto py-container-sm-vert">
                     <div>
                         <h2>About Me</h2>
-                        <p>{introText0}</p>
-                        <p className="mb-5!">{introText1}</p>
+                        <p>
+                            Hello, my name is Nemanja, and I am a software
+                            developer specializing in cloud infrastructure and
+                            web development. With my senior experience, your IT
+                            project will benefit from creative and innovative
+                            solutions to your unsolved problems. You don't just
+                            hire a professional developer with me. You also gain
+                            a true team player.
+                        </p>
+                        <p className="mb-5!">
+                            Your team will greatly benefit in various ways from
+                            my services. Flexibility, engagement and
+                            communication are vital to success in today's world
+                            of business, and this is where I excel at. I speak
+                            both the language of technology and business, making
+                            me a key communicator and essential contributor in
+                            any IT project. My knowledge is broad and extensive.
+                            Whatever you need, I can deliver. On top of that,
+                            I'm fluent in German, English, Spanish and Serbian,
+                            ensuring smooth collaboration within international
+                            teams.
+                        </p>
                         <Button
                             className="btn-fill-primary btn-lg"
                             onClick={() => setShowResumePopup(true)}
@@ -127,8 +148,20 @@ export default function Home() {
 
                     <div>
                         <h2>My Risk-Free Promise</h2>
-                        <p>{satisfactionGuarantee0}</p>
-                        <p>{satisfactionGuarantee1}</p>
+                        <p>
+                            I am confident in my abilities to help your project
+                            succeed. To prove that, I offer a guarantee to every
+                            one of my clients.
+                        </p>
+                        <p>
+                            If you’re not fully satisfied after the first 100
+                            hours, you can cancel the contract and receive a{" "}
+                            <strong>full refund</strong>. You have complete
+                            freedom to decide whether or not you’d like to
+                            continue working with us after that trial period —
+                            no hard feelings, no strings attached. Together, we
+                            can do it!
+                        </p>
                         <p className="font-bold text-primary mb-0!">
                             Together, We Can Do It!
                         </p>
@@ -159,6 +192,8 @@ export default function Home() {
                     className="hidden lg:block"
                 />
             </div>
+
+            <ContactForm />
         </>
     );
 }
@@ -169,29 +204,6 @@ const heroItems = [
     "Cloud Architecture",
     "IT Consultancy",
 ];
-
-const introText0 = (
-    <>
-        Hello, my name is Nemanja, and I am a software developer specializing in
-        cloud infrastructure and web development. With my senior experience,
-        your IT project will benefit from creative and innovative solutions to
-        your unsolved problems. You don't just hire a professional developer
-        with me. You also gain a true team player.
-    </>
-);
-
-const introText1 = (
-    <>
-        Your team will greatly benefit in various ways from my services.
-        Flexibility, engagement and communication are vital to success in
-        today's world of business, and this is where I excel at. I speak both
-        the language of technology and business, making me a key communicator
-        and essential contributor in any IT project. My knowledge is broad and
-        extensive. Whatever you need, I can deliver. On top of that, I'm fluent
-        in German, English, Spanish and Serbian, ensuring smooth collaboration
-        within international teams.
-    </>
-);
 
 const whyYouShouldChooseMe = [
     {
@@ -244,48 +256,26 @@ const whyYouShouldChooseMe = [
     },
 ];
 
-const satisfactionGuarantee0 = (
-    <>
-        I am confident in my abilities to help your project succeed. To prove
-        that, I offer a guarantee to every one of my clients.{" "}
-    </>
-);
-
-const satisfactionGuarantee1 = (
-    <>
-        If you’re not fully satisfied after the first 100 hours, you can cancel
-        the contract and receive a <strong>full refund</strong>. You have
-        complete freedom to decide whether or not you’d like to continue working
-        with us after that trial period — no hard feelings, no strings attached.
-        Together, we can do it!
-    </>
-);
-
 const experienceItems = [
+    <>4+ years of hands-on experience in large-scale projects</>,
     <>
-        <strong>4+ years of hands-on experience in large-scale projects</strong>
+        DevOps Engineer Expert — <strong>Microsoft</strong>
     </>,
     <>
-        <strong>DevOps Engineer Expert</strong> - Microsoft
+        Certified Kubernetes Administrator (CKA) —{" "}
+        <strong>Linux Foundation</strong>
     </>,
     <>
-        <strong>Certified Kubernetes Administrator (CKA)</strong> - Linux
-        Foundation
+        Certified Calico Operator: Level 1 — <strong>Tigera</strong>
     </>,
     <>
-        <strong>Certified Calico Operator: Level 1</strong> - Tigera
-    </>,
-    // <>
-    //     <strong>Prometheus Certified Associate (PCA)</strong> - Linux Foundation
-    // </>,
-    <>
-        <strong>ISTQB Certified Tester Foundation Level (CTFL)</strong> - German
-        Testing Board
+        ISTQB Certified Tester Foundation Level (CTFL) —{" "}
+        <strong>German Testing Board</strong>
     </>,
     <>
-        <strong>Certified Data Scientist</strong> - DBE Academy
+        Certified Data Scientist — <strong>DBE Academy</strong>
     </>,
     <>
-        <strong>B.Sc. Business and Computer Science</strong> - DHBW Stuttgart
+        B.Sc. Business and Computer Science — <strong>DHBW Stuttgart</strong>
     </>,
 ];

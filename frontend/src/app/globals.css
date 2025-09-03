@@ -18,12 +18,25 @@
     font-weight: 700;
 }
 
+@font-face {
+    font-family: Girloy;
+    src: url("/fonts/Gilroy-Medium.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Girloy;
+    src: url("/fonts/Gilroy-Bold.ttf");
+    font-weight: 700;
+}
+
 :root {
     /*------ COLORS ------*/
     --primary: #008cff;
     --primary-tint: #e6f4ff;
     --primary-shade: #0077d9;
     --gray-tint: #9ba8bd;
+    --gray-tone: #7b8ca8;
     --white-transparent-tint: rgba(255, 255, 255, 0.2);
     --white-transparent-tone: rgba(255, 255, 255, 0.4);
     --background: #ffffff;
@@ -44,11 +57,15 @@
     --color-primary-tint: var(--primary-tint);
     --color-primary-shade: var(--primary-shade);
     --color-gray-tint: var(--gray-tint);
+    --color-gray-tone: var(--gray-tone);
     --color-white-transparent-tint: var(--white-transparent-tint);
     --color-white-transparent-tone: var(--white-transparent-tone);
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+
     --spacing-container-sm-vert: var(--container-sm-vert);
+
+    --font-girloy: "Girloy", sans-serif;
 }
 
 body {
@@ -102,15 +119,15 @@ ul.blue-checkmark {
 
 ul.blue-checkmark li {
     position: relative;
-    padding-left: 34px;
     margin-bottom: 12px;
+    @apply pl-8;
 }
 
 ul.blue-checkmark li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.27em; /* aligns with text’s first line */
+    top: 0.27em;
     width: 16px;
     height: 16px;
     background: url("/images/list-item.svg") no-repeat center / contain;
@@ -127,11 +144,30 @@ ul.blue-checkmark li::before {
 }
 
 .btn-base {
-    @apply py-[7px] px-6 shadow-sm;
+    @apply pb-[6px] pt-[7px] px-6 shadow-sm;
 }
 
 .btn-lg {
-    @apply py-3 px-8 shadow-sm;
+    @apply pb-[10px] pt-3 px-8 shadow-sm;
+}
+
+/*------ INPUT ------*/
+.placeholder,
+input::placeholder,
+textarea::placeholder {
+    @apply text-gray-tone;
+}
+
+.form-input-standard {
+    @apply relative outline-0 border-1 border-gray-tint/80 py-2 sm:py-3 px-2 sm:px-5 outline-gray-tint/80 rounded-lg;
+
+    input {
+        @apply h-full w-full outline-none;
+    }
+}
+
+.form-input-standard:focus-within {
+    @apply outline-1;
 }
 
 /*------ SHADOWS ------*/
@@ -143,6 +179,10 @@ ul.blue-checkmark li::before {
     box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.12),
         0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.shadow-card-lg {
+    box-shadow: 0 4px 10px rgba(95, 95, 95, 0.15);
 }
 
 /*------ SWIPER ------*/
