@@ -4,12 +4,12 @@
     "service": "dev",
     "workspaceFolder": "/workspace",
     "postCreateCommand": "bash .devcontainer/postCreate.sh",
-    "shutdownAction": "stopCompose",
     "customizations": {
         "vscode": {
             "extensions": [
+                "ms-dotnettools.csdevkit",
                 "patcx.vscode-nuget-gallery",
-                "ms-dotnettools.csdevkit"
+                "ckolkman.vscode-postgres"
             ]
         }
     }

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd API
-dotnet restore
+# Restore NuGet packages
+cd /workspace/API && dotnet restore

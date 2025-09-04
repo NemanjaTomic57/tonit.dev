@@ -24,6 +24,20 @@ This project is the codebase for my homepage tonit.dev, where I run my blog and 
 - Fully fledged CI/CD pipeline with GitHub Actions
 - Self-hosted SMTP server for reliable email delivery
 
+## Database Management
+
+The database is not really large. However, to ensure best practices, there is a database for development and production. Because the project is lead only by me, there is no need for persistent test data across multiple dev environments. This led to the decision to have the development database only locally inside the devcontainer, as opposed to publically accessible on the server.
+
+The production database is hosted on a server via a kubernetes pod and is exposed by a ClusterIP. The credentials are stored inside Azure Key Vault.
+
+The database is code first. To find out more about the database structure, you can check out the migrations as well as the entities under `/API/Objects/`. Or you can run `dotnet watch` and take a look at the Scalar documentation of the project under https://localhost:5000/scalar.
+
+## API 
+
+For the API, we have Asp.Net Core with Scalar for automated API documentation. 
+
+I've had the pleasure of building APIs in a few different languages in my carreer, including Flask, Node.js, Laravel, and Rust. I think every language has its pros and cons, but in terms of Web APIs, Asp.Net Core is the clear winner for me. The Syntax is easy, the code has a high readability, the documentation is generated automatically with Swagger or Scalar, and the performance is unbeatable (actually, Rust does have a better performance, but I think it's way to complex to be used for a Web API with simple CRUD operations). 
+
 ## How to run locally
 
 Perform the following steps to run this project locally:
