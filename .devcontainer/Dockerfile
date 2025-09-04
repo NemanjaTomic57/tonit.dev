@@ -15,4 +15,8 @@ RUN sudo bash - \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install dotnet ef for migration management
+USER vscode
+RUN dotnet tool install --global --version 9.0.8 dotnet-ef
+
 CMD ["sleep", "infinity"]

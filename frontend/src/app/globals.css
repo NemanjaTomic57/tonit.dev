@@ -65,6 +65,7 @@
 
     --spacing-container-sm-vert: var(--container-sm-vert);
 
+    --font-aenotik: "Aenotik Trial", sans-serif;
     --font-girloy: "Girloy", sans-serif;
 }
 
@@ -73,7 +74,6 @@ body {
     color: var(--foreground);
     font-family:
         Aenotik Trial,
-        Helvetica,
         sans-serif;
 }
 

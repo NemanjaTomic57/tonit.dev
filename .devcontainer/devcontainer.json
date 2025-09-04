@@ -3,7 +3,7 @@
     "dockerComposeFile": "docker-compose.yaml",
     "service": "dev",
     "workspaceFolder": "/workspace",
-    "postCreateCommand": "bash .devcontainer/postCreate.sh",
+    "postCreateCommand": "cd API && dotnet restore",
     "customizations": {
         "vscode": {
             "extensions": [

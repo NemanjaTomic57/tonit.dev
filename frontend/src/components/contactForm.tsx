@@ -62,7 +62,7 @@ export default function ContactForm() {
                                     inputName="message"
                                 />
                             </div>
-                            <Button className="btn-fill-primary btn-lg w-full md:col-span-2">
+                            <Button className="font-aenotik btn-fill-primary btn-lg w-full md:col-span-2">
                                 Book A Call
                             </Button>
                         </form>

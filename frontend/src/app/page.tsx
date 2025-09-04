@@ -158,7 +158,7 @@ export default function Home() {
                             hours, you can cancel the contract and receive a{" "}
                             <strong>full refund</strong>. You have complete
                             freedom to decide whether or not you’d like to
-                            continue working with us after that trial period —
+                            continue working together after that trial period —
                             no hard feelings, no strings attached. Together, we
                             can do it!
                         </p>

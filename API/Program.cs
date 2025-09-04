@@ -1,17 +1,34 @@
+using API.Data;
+using API.Objects.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddCors();
 
+builder.Services.AddDbContext<PostgresContext>(opt =>
+{
+    opt.UseNpgsql(connectionString);
+});
+
+builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<PostgresContext>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    // Accessible at /scalar
+    app.MapScalarApiReference();
 }
 
 app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
@@ -20,5 +37,19 @@ app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 app.UseAuthorization();
 
 app.MapControllers();
+
+try
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<PostgresContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    await context.Database.MigrateAsync();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex);
+    throw;
+}
 
 app.Run();
