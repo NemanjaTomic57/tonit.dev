@@ -1,10 +1,14 @@
 using API.Data;
 using API.Objects.Entities;
+using API.Services;
+using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Env.Load();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -20,6 +24,8 @@ builder.Services.AddDbContext<PostgresContext>(opt =>
 });
 
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<PostgresContext>();
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 
