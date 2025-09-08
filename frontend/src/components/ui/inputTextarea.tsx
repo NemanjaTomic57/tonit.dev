@@ -21,17 +21,16 @@ export default function InputTextarea({ label, inputName, className }: Props) {
 
     return (
         <>
-            <textarea
-                {...register(inputName)}
-                placeholder={placeholder}
-                onFocus={() => setPlaceholder("")}
-                onBlur={() => setPlaceholder(label)}
-                rows={7}
-                className={clsx(
-                    "form-input-standard w-full resize-none",
-                    className,
-                )}
-            />
+            <div className="form-input-standard">
+                <textarea
+                    {...register(inputName)}
+                    placeholder={placeholder}
+                    onFocus={() => setPlaceholder("")}
+                    onBlur={() => setPlaceholder(label)}
+                    rows={7}
+                    className={clsx("w-full resize-none", className)}
+                />
+            </div>
             <InputValidationError className="md:absolute">
                 {errorMessage}
             </InputValidationError>

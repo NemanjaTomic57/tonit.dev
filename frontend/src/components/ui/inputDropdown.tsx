@@ -92,18 +92,18 @@ export default function InputDropdown({
             >
                 <div
                     className={clsx(
-                        "form-input-standard flex gap-2 cursor-pointer items-center justify-between",
+                        "form-input-standard flex gap-3 cursor-pointer items-center justify-between",
                         showDd && "rounded-b-none! border-b-transparent!",
                     )}
                 >
-                    <p
+                    <div
                         className={clsx(
-                            "mb-0! line-clamp-1 input",
+                            "dropdown-input truncate",
                             activeText === initialText && "placeholder",
                         )}
                     >
                         {activeText}
-                    </p>
+                    </div>
                     <Icon
                         name="angleDown"
                         size="xs"

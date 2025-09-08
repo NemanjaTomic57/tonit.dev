@@ -104,7 +104,7 @@ export default function TechStack() {
                     ))}
                 </Swiper>
 
-                <div className="tech-stack__pagination flex justify-center gap-3"></div>
+                <div className="tech-stack__pagination flex justify-center gap-2"></div>
             </div>
         </>
     );

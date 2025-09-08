@@ -39,6 +39,7 @@
     --gray-tone: #7b8ca8;
     --white-transparent-tint: rgba(255, 255, 255, 0.2);
     --white-transparent-tone: rgba(255, 255, 255, 0.4);
+    --white-transparent-shade: rgba(255, 255, 255, 0.8);
     --background: #ffffff;
     --foreground: #000000;
 
@@ -60,6 +61,7 @@
     --color-gray-tone: var(--gray-tone);
     --color-white-transparent-tint: var(--white-transparent-tint);
     --color-white-transparent-tone: var(--white-transparent-tone);
+    --color-white-transparent-shade: var(--white-transparent-shade);
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
@@ -149,7 +151,7 @@ ul.blue-checkmark li::before {
 }
 
 .btn-fill-background:hover {
-    background-color: var(--white-transparent-tone);
+    background-color: var(--white-transparent-shade);
 }
 
 .btn-base {
@@ -157,7 +159,7 @@ ul.blue-checkmark li::before {
 }
 
 .btn-lg {
-    @apply pt-1 pb-[4px] sm:pb-[10px] sm:pt-3 px-8 shadow-sm;
+    @apply pt-2 pb-[6px] sm:pb-[10px] sm:pt-3 px-8 shadow-sm;
 }
 
 /*------ INPUT ------*/
@@ -170,9 +172,13 @@ textarea::placeholder {
 .form-input-standard {
     @apply relative outline-0 border-1 border-gray-tint/80 outline-gray-tint/80 rounded-sm overflow-hidden;
 
-    .input,
-    input {
-        @apply py-1 sm:py-3 px-2 sm:px-5 h-full w-full outline-none;
+    input,
+    .dropdown-input {
+        @apply flex items-center h-[2rem] sm:h-[2.5rem] pt-1 pb-0.5 sm:pt-3 sm:pb-2.5 px-2 sm:px-4 w-full outline-none;
+    }
+
+    textarea {
+        @apply py-2 sm:py-3 px-2 sm:px-4 outline-none;
     }
 }
 
@@ -203,8 +209,4 @@ textarea::placeholder {
 .tech-stack {
     padding-inline: 16px !important;
     padding-bottom: 14px !important;
-}
-
-.tech-stack .swiper-pagination {
-    translate: 0 24px;
 }

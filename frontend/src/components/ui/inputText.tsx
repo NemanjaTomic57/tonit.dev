@@ -8,6 +8,7 @@ import { useState } from "react";
 interface Props {
     label: string;
     inputName: string;
+    type?: string;
     button?: boolean;
     buttonClassName?: string;
     inputClassName?: string;
@@ -18,6 +19,7 @@ interface Props {
 export default function InputText({
     label,
     inputName,
+    type = "text",
     button,
     buttonClassName = "btn-fill-primary",
     inputClassName,
@@ -36,7 +38,7 @@ export default function InputText({
             <div className={clsx("form-input-standard", className)}>
                 <input
                     {...register(inputName)}
-                    type="text"
+                    type={type}
                     placeholder={placeholder}
                     onFocus={() => setPlaceholder("")}
                     onBlur={() => setPlaceholder(label)}
@@ -45,7 +47,7 @@ export default function InputText({
                 {button && (
                     <button
                         className={clsx(
-                            "rounded-md absolute right-1 top-1 bottom-1 px-4 sm:px-8 text-sm font-bold cursor-pointer",
+                            "rounded-xs absolute right-0.5 top-0.5 bottom-0.5 md:top-1 md:bottom-1 md:right-1 px-4 sm:px-8 text-sm font-bold cursor-pointer",
                             buttonClassName,
                         )}
                     >

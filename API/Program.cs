@@ -2,6 +2,7 @@ using API.Data;
 using API.Objects.Entities;
 using API.Services;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -25,6 +26,13 @@ builder.Services.AddDbContext<PostgresContext>(opt =>
 
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<PostgresContext>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
 builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
@@ -32,7 +40,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-
     // Accessible at /scalar
     app.MapScalarApiReference();
 }
@@ -40,6 +47,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
     .WithOrigins("http://localhost:3000", "https://tonit.dev", "https://www.tonit.dev"));
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -51,6 +59,7 @@ try
     var context = services.GetRequiredService<PostgresContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
+    await PostgresContextSeed.SeedAsync(context, userManager);
 }
 catch (Exception ex)
 {

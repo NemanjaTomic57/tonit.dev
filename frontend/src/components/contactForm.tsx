@@ -42,7 +42,7 @@ export default function ContactForm() {
                     </p>
                 </div>
 
-                <div className="font-girloy rounded-xl md:rounded-2xl p-4 sm:p-8 shadow-card-lg border-1 border-foreground/10 bg-background">
+                <div className="font-girloy rounded-xl md:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-card-lg border-1 border-foreground/10 bg-background">
                     <FormProvider {...methods}>
                         <form
                             onSubmit={handleSubmit(onSubmit)}
@@ -53,7 +53,7 @@ export default function ContactForm() {
                             <InputText label="Company" inputName="company" />
                             <InputDropdown
                                 inputName="dateTime"
-                                initialText="Choose an available date and time"
+                                initialText="Date & Time"
                                 options={timeOptions}
                             />
                             <div className="md:col-span-2 mt-0.5">
