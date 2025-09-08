@@ -1,4 +1,3 @@
-using System;
 using API.DTOs;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +9,14 @@ public class LeadController(EmailService emailService) : BaseApiController
     [HttpPost("send-resume")]
     public ActionResult SendResume(EmailDto dto)
     {
-        emailService.SendNotification(dto.Email, dto.Name);
+        emailService.SendResume(dto.Email, dto.Name);
 
         return Ok();
+    }
+
+    [HttpPost("book-appointment")]
+    public ActionResult BookAppointment(AppointmentDto dto)
+    {
+        return NoContent();
     }
 }

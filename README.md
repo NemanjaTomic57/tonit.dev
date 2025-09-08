@@ -9,7 +9,7 @@ This project is the codebase for my homepage tonit.dev, where I run my blog and 
 - PostgreSQL
 - Docker
 - GitHub Actions
-- Simple Mail Transfer Protocol (SMTP)
+- SMTP
 - Kubernetes
 
 ## Functionality
