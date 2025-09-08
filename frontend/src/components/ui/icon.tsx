@@ -1,8 +1,10 @@
 import { IconType } from "react-icons";
 import { FaAngleDown } from "react-icons/fa6";
+import { LuLoaderCircle } from "react-icons/lu";
 
 const icons: { [key: string]: IconType } = {
     angleDown: FaAngleDown,
+    loader: LuLoaderCircle,
 };
 
 interface Props {

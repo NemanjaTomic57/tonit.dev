@@ -17,12 +17,12 @@ public class EmailService
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(name, email));
-        message.Subject = "Here's my resume you requested";
+        message.Subject = "Here's the resume you requested";
 
         var body = new TextPart("html")
         {
             Text = $@"
-                <p>Hey {name}</p>
+                <p>Hello {name}</p>
                 <br/>
                 <p>Thank you for reaching out! I've attached my resume and certificates for your review.</p>
                 <br/>

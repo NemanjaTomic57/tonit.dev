@@ -157,21 +157,22 @@ ul.blue-checkmark li::before {
 }
 
 .btn-lg {
-    @apply pb-[10px] pt-3 px-8 shadow-sm;
+    @apply pt-1 pb-[4px] sm:pb-[10px] sm:pt-3 px-8 shadow-sm;
 }
 
 /*------ INPUT ------*/
 .placeholder,
 input::placeholder,
 textarea::placeholder {
-    @apply text-gray-tone;
+    @apply text-gray-tone text-sm md:text-base;
 }
 
 .form-input-standard {
-    @apply relative outline-0 border-1 border-gray-tint/80 py-2 sm:py-3 px-2 sm:px-5 outline-gray-tint/80 rounded-lg;
+    @apply relative outline-0 border-1 border-gray-tint/80 outline-gray-tint/80 rounded-sm overflow-hidden;
 
+    .input,
     input {
-        @apply h-full w-full outline-none;
+        @apply py-1 sm:py-3 px-2 sm:px-5 h-full w-full outline-none;
     }
 }
 

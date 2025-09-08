@@ -98,13 +98,18 @@ export default function InputDropdown({
                 >
                     <p
                         className={clsx(
-                            "mb-0! line-clamp-1",
+                            "mb-0! line-clamp-1 input",
                             activeText === initialText && "placeholder",
                         )}
                     >
                         {activeText}
                     </p>
-                    <Icon name="angleDown" size="xs" color="var(--gray-tone)" />
+                    <Icon
+                        name="angleDown"
+                        size="xs"
+                        color="var(--gray-tone)"
+                        className="pr-4"
+                    />
                 </div>
 
                 {showDd && (

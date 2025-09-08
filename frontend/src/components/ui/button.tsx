@@ -5,11 +5,18 @@ import { ReactNode } from "react";
 interface Props {
     href?: string;
     onClick?: () => void;
+    disabled?: boolean;
     className?: string;
     children: ReactNode;
 }
 
-export default function Button({ href, onClick, className, children }: Props) {
+export default function Button({
+    href,
+    onClick,
+    className,
+    disabled,
+    children,
+}: Props) {
     const btnClassName =
         "block rounded-sm font-bold cursor-pointer transition-all transition-duration-200";
 
@@ -26,6 +33,7 @@ export default function Button({ href, onClick, className, children }: Props) {
             ) : (
                 <button
                     onClick={onClick}
+                    disabled={disabled}
                     className={clsx(className, btnClassName)}
                 >
                     {children}

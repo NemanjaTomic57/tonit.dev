@@ -23,6 +23,7 @@ export default function Home() {
                         src="/images/hero__binary-code.png"
                         alt="Streaming binary code"
                         fill
+                        sizes="100vh"
                         className="w-full h-full object-cover"
                     />
                 </div>
@@ -31,6 +32,7 @@ export default function Home() {
                         src="/images/hero__ellipses-white.png"
                         alt=""
                         fill
+                        sizes="100vh"
                         className="w-full h-full object-cover"
                     />
                 </div>

@@ -5,6 +5,12 @@ import Overlay from "./overlay";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputText from "./ui/inputText";
+import Button from "./ui/button";
+import axios from "axios";
+import { apiUrl } from "@/environment";
+import toast from "react-hot-toast";
+import Icon from "./ui/icon";
+import clsx from "clsx";
 
 interface Props {
     show: boolean;
@@ -12,6 +18,7 @@ interface Props {
 }
 
 const emailSchema = z.object({
+    name: z.string().nonempty("Please enter your name"),
     email: z.email("Please enter a valid email adress"),
 });
 
@@ -22,12 +29,20 @@ export default function ResumePopup({ show, setShow }: Props) {
     const methods = useForm<EmailSchema>({
         resolver: zodResolver(emailSchema),
     });
-    const { handleSubmit } = methods;
+    const {
+        handleSubmit,
+        formState: { isSubmitting },
+    } = methods;
 
     useOnClickOutside(ref, () => setShow(false));
 
-    const onSubmit: SubmitHandler<EmailSchema> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<EmailSchema> = async (data) => {
+        try {
+            await axios.post(apiUrl + "lead/send-resume", data);
+            toast.success("Check your inbox.");
+        } catch (error) {
+            toast.error("Something unexpected happened...");
+        }
     };
 
     return (
@@ -45,14 +60,42 @@ export default function ResumePopup({ show, setShow }: Props) {
                         </p>
 
                         <FormProvider {...methods}>
-                            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                            <form
+                                onSubmit={handleSubmit(onSubmit)}
+                                noValidate
+                                className="grid gap-2"
+                            >
                                 <InputText
-                                    label="Enter Email Adress"
-                                    inputName="email"
-                                    button
+                                    label="Name"
+                                    inputName="name"
                                     className="bg-gray-tint/10"
-                                    errorClassName="md:absolute"
                                 />
+                                <InputText
+                                    label="Email Adress"
+                                    inputName="email"
+                                    className="bg-gray-tint/10"
+                                />
+                                <Button
+                                    className={clsx(
+                                        "btn-fill-primary btn-lg flex items-center justify-center gap-2",
+                                        isSubmitting &&
+                                            "bg-primary/80! hover:bg-primary/80! cursor-default!",
+                                    )}
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <Icon
+                                                name="loader"
+                                                size="xs"
+                                                className="animate-spin"
+                                            />
+                                            Submitting...
+                                        </>
+                                    ) : (
+                                        "Submit"
+                                    )}
+                                </Button>
                             </form>
                         </FormProvider>
                     </div>
