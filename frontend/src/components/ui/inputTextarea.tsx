@@ -8,10 +8,16 @@ import { useState } from "react";
 interface Props {
     label: string;
     inputName: string;
+    rows?: number;
     className?: string;
 }
 
-export default function InputTextarea({ label, inputName, className }: Props) {
+export default function InputTextarea({
+    label,
+    inputName,
+    rows = 7,
+    className,
+}: Props) {
     const {
         register,
         formState: { errors },
@@ -27,7 +33,7 @@ export default function InputTextarea({ label, inputName, className }: Props) {
                     placeholder={placeholder}
                     onFocus={() => setPlaceholder("")}
                     onBlur={() => setPlaceholder(label)}
-                    rows={7}
+                    rows={rows}
                     className={clsx("w-full resize-none", className)}
                 />
             </div>

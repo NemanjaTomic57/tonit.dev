@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header";
-import ResumePopupProvider from "@/components/contextProviders/resumePopupProvider";
 import { Toaster } from "react-hot-toast";
+import RootContextProvider from "@/components/contextProviders/rootContextProvider";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -17,22 +16,21 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <div className="z-50">
-                    <Toaster
-                        toastOptions={{
-                            success: {
-                                duration: 3000,
-                            },
-                            error: {
-                                duration: 4000,
-                            },
-                        }}
-                    />
-                </div>
-                <ResumePopupProvider>
-                    <Header />
+                <RootContextProvider>
+                    <div className="z-50">
+                        <Toaster
+                            toastOptions={{
+                                success: {
+                                    duration: 3000,
+                                },
+                                error: {
+                                    duration: 4000,
+                                },
+                            }}
+                        />
+                    </div>
                     {children}
-                </ResumePopupProvider>
+                </RootContextProvider>
             </body>
         </html>
     );

@@ -8,12 +8,11 @@ import Button from "./ui/button";
 import Image from "next/image";
 import ResumePopup from "./resumePopup";
 import { useContext } from "react";
-import { ResumePopupContext } from "./contextProviders/resumePopupProvider";
+import { RootContext } from "./contextProviders/rootContextProvider";
 
 export default function Header() {
     const pathname = usePathname();
-    const { showResumePopup, setShowResumePopup } =
-        useContext(ResumePopupContext);
+    const { showResumePopup, setShowResumePopup } = useContext(RootContext);
 
     return (
         <>

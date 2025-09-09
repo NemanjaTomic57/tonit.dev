@@ -79,6 +79,11 @@ body {
         sans-serif;
 }
 
+img {
+    pointer-events: none;
+    user-select: none;
+}
+
 /*------ CONTAINERS ------*/
 .container-sm {
     @apply px-3 md:px-6 max-w-[1200px] mx-auto;

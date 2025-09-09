@@ -1,6 +1,6 @@
 "use client";
 
-import { ResumePopupContext } from "@/components/contextProviders/resumePopupProvider";
+import { RootContext } from "@/components/contextProviders/rootContextProvider";
 import Button from "@/components/ui/button";
 import { routes } from "@/routes";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import ContactForm from "@/components/contactForm";
 import Footer from "@/components/footer";
 
 export default function Home() {
-    const { setShowResumePopup } = useContext(ResumePopupContext);
+    const { setShowResumePopup } = useContext(RootContext);
 
     return (
         <>
@@ -27,7 +27,7 @@ export default function Home() {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="absolute md:h-[600px] md:w-[800px] left-1/2 -translate-x-1/2 -z-10 hidden sm:block">
+                <div className="absolute md:h-[600px] md:w-[800px] left-1/2 -translate-x-1/2 -translate-y-20 -z-10 hidden sm:block">
                     <Image
                         src="/images/hero__ellipses-white.png"
                         alt=""

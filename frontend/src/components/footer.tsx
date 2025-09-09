@@ -82,7 +82,7 @@ export default function Footer() {
                     alt="Navigate to top"
                     width={60}
                     height={60}
-                    className="cursor-pointer hidden sm:block rounded-full"
+                    className="cursor-pointer hidden sm:block rounded-full pointer-events-auto! select-auto"
                     onClick={() =>
                         window.scrollTo({ top: 0, behavior: "smooth" })
                     }
