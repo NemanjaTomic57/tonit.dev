@@ -1,39 +1,52 @@
-"use client";
+'use client';
 
-import InputText from "@/components/ui/inputText";
-import InputTextarea from "@/components/ui/inputTextarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import Button from '@/components/ui/button';
+import InputCalendar from '@/components/ui/inputCalendar';
+import InputText from '@/components/ui/inputText';
+import InputTextarea from '@/components/ui/inputTextarea';
+import { useAdminGuard } from '@/hooks/useAdminGuard';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import ReactMarkdown from 'react-markdown';
+import z from 'zod';
 
 const schema = z.object({
-    heading: z.string(),
-    markdown: z.string(),
-    publicationDate: z.string(),
+    heading: z.string().nonempty('Please enter a heading'),
+    author: z.string().nonempty('Please enter your name'),
+    markdown: z.string().nonempty('Please enter your blog post'),
+    publicationDate: z.string().nonempty('Please set a publication date'),
 });
 
 type Schema = z.infer<typeof schema>;
 
 export default function Admin() {
+    useAdminGuard();
     const methods = useForm<Schema>({
         resolver: zodResolver(schema),
     });
-    const { handleSubmit } = methods;
+    const { handleSubmit, watch } = methods;
+    const markdown = watch('markdown');
 
     const onSubmit: SubmitHandler<Schema> = (data) => {
         console.log(data);
     };
 
     return (
-        <div className="container py-container-sm-vert grid grid-cols-2 gap-20">
+        <div className="container py-8">
             <FormProvider {...methods}>
-                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
-                    <InputText label="Heading" inputName="heading" />
-                    <InputTextarea
-                        label="Markdown"
-                        inputName="markdown"
-                        rows={30}
-                    />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="mb-8 flex items-center gap-4">
+                        <InputText label="Heading" inputName="heading" className="w-200" errorClassName="absolute" />
+                        <InputText label="Author" inputName="author" className="w-80" errorClassName="absolute" />
+                        <InputCalendar inputName="publicationDate" errorClassName="absolute" />
+                        <Button className="btn-lg btn-fill-primary ml-auto h-fit">Create Post</Button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-20">
+                        <InputTextarea label="Markdown" inputName="markdown" rows={80} />
+                        <div className="blog-post max-w-[700px]">
+                            <ReactMarkdown>{markdown}</ReactMarkdown>
+                        </div>
+                    </div>
                 </form>
             </FormProvider>
         </div>

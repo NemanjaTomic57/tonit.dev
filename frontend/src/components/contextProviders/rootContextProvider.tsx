@@ -31,23 +31,6 @@ export default function RootContextProvider({ children }: Props) {
     const [showResumePopup, setShowResumePopup] = useState(false);
     useDisableScroll(showResumePopup);
 
-    // User info for admin dashboard
-    const fetchUserInfo = async () => {
-        const result = await axios.get(apiUrl + "admin/user-info", {
-            withCredentials: true,
-        });
-
-        if (result.status === 200) {
-            localStorage.setItem("user", JSON.stringify(result.data));
-        } else {
-            localStorage.removeItem("user");
-        }
-    };
-
-    useEffect(() => {
-        fetchUserInfo();
-    }, [fetchUserInfo]);
-
     return (
         <RootContext.Provider value={{ showResumePopup, setShowResumePopup }}>
             {children}

@@ -42,6 +42,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
         };
+
+        opt.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (context.Request.Cookies.TryGetValue("jwt", out var token))
+                {
+                    context.Token = token;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddSingleton<TokenGenerator>();

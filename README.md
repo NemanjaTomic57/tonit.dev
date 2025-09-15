@@ -54,20 +54,20 @@ I've had the pleasure of building APIs in a few different languages in my carree
 
 #### LeadController
 
-- SendResume
-- BookAppointment
+- [x] SendResume
+- [ ] BookAppointment
 
 #### BlogController
 
-- GetAllBlogPosts
-- GetBlogPost
-- Subscribe
-- Unsubscribe
+- [ ] GetAllBlogPosts
+- [ ] GetBlogPost
+- [ ] Subscribe
+- [ ] Unsubscribe
 
 #### AdminController
 
-- Login
-- GetUserInfo
-- CreateBlogPost
-- DeleteBlogPost
-- UpdateBlogPost
+- [x] Login
+- [x] GetAuthStatus
+- [ ] CreateBlogPost
+- [ ] DeleteBlogPost
+- [ ] UpdateBlogPost

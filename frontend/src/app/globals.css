@@ -1,32 +1,32 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
     font-family: Aenotik Trial;
-    src: url("/public/fonts/aeoniktrial-light.otf");
+    src: url('/public/fonts/aeoniktrial-light.otf');
     font-weight: 300;
 }
 
 @font-face {
     font-family: Aenotik Trial;
-    src: url("/fonts/aeoniktrial-regular.otf");
+    src: url('/fonts/aeoniktrial-regular.otf');
     font-weight: 400;
 }
 
 @font-face {
     font-family: Aenotik Trial;
-    src: url("/fonts/aeoniktrial-bold.otf");
+    src: url('/fonts/aeoniktrial-bold.otf');
     font-weight: 700;
 }
 
 @font-face {
     font-family: Girloy;
-    src: url("/fonts/Gilroy-Medium.ttf");
+    src: url('/fonts/Gilroy-Medium.ttf');
     font-weight: 400;
 }
 
 @font-face {
     font-family: Girloy;
-    src: url("/fonts/Gilroy-Bold.ttf");
+    src: url('/fonts/Gilroy-Bold.ttf');
     font-weight: 700;
 }
 
@@ -67,8 +67,8 @@
 
     --spacing-container-sm-vert: var(--container-sm-vert);
 
-    --font-aenotik: "Aenotik Trial", sans-serif;
-    --font-girloy: "Girloy", sans-serif;
+    --font-aenotik: 'Aenotik Trial', sans-serif;
+    --font-girloy: 'Girloy', sans-serif;
 }
 
 body {
@@ -84,34 +84,39 @@ img {
     user-select: none;
 }
 
+button {
+    pointer-events: all;
+    user-select: all;
+}
+
 /*------ CONTAINERS ------*/
 .container-sm {
-    @apply px-3 md:px-6 max-w-[1200px] mx-auto;
+    @apply mx-auto max-w-[1200px] px-3 md:px-6;
 }
 
 .container {
-    @apply px-3 md:px-6 max-w-full;
+    @apply max-w-full px-3 md:px-6;
 }
 
 /*------ HEADINGS & TYPOGRAPHY ------*/
 h1 {
-    @apply leading-[3.8rem] sm:leading-[6.15rem] text-[3.5rem] sm:text-[5.75rem];
+    @apply text-[3.5rem] leading-[3.8rem] sm:text-[5.75rem] sm:leading-[6.15rem];
 }
 
 h2 {
-    @apply mb-3 md:mb-4 leading-[2rem] sm:leading-[2.8rem] md:leading-[3.8rem] lg:leading-[4.5rem] text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] lg:text-[4.5rem];
+    @apply mb-3 text-[2rem] leading-[2rem] sm:text-[2.8rem] sm:leading-[2.8rem] md:mb-4 md:text-[3.6rem] md:leading-[3.8rem] lg:text-[4.5rem] lg:leading-[4.5rem];
 }
 
 h3 {
     font-weight: 700;
     margin-bottom: 1.6rem;
-    @apply mb-4 sm:mb-6 leading-[1.8rem] sm:leading-[2.4rem] lg:leading-[3rem] text-[1.6rem] sm:text-[2.4rem] lg:text-[2.875rem];
+    @apply mb-4 text-[1.6rem] leading-[1.8rem] sm:mb-6 sm:text-[2.4rem] sm:leading-[2.4rem] lg:text-[2.875rem] lg:leading-[3rem];
 }
 
 h5 {
     font-weight: 700;
     margin-bottom: 0.8rem;
-    @apply leading-[1.2rem] lg:leading-[1.6rem] text-[1.3rem] lg:text-[1.4rem];
+    @apply text-[1.3rem] leading-[1.2rem] lg:text-[1.4rem] lg:leading-[1.6rem];
 }
 
 p {
@@ -131,13 +136,13 @@ ul.blue-checkmark li {
 }
 
 ul.blue-checkmark li::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 0.27em;
     width: 16px;
     height: 16px;
-    background: url("/images/list-item.svg") no-repeat center / contain;
+    background: url('/images/list-item.svg') no-repeat center / contain;
 }
 
 /*------ BUTTONS ------*/
@@ -160,11 +165,11 @@ ul.blue-checkmark li::before {
 }
 
 .btn-base {
-    @apply pb-[6px] pt-[7px] px-6 shadow-sm;
+    @apply px-6 pt-[7px] pb-[6px] shadow-sm;
 }
 
 .btn-lg {
-    @apply pt-2 pb-[6px] sm:pb-[10px] sm:pt-3 px-8 shadow-sm;
+    @apply px-8 pt-2 pb-[7px] shadow-sm sm:pt-3 sm:pb-[11px];
 }
 
 /*------ INPUT ------*/
@@ -175,15 +180,15 @@ textarea::placeholder {
 }
 
 .form-input-standard {
-    @apply relative outline-0 border-1 border-gray-tint/80 outline-gray-tint/80 rounded-sm overflow-hidden;
+    @apply border-gray-tint/80 outline-gray-tint/80 relative overflow-hidden rounded-sm border-1 outline-0;
 
     input,
     .dropdown-input {
-        @apply flex items-center h-[2rem] sm:h-[2.5rem] pt-1 pb-0.5 sm:pt-3 sm:pb-2.5 px-2 sm:px-4 w-full outline-none;
+        @apply flex h-[2rem] w-full items-center px-2 pt-1 pb-0.5 outline-none sm:h-[2.5rem] sm:px-4 sm:pt-3 sm:pb-2.5;
     }
 
     textarea {
-        @apply py-2 sm:py-3 px-2 sm:px-4 outline-none;
+        @apply px-2 py-2 outline-none sm:px-4 sm:py-3;
     }
 }
 
@@ -214,4 +219,11 @@ textarea::placeholder {
 .tech-stack {
     padding-inline: 16px !important;
     padding-bottom: 14px !important;
+}
+
+/*------ BLOG POST ------*/
+.blog-post {
+    h1 {
+        @apply mb-4 text-4xl leading-11 font-bold not-first:mt-8;
+    }
 }

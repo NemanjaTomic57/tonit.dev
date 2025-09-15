@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
-import InputValidationError from "./inputValidationError";
-import clsx from "clsx";
-import { useState } from "react";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import InputValidationError from './inputValidationError';
 
 interface Props {
     label: string;
@@ -12,12 +12,7 @@ interface Props {
     className?: string;
 }
 
-export default function InputTextarea({
-    label,
-    inputName,
-    rows = 7,
-    className,
-}: Props) {
+export default function InputTextarea({ label, inputName, rows = 7, className }: Props) {
     const {
         register,
         formState: { errors },
@@ -26,20 +21,18 @@ export default function InputTextarea({
     const errorMessage = errors[inputName]?.message as string;
 
     return (
-        <>
+        <div>
             <div className="form-input-standard">
                 <textarea
                     {...register(inputName)}
                     placeholder={placeholder}
-                    onFocus={() => setPlaceholder("")}
+                    onFocus={() => setPlaceholder('')}
                     onBlur={() => setPlaceholder(label)}
                     rows={rows}
-                    className={clsx("w-full resize-none", className)}
+                    className={clsx('w-full resize-none', className)}
                 />
             </div>
-            <InputValidationError className="md:absolute">
-                {errorMessage}
-            </InputValidationError>
-        </>
+            <InputValidationError className="md:absolute">{errorMessage}</InputValidationError>
+        </div>
     );
 }
