@@ -4,8 +4,11 @@ import Button from '@/components/ui/button';
 import InputCalendar from '@/components/ui/inputCalendar';
 import InputText from '@/components/ui/inputText';
 import InputTextarea from '@/components/ui/inputTextarea';
+import { apiUrl } from '@/environment';
 import { useAdminGuard } from '@/hooks/useAdminGuard';
+import { generalErrorToast } from '@/utils/generalErrorToast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import z from 'zod';
@@ -15,6 +18,7 @@ const schema = z.object({
     author: z.string().nonempty('Please enter your name'),
     markdown: z.string().nonempty('Please enter your blog post'),
     publicationDate: z.string().nonempty('Please set a publication date'),
+    slug: z.string().nullish(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -27,8 +31,19 @@ export default function Admin() {
     const { handleSubmit, watch } = methods;
     const markdown = watch('markdown');
 
-    const onSubmit: SubmitHandler<Schema> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<Schema> = async (req) => {
+        req.slug = req.heading.toLowerCase();
+        const token = localStorage.getItem('jwt');
+        try {
+            const r = await axios.post(apiUrl + 'blog/create-blog-post', req, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(r.data);
+        } catch (error) {
+            generalErrorToast();
+        }
     };
 
     return (

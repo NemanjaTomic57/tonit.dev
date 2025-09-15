@@ -56,8 +56,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddSingleton<TokenGenerator>();
+builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped(typeof (GenericRepository<>));
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddSingleton<TokenGenerator>();
 
 var app = builder.Build();
 
