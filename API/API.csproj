@@ -6,12 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <!-- Later for production -->
-  <!-- <ItemGroup>
-    <Content Include="Assets\Zeugnis.pdf" CopyToOutputDirectory="Always" />
-  </ItemGroup> -->
-
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="4.0.7.1" />
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="MailKit" Version="4.13.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />

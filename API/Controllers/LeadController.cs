@@ -7,9 +7,9 @@ namespace API.Controllers;
 public class LeadController(EmailService emailService) : BaseApiController
 {
     [HttpPost("send-resume")]
-    public ActionResult SendResume(EmailDto dto)
+    public async Task<ActionResult> SendResume(EmailDto dto)
     {
-        emailService.SendResume(dto.Email, dto.Name);
+        await emailService.SendResume(dto.Email, dto.Name);
 
         return Ok();
     }

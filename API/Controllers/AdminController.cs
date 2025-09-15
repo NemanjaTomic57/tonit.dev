@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using API.DTOs;
 using API.Objects.Entities;
 using API.Services;
@@ -29,18 +27,5 @@ public class AdminController(SignInManager<AppUser> signInManager, TokenGenerato
     public ActionResult GetAuthState()
     {
         return Ok(new { IsAuthenticated = User.Identity?.IsAuthenticated ?? false });
-    }
-
-    [HttpGet("user-info")]
-    public ActionResult GetUserInfo()
-    {
-        if (User.Identity?.IsAuthenticated == false) return NoContent();
-
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        return Ok(new
-        {
-            UserId = userId,
-        });
     }
 }

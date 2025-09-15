@@ -1,4 +1,7 @@
+using Amazon.S3;
+using Amazon.S3.Model;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 
 namespace API.Services;
@@ -12,7 +15,13 @@ public class EmailService
     private readonly string username = Environment.GetEnvironmentVariable("SMTP_USERNAME")!;
     private readonly string password = Environment.GetEnvironmentVariable("SMTP_PASSWORD")!;
 
-    public void SendResume(string email, string name)
+    private readonly string b2KeyId = Environment.GetEnvironmentVariable("BACKBLAZE_KEYID")!;
+    private readonly string b2AppKey = Environment.GetEnvironmentVariable("BACKBLAZE_APPKEY")!;
+    private const string bucketName = "tonit-dev";
+    private const string fileName = "Certificates.pdf";
+    private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com"; // Backblaze S3 endpoint
+
+    public async Task<ActionResult<bool>> SendResume(string email, string name)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
@@ -22,27 +31,49 @@ public class EmailService
         var body = new TextPart("html")
         {
             Text = $@"
-                <p>Hello {name}</p>
-                <br/>
-                <p>Thank you for reaching out! I've attached my resume and certificates for your review.</p>
-                <br/>
-                <p>If you have any questions or want to connect further, feel free to reply to this email 
-                or book a call directly on my homepage at https://www.tonit.dev/#contact.</p>
-                <br/>
-                <p>Looking forward to hearing from you.</p>
-                <br/>
-                <p>Best regards,</p>
-                <p>Nemanja</p>
-            "
+            <p>Hello {name}</p>
+            <br/>
+            <p>Thank you for reaching out! I've attached my resume and certificates for your review.</p>
+            <br/>
+            <p>If you have any questions or want to connect further, feel free to reply to this email 
+            or book a call directly on my homepage at https://www.tonit.dev/#contact.</p>
+            <br/>
+            <p>Looking forward to hearing from you.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p>Nemanja</p>
+        "
         };
 
-        // Path to attachments
-        var certificatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Certificates.pdf");
+        // Backblaze S3 client
+        using var s3Client = new AmazonS3Client(b2KeyId, b2AppKey, new AmazonS3Config
+        {
+            ServiceURL = serviceUrl,
+            ForcePathStyle = true,
+        });
+
+        // Get pre-signed download URL
+        var request = new GetPreSignedUrlRequest
+        {
+            BucketName = bucketName,
+            Key = fileName,
+            Expires = DateTime.UtcNow.AddMinutes(5),
+            Verb = HttpVerb.GET,
+        };
+
+        var presignedUrl = s3Client.GetPreSignedURL(request);
+
+        // Download file into seekable MemoryStream
+        using var httpClient = new HttpClient();
+        using var remoteStream = await httpClient.GetStreamAsync(presignedUrl);
+        using var memoryStream = new MemoryStream();
+        await remoteStream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
 
         // Create attachment
         var certificatesAttachment = new MimePart("application", "pdf")
         {
-            Content = new MimeContent(File.OpenRead(certificatesPath)),
+            Content = new MimeContent(memoryStream, ContentEncoding.Default),
             ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
             ContentTransferEncoding = ContentEncoding.Base64,
             FileName = "Certificates.pdf"
@@ -57,11 +88,13 @@ public class EmailService
 
         message.Body = multipart;
 
-        // Send
-        var client = new SmtpClient();
-        client.Connect(host, int.Parse(port), false);
-        client.Authenticate(username, password);
-        client.Send(message);
-        client.Disconnect(true);
+        // Send email
+        using var smtp = new SmtpClient();
+        await smtp.ConnectAsync(host, int.Parse(port), false);
+        await smtp.AuthenticateAsync(username, password);
+        await smtp.SendAsync(message);
+        await smtp.DisconnectAsync(true);
+
+        return true;
     }
 }

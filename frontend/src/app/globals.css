@@ -226,4 +226,7 @@ textarea::placeholder {
     h1 {
         @apply mb-4 text-4xl leading-11 font-bold not-first:mt-8;
     }
+    img {
+        @apply mx-auto my-6;
+    }
 }

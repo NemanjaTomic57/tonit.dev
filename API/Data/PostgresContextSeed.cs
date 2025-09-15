@@ -1,4 +1,3 @@
-using System;
 using API.Objects.Entities;
 using Microsoft.AspNetCore.Identity;
 
