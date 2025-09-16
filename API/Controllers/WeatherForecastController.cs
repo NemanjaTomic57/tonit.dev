@@ -31,4 +31,10 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+    [HttpGet("bad-request")]
+    public ActionResult GetBadRequest()
+    {
+        return BadRequest();
+    }
 }

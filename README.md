@@ -48,7 +48,7 @@ The production database is hosted on a server via a kubernetes pod and is expose
 
 For the API, we have Asp.Net Core with Scalar for testing and automated API documentation. 
 
-I've had the pleasure of building APIs in a few different languages in my carreer, including Flask, Node.js, Laravel, and Rust. I think every language has its pros and cons, but in terms of Web APIs, Asp.Net Core is the clear winner for me. The Syntax is easy, the code has a high readability, the documentation is generated automatically with Swagger or Scalar, and the performance is unbeatable (actually, Rust does have a better performance, but I think it's way to complex to be used for a Web API with simple CRUD operations).
+I've had the pleasure of building APIs in a few different languages so far in my carreer, including Flask, Node.js, Laravel, and Rust. I think every language has its pros and cons, but in terms of Web APIs, Asp.Net Core is the clear winner for me. The Syntax is easy, the code has a high readability, the documentation is generated automatically with Swagger or Scalar, and the performance is unbeatable (actually, Rust does have a better performance, but I think it's way to complex to be used for a Web API with simple CRUD operations).
 
 ### API endpoints
 
@@ -59,8 +59,10 @@ I've had the pleasure of building APIs in a few different languages in my carree
 
 #### BlogController
 
-- [ ] GetAllBlogPosts
-- [ ] GetBlogPost
+Thumbnail should be format 3:1
+
+- [x] GetAllBlogPosts
+- [x] GetBlogPost
 - [ ] Subscribe
 - [ ] Unsubscribe
 

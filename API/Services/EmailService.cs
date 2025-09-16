@@ -88,11 +88,47 @@ public class EmailService
 
         message.Body = multipart;
 
-        // Send email
+        return await SendEmail(message);
+    }
+
+    public async Task<bool> SendSubscriptionConfirmation(string email)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress(alias, from));
+        message.To.Add(new MailboxAddress(null, email));
+        message.Subject = "Confirmation to your subscription";
+
+        var body = new TextPart("html")
+        {
+            Text = $@"
+            <p>Hello friend!</p>
+            </br>
+            <p>Thank you so much for subscribing to my blog. It really means a lot to me. Of course writing itself is fun, but its even more fun when you know that people are actually reading your stuff.</p>
+            </br>
+            <p>Anyway, I will keep it short this time. If you want to work together on something, feel free to reply directly to this email adress and we can talk about it.</p>
+            </br>
+            <p>Best regards,</p>
+            <p>Nemanja</p>
+            "
+        };
+
+        message.Body = body;
+
+        return await SendEmail(message);
+
+
+    }
+
+    private async Task<bool> SendEmail(MimeMessage message)
+    {
         using var smtp = new SmtpClient();
+
         await smtp.ConnectAsync(host, int.Parse(port), false);
+
         await smtp.AuthenticateAsync(username, password);
+
         await smtp.SendAsync(message);
+
         await smtp.DisconnectAsync(true);
 
         return true;
