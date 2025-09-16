@@ -42,6 +42,7 @@ export default function Admin() {
             });
             console.log(r.data);
         } catch (error) {
+            console.error(error);
             generalErrorToast();
         }
     };

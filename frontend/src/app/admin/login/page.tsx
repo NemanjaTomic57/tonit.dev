@@ -29,6 +29,7 @@ export default function Login() {
             localStorage.setItem('jwt', data.token);
             window.location.pathname = routes.admin;
         } catch (error) {
+            console.error(error);
             generalErrorToast();
         }
     };

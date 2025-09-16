@@ -1,6 +1,7 @@
 using System;
 using API.Controllers;
 using API.Entities;
+using API.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,10 @@ public class BlogController(UnitOfWork unit) : BaseApiController
     [HttpGet("get-blog-post/{slug}")]
     public async Task<ActionResult<BlogPost>> GetBlogPost(string slug)
     {
-        // Todo
-        return null;
+        var spec = new BlogSpecification(slug);
+
+        var blogPost = await unit.Repository<BlogPost>().FindAsync(spec);
+
+        return Ok(blogPost);
     }
 }

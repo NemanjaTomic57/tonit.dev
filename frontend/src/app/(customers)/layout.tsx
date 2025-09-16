@@ -1,5 +1,4 @@
-import Header from "@/components/header";
-import RootContextProvider from "@/components/contextProviders/rootContextProvider";
+import Header from '@/components/header';
 
 export default function RootLayout({
     children,

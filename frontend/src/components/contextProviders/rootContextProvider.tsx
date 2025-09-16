@@ -1,16 +1,7 @@
-"use client";
+'use client';
 
-import { apiUrl } from "@/environment";
-import { useDisableScroll } from "@/hooks/useDisableScroll";
-import axios from "axios";
-import {
-    createContext,
-    Dispatch,
-    ReactNode,
-    SetStateAction,
-    useEffect,
-    useState,
-} from "react";
+import { useDisableScroll } from '@/hooks/useDisableScroll';
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
 interface Props {
     children: ReactNode;
@@ -31,9 +22,5 @@ export default function RootContextProvider({ children }: Props) {
     const [showResumePopup, setShowResumePopup] = useState(false);
     useDisableScroll(showResumePopup);
 
-    return (
-        <RootContext.Provider value={{ showResumePopup, setShowResumePopup }}>
-            {children}
-        </RootContext.Provider>
-    );
+    return <RootContext.Provider value={{ showResumePopup, setShowResumePopup }}>{children}</RootContext.Provider>;
 }

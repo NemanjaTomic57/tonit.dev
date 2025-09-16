@@ -19,7 +19,7 @@ public class EmailService
     private readonly string b2AppKey = Environment.GetEnvironmentVariable("BACKBLAZE_APPKEY")!;
     private const string bucketName = "tonit-dev";
     private const string fileName = "Certificates.pdf";
-    private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com"; // Backblaze S3 endpoint
+    private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com";
 
     public async Task<ActionResult<bool>> SendResume(string email, string name)
     {
@@ -35,7 +35,7 @@ public class EmailService
             <br/>
             <p>Thank you for reaching out! I've attached my resume and certificates for your review.</p>
             <br/>
-            <p>If you have any questions or want to connect further, feel free to reply to this email 
+            <p>If you have any questions or want to connect further, please feel free to reply to this email 
             or book a call directly on my homepage at https://www.tonit.dev/#contact.</p>
             <br/>
             <p>Looking forward to hearing from you.</p>

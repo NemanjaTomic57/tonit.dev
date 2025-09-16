@@ -7,10 +7,10 @@ namespace API.Data;
 
 public class PostgresContext(DbContextOptions<PostgresContext> options) : IdentityDbContext<AppUser>(options)
 {
-    public DbSet<Appointment> appointments { get; set; }
-    public DbSet<BlogPost> blog_posts { get; set; }
-    public DbSet<BlogSubscription> blog_subscriptions { get; set; }
-    public DbSet<LeadMagnetEmail> lead_magnet_emails { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<BlogPost> BlogPosts { get; set; }
+    public DbSet<BlogSubscription> BlogSubscriptions { get; set; }
+    public DbSet<LeadMagnetEmail> LeadMagnetEmails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

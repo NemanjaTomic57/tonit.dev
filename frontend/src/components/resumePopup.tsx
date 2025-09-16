@@ -1,16 +1,17 @@
-import { Dispatch, SetStateAction, useRef } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
-import Overlay from "./overlay";
-import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import { zodResolver } from "@hookform/resolvers/zod";
-import InputText from "./ui/inputText";
-import Button from "./ui/button";
-import axios from "axios";
-import { apiUrl } from "@/environment";
-import toast from "react-hot-toast";
-import Icon from "./ui/icon";
-import clsx from "clsx";
+import { apiUrl } from '@/environment';
+import { useOnClickOutside } from '@/hooks/useOnClickOutside';
+import { generalErrorToast } from '@/utils/generalErrorToast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import clsx from 'clsx';
+import { Dispatch, SetStateAction, useRef } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import z from 'zod';
+import Overlay from './overlay';
+import Button from './ui/button';
+import Icon from './ui/icon';
+import InputText from './ui/inputText';
 
 interface Props {
     show: boolean;
@@ -18,8 +19,8 @@ interface Props {
 }
 
 const emailSchema = z.object({
-    name: z.string().nonempty("Please enter your name"),
-    email: z.email("Please enter a valid email adress"),
+    name: z.string().nonempty('Please enter your name'),
+    email: z.email('Please enter a valid email adress'),
 });
 
 type EmailSchema = z.infer<typeof emailSchema>;
@@ -38,10 +39,11 @@ export default function ResumePopup({ show, setShow }: Props) {
 
     const onSubmit: SubmitHandler<EmailSchema> = async (data) => {
         try {
-            await axios.post(apiUrl + "lead/send-resume", data);
-            toast.success("Check your inbox.");
+            await axios.post(apiUrl + 'lead/send-resume', data);
+            toast.success('Check your inbox.');
         } catch (error) {
-            toast.error("Something unexpected happened...");
+            console.error(error);
+            generalErrorToast();
         }
     };
 
@@ -52,48 +54,30 @@ export default function ResumePopup({ show, setShow }: Props) {
                     <Overlay />
                     <div
                         ref={ref}
-                        className="fixed p-4 sm:p-6 md:p-18 inset-0 m-auto rounded-lg bg-white/80 border-1 border-gray-tint z-50 w-[310px] sm:w-[480px] md:w-[700px] h-fit"
+                        className="border-gray-tint fixed inset-0 z-50 m-auto h-fit w-[310px] rounded-lg border-1 bg-white/80 p-4 sm:w-[480px] sm:p-6 md:w-[700px] md:p-18"
                     >
-                        <p className="text-center sm:text-2xl md:text-3xl mb-8">
-                            Enter your email to receive my resume and my
-                            certifications for free!
+                        <p className="mb-8 text-center sm:text-2xl md:text-3xl">
+                            Enter your email to receive my resume and my certifications for free!
                         </p>
 
                         <FormProvider {...methods}>
-                            <form
-                                onSubmit={handleSubmit(onSubmit)}
-                                noValidate
-                                className="grid gap-2"
-                            >
-                                <InputText
-                                    label="Name"
-                                    inputName="name"
-                                    className="bg-gray-tint/10"
-                                />
-                                <InputText
-                                    label="Email Adress"
-                                    inputName="email"
-                                    className="bg-gray-tint/10"
-                                />
+                            <form onSubmit={handleSubmit(onSubmit)} noValidate className="grid gap-2">
+                                <InputText label="Name" inputName="name" className="bg-gray-tint/10" />
+                                <InputText label="Email Adress" inputName="email" className="bg-gray-tint/10" />
                                 <Button
                                     className={clsx(
-                                        "btn-fill-primary btn-lg flex items-center justify-center gap-2",
-                                        isSubmitting &&
-                                            "bg-primary/80! hover:bg-primary/80! cursor-default!",
+                                        'btn-fill-primary btn-lg flex items-center justify-center gap-2',
+                                        isSubmitting && 'bg-primary/80! hover:bg-primary/80! cursor-default!',
                                     )}
                                     disabled={isSubmitting}
                                 >
                                     {isSubmitting ? (
                                         <>
-                                            <Icon
-                                                name="loader"
-                                                size="xs"
-                                                className="animate-spin"
-                                            />
+                                            <Icon name="loader" size="xs" className="animate-spin" />
                                             Submitting...
                                         </>
                                     ) : (
-                                        "Submit"
+                                        'Submit'
                                     )}
                                 </Button>
                             </form>
