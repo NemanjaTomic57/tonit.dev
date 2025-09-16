@@ -32,7 +32,7 @@ Perform the following steps to run this project locally:
 4. In a terminal window inside the devcontainer, run `dotnet watch`.
 5. In a second terminal, run `npm run dev` and open the link in your browser. Whatever changes you make from here on out will instantly be visible in the browser.
 
-Note: Sending out emails like for the resume or the appointment confirmation will not work, since the SMTP credentials are stored in a .env file. Checkout the [Postfix documentation][https://www.postfix.org/] for more information on how you can setup your own SMTP server that serves you better than any SaaS solution on the market. The amount of control you gain from a self-hosted SMTP server is massive.
+Note: Some functionalities will not work depending on wheather or not you configure the `./API/.env.default` file and rename it to `./API/.env`. This includes sending emails, adding attachments and the admin dashboard. The connection string to the database will work as long as you are in the devcontainer.
 
 ## Database Management
 
@@ -68,6 +68,6 @@ I've had the pleasure of building APIs in a few different languages in my carree
 
 - [x] Login
 - [x] GetAuthStatus
-- [ ] CreateBlogPost
+- [x] CreateBlogPost
 - [ ] DeleteBlogPost
 - [ ] UpdateBlogPost

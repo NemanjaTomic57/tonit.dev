@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { routes } from "@/routes";
-import clsx from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Button from "./ui/button";
-import Image from "next/image";
-import ResumePopup from "./resumePopup";
-import { useContext } from "react";
-import { RootContext } from "./contextProviders/rootContextProvider";
+import { routes } from '@/routes';
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
+import { RootContext } from './contextProviders/rootContextProvider';
+import ResumePopup from './resumePopup';
+import Button from './ui/button';
 
 export default function Header() {
     const pathname = usePathname();
@@ -19,20 +19,20 @@ export default function Header() {
             <ResumePopup show={showResumePopup} setShow={setShowResumePopup} />
 
             <header className="relative">
-                <div className="-z-10 absolute top-0 w-full h-[400px]">
+                <div className="absolute top-0 -z-10 h-[400px] w-full">
                     <Image src="/images/hero__overlay.png" alt="" fill />
                 </div>
-                <div className="container flex h-[70px] w-full justify-end items-center">
-                    <div className="absolute gap-1 left-1/2 top-1/2 -translate-1/2 flex bg-white-transparent-tint rounded-sm py-[4px] px-[5px]">
+                <div className="container flex h-[70px] w-full items-center justify-end">
+                    <div className="bg-white-transparent-tint absolute top-1/2 left-1/2 flex -translate-1/2 gap-1 rounded-sm px-[5px] py-[4px]">
                         {navItems.map((item, index) => (
                             <Link
                                 key={index}
                                 href={item.href}
                                 className={clsx(
-                                    "py-1.5 px-4 rounded-sm transition-colors duration-200",
-                                    pathname === item.href
-                                        ? "font-bold bg-background"
-                                        : "hover:bg-white-transparent-tone",
+                                    'rounded-sm px-4 py-1.5 transition-colors duration-200',
+                                    pathname === item.href || (pathname.includes(item.href) && item.href !== '/')
+                                        ? 'bg-background font-bold'
+                                        : 'hover:bg-white-transparent-tone',
                                 )}
                             >
                                 {item.text}
@@ -40,15 +40,12 @@ export default function Header() {
                         ))}
                         <button
                             onClick={() => setShowResumePopup(true)}
-                            className="py-1.5 px-4 hover:bg-white-transparent-tone rounded-sm cursor-pointer transition-colors duration-200"
+                            className="hover:bg-white-transparent-tone cursor-pointer rounded-sm px-4 py-1.5 transition-colors duration-200"
                         >
                             Resume
                         </button>
                     </div>
-                    <Button
-                        href={routes.contact}
-                        className="btn-fill-primary btn-base hidden sm:block"
-                    >
+                    <Button href={routes.contact} className="btn-fill-primary btn-base hidden sm:block">
                         Book A Call
                     </Button>
                 </div>
@@ -59,11 +56,11 @@ export default function Header() {
 
 const navItems = [
     {
-        text: "Home",
+        text: 'Home',
         href: routes.home,
     },
     {
-        text: "Blog",
+        text: 'Blog',
         href: routes.blog,
     },
 ];

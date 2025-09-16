@@ -37,11 +37,12 @@
     --primary-shade: #0077d9;
     --gray-tint: #9ba8bd;
     --gray-tone: #7b8ca8;
+    --gray-shade: #5f6a7a;
     --white-transparent-tint: rgba(255, 255, 255, 0.2);
     --white-transparent-tone: rgba(255, 255, 255, 0.4);
     --white-transparent-shade: rgba(255, 255, 255, 0.8);
     --background: #ffffff;
-    --foreground: #000000;
+    --foreground: #222222;
 
     /*------ SPACING ------*/
     --container-sm-vert: 90px;
@@ -59,6 +60,7 @@
     --color-primary-shade: var(--primary-shade);
     --color-gray-tint: var(--gray-tint);
     --color-gray-tone: var(--gray-tone);
+    --color-gray-shade: var(--gray-shade);
     --color-white-transparent-tint: var(--white-transparent-tint);
     --color-white-transparent-tone: var(--white-transparent-tone);
     --color-white-transparent-shade: var(--white-transparent-shade);

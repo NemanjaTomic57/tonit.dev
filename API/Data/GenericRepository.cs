@@ -17,6 +17,11 @@ public class GenericRepository<T>(PostgresContext context) where T : BaseEntity
         return await ApplySpecification(spec).FirstOrDefaultAsync();
     }
 
+    public async Task<IReadOnlyList<T>> ListAllAsync()
+    {
+        return await context.Set<T>().ToListAsync();
+    }
+
     public async Task<IReadOnlyList<T>> ListAsync(BaseSpecification<T> spec)
     {
         return await ApplySpecification(spec).ToListAsync();
