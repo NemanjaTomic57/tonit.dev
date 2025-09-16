@@ -8,6 +8,6 @@ public class BlogSpecification : BaseSpecification<BlogPost>
     public BlogSpecification(string slug) : base(x =>
         x.Slug == slug
     )
-    { 
+    {
     }
 }

@@ -57,7 +57,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddScoped<UnitOfWork>();
-builder.Services.AddScoped(typeof (GenericRepository<>));
+builder.Services.AddScoped(typeof(GenericRepository<>));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddSingleton<TokenGenerator>();
 
