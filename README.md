@@ -63,8 +63,8 @@ Thumbnail should be format 3:1
 
 - [x] GetAllBlogPosts
 - [x] GetBlogPost
-- [ ] Subscribe
-- [ ] Unsubscribe
+- [x] Subscribe
+- [x] Unsubscribe
 
 #### AdminController
 

@@ -16,12 +16,24 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
     {
         unit.Repository<BlogPost>().Add(blogPost);
 
-        if (await unit.Complete())
+        if (!await unit.Complete())
         {
-            return CreatedAtAction(nameof(GetBlogPost), new { slug = blogPost.Slug }, blogPost);
+            throw new BadHttpRequestException("Failed to create blog post", 500);
         }
 
-        throw new BadHttpRequestException("Failed to create blog post", 500);
+        var subscribers = await unit.Repository<BlogSubscription>().ListAllAsync();
+
+        foreach (var sub in subscribers)
+        {
+            var r = await emailService.SendNewBlogPostNotification(sub.Email, blogPost.Heading);
+
+            if (!r)
+            {
+                throw new BadHttpRequestException("Failed to send email", 503);
+            }
+        }
+
+        return CreatedAtAction(nameof(GetBlogPost), new { slug = blogPost.Slug }, blogPost);
     }
 
     [HttpGet("get/{slug}")]
@@ -46,6 +58,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
     public async Task<ActionResult> Subscribe(BlogSubscription blogSubscription)
     {
         var spec = new BlogSubscriptionSpecification(blogSubscription.Email);
+
         var exists = await unit.Repository<BlogSubscription>().FindAsync(spec);
 
         if (exists != null)
@@ -57,10 +70,11 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         if (await unit.Complete())
         {
+            await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
 
             return Ok("Subscribed to blog");
         }
 
-        throw new BadHttpRequestException("Failed to subscribe to blog", 500);        
+        throw new BadHttpRequestException("Failed to subscribe to blog", 500);
     }
 }

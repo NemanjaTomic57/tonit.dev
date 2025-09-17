@@ -42,7 +42,7 @@ public class EmailService
             <br/>
             <p>Best regards,</p>
             <p>Nemanja</p>
-        "
+            "
         };
 
         // Backblaze S3 client
@@ -69,7 +69,7 @@ public class EmailService
         using var memoryStream = new MemoryStream();
         await remoteStream.CopyToAsync(memoryStream);
         memoryStream.Position = 0;
-
+        
         // Create attachment
         var certificatesAttachment = new MimePart("application", "pdf")
         {
@@ -104,7 +104,7 @@ public class EmailService
             <p>Hello friend!</p>
             </br>
             <p>Thank you so much for subscribing to my blog. It really means a lot to me. Of course writing itself is fun, but its even more fun when you know that people are actually reading your stuff.</p>
-            </br>
+
             <p>Anyway, I will keep it short this time. If you want to work together on something, feel free to reply directly to this email adress and we can talk about it.</p>
             </br>
             <p>Best regards,</p>
@@ -115,8 +115,34 @@ public class EmailService
         message.Body = body;
 
         return await SendEmail(message);
+    }
 
+    public async Task<bool> SendNewBlogPostNotification(string email, string title)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress(alias, from));
+        message.To.Add(new MailboxAddress(null, email));
+        message.Subject = "Notification: New Blog Post";
 
+        var body = new TextPart("html")
+        {
+            Text = $@"
+            <p>Hello friend!</p>
+            </br>
+            <p>I just wanted to notify you of my new blog post. The topic I'm writing about today is:</p>
+            <p><strong>{title}</strong></p>
+            </br>
+            <p>Wish you all the best</p>
+            <p>Nemanja</p>
+            "
+        };
+
+        message.Body = body;
+
+        var unsubscribeUrl = $"https://tonit.dev/blog/unsubscribe?email={Uri.EscapeDataString(email)}";
+        message.Headers.Add("List-Unsubscribe", $"<{unsubscribeUrl}>");
+
+        return await SendEmail(message);
     }
 
     private async Task<bool> SendEmail(MimeMessage message)

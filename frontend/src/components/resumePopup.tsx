@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 import z from 'zod';
 import Overlay from './overlay';
 import Button from './ui/button';
-import Icon from './ui/icon';
+import ButtonDisabledText from './ui/buttonDisabledText';
 import InputText from './ui/inputText';
 
 interface Props {
@@ -65,20 +65,10 @@ export default function ResumePopup({ show, setShow }: Props) {
                                 <InputText label="Name" inputName="name" className="bg-gray-tint/10" />
                                 <InputText label="Email Adress" inputName="email" className="bg-gray-tint/10" />
                                 <Button
-                                    className={clsx(
-                                        'btn-fill-primary btn-lg flex items-center justify-center gap-2',
-                                        isSubmitting && 'bg-primary/80! hover:bg-primary/80! cursor-default!',
-                                    )}
+                                    className={clsx('btn-fill-primary btn-lg', isSubmitting && 'btn-fill-primary-submitting')}
                                     disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? (
-                                        <>
-                                            <Icon name="loader" size="xs" className="animate-spin" />
-                                            Submitting...
-                                        </>
-                                    ) : (
-                                        'Submit'
-                                    )}
+                                    {isSubmitting ? <ButtonDisabledText /> : 'Submit'}
                                 </Button>
                             </form>
                         </FormProvider>
