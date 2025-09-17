@@ -14,7 +14,8 @@ public class AppointmentDto
     public string Company { get; set; } = string.Empty;
 
     [Required]
-    public DateTimeOffset DateTime { get; set; }
+    public DateTimeOffset AppointmentTime { get; set; }
+    public string? Offset { get; set; }
 
     public string? Message { get; set; }
 }

@@ -21,7 +21,7 @@ public class EmailService
     private const string fileName = "Certificates.pdf";
     private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com";
 
-    public async Task<ActionResult<bool>> SendResume(string email, string name)
+    public async void SendResume(string email, string name)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
@@ -87,8 +87,6 @@ public class EmailService
         };
 
         message.Body = multipart;
-
-        return await SendEmail(message);
     }
 
     public async Task<bool> SendSubscriptionConfirmation(string email)

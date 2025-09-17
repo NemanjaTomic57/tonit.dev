@@ -1,18 +1,18 @@
-'use client';
-
 import ContactForm from '@/components/contactForm';
-import { RootContext } from '@/components/contextProviders/rootContextProvider';
 import TechStack from '@/components/techStack';
 import Button from '@/components/ui/button';
+import ButtonShowResumePopup from '@/components/ui/buttonShowResumePopup';
+import { apiUrl } from '@/environment';
 import { routes } from '@/routes';
+import axios from 'axios';
 import Image from 'next/image';
-import { useContext } from 'react';
 import codeSnippet from '/public/images/code-snippet.png';
 import headshot from '/public/images/headshot.png';
 import teamMeeting from '/public/images/team-meeting.png';
 
-export default function Home() {
-    const { setShowResumePopup } = useContext(RootContext);
+export default async function Home() {
+    const r = await axios.get(apiUrl + 'lead/appointment-datetimes');
+    const timeOptions = r.data;
 
     return (
         <>
@@ -61,9 +61,7 @@ export default function Home() {
                             you need, I can deliver. On top of that, I'm fluent in German, English, Spanish and Serbian, ensuring smooth collaboration
                             within international teams.
                         </p>
-                        <Button className="btn-fill-primary btn-lg" onClick={() => setShowResumePopup(true)}>
-                            Download Resume
-                        </Button>
+                        <ButtonShowResumePopup />
                     </div>
                     <div className="row-start-1 max-w-[300px] justify-self-center md:row-start-auto md:max-w-full">
                         <Image src={headshot} alt="Headshot of Nemanja Tomic" />
@@ -117,7 +115,7 @@ export default function Home() {
                         <p>
                             If you’re not fully satisfied after the first 100 hours, you can cancel the contract and receive a{' '}
                             <strong>full refund</strong>. You have complete freedom to decide whether or not you’d like to continue working together
-                            after that trial period — no hard feelings, no strings attached. Together, we can do it!
+                            after that trial period — no hard feelings, no strings attached.
                         </p>
                         <p className="text-primary mb-0! font-bold">Together, We Can Do It!</p>
                     </div>
@@ -133,15 +131,13 @@ export default function Home() {
                         ))}
                     </ul>
 
-                    <Button className="btn-fill-primary btn-lg mt-8" onClick={() => setShowResumePopup(true)}>
-                        Download Resume
-                    </Button>
+                    <ButtonShowResumePopup className="mt-8" />
                 </div>
 
                 <Image src={codeSnippet} alt="Team working on a project" className="hidden lg:block" />
             </div>
 
-            <ContactForm />
+            <ContactForm timeOptions={timeOptions} />
         </>
     );
 }
@@ -194,9 +190,6 @@ const whyYouShouldChooseMe = [
 
 const experienceItems = [
     <>4+ years of hands-on experience in large-scale projects</>,
-    <>
-        DevOps Engineer Expert — <strong>Microsoft</strong>
-    </>,
     <>
         Certified Kubernetes Administrator (CKA) — <strong>Linux Foundation</strong>
     </>,

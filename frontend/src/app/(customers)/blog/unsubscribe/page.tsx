@@ -13,7 +13,6 @@ function Unsubscribe() {
     const unsubscribe = async () => {
         try {
             const r = await axios.delete(apiUrl + `blog/unsubscribe/${encodedEmail}`);
-            console.log(r);
         } catch (error) {
             console.error(error);
         }
