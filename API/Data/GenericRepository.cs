@@ -27,6 +27,11 @@ public class GenericRepository<T>(PostgresContext context) where T : BaseEntity
         return await ApplySpecification(spec).ToListAsync();
     }
 
+    public void Remove(T entity)
+    {
+        context.Set<T>().Remove(entity);
+    }
+
     private IQueryable<T> ApplySpecification(BaseSpecification<T> spec)
     {
         return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec);

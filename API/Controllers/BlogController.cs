@@ -25,9 +25,9 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         foreach (var sub in subscribers)
         {
-            var r = await emailService.SendNewBlogPostNotification(sub.Email, blogPost.Heading);
+            var result = await emailService.SendNewBlogPostNotification(sub.Email, blogPost.Heading);
 
-            if (!r)
+            if (!result)
             {
                 throw new BadHttpRequestException("Failed to send email", 503);
             }
@@ -68,13 +68,31 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         unit.Repository<BlogSubscription>().Add(blogSubscription);
 
-        if (await unit.Complete())
+        if (!await unit.Complete())
         {
-            await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
-
-            return Ok("Subscribed to blog");
+            throw new BadHttpRequestException("Failed to subscribe to blog", 500);
         }
 
-        throw new BadHttpRequestException("Failed to subscribe to blog", 500);
+        await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
+
+        return Ok("Subscribed to blog");
+    }
+
+    [HttpDelete("unsubscribe/{email}")]
+    public async Task<ActionResult> Unsubscribe(string email)
+    {
+        var spec = new BlogSubscriptionSpecification(Uri.UnescapeDataString(email));
+
+        var subscriber = await unit.Repository<BlogSubscription>().FindAsync(spec)
+            ?? throw new BadHttpRequestException("Email not found", 404);
+
+        unit.Repository<BlogSubscription>().Remove(subscriber);
+
+        if (!await unit.Complete())
+        {
+            throw new BadHttpRequestException("Failed to unsubscribe from blog", 500);
+        }
+
+        return Ok("Unsubscribed from blog");
     }
 }

@@ -1,10 +1,11 @@
 import Author from '@/components/blog/author';
 import { apiUrl } from '@/environment';
+import { Blog } from '@/models/blog';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Blog() {
+export default async function BlogPage() {
     const blogPosts = await axios.get(apiUrl + 'blog/get-all').then((r) => r.data as Blog[]);
     const imgSrc =
         'https://images.unsplash.com/photo-1757252800867-2e78e08a6d53?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';

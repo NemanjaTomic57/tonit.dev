@@ -13,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 Env.Load();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var baseConn = builder.Configuration.GetConnectionString("DefaultConnection")!;
+var dbPassword = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+var connectionString = baseConn.Replace("{POSTGRES_PASSWORD}", dbPassword);
 
 builder.Services.AddControllers();
 

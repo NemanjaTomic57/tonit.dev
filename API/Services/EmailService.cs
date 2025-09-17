@@ -69,7 +69,7 @@ public class EmailService
         using var memoryStream = new MemoryStream();
         await remoteStream.CopyToAsync(memoryStream);
         memoryStream.Position = 0;
-        
+
         // Create attachment
         var certificatesAttachment = new MimePart("application", "pdf")
         {
@@ -144,6 +144,7 @@ public class EmailService
 
         return await SendEmail(message);
     }
+
 
     private async Task<bool> SendEmail(MimeMessage message)
     {

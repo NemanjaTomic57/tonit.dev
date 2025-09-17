@@ -1,6 +1,7 @@
 import Author from '@/components/blog/author';
 import { Markdown } from '@/components/markdown';
 import { apiUrl } from '@/environment';
+import { Blog } from '@/models/blog';
 import axios from 'axios';
 import Image from 'next/image';
 

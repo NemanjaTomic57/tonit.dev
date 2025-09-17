@@ -71,5 +71,5 @@ Thumbnail should be format 3:1
 - [x] Login
 - [x] GetAuthStatus
 - [x] CreateBlogPost
-- [ ] DeleteBlogPost
 - [ ] UpdateBlogPost
+- [ ] DeleteBlogPost

@@ -1,3 +1,4 @@
+import { Blog } from '@/models/blog';
 import { readingTimeMinutes, translateIsoDateToLocale } from '@/utils/dateTime';
 
 interface Props {
