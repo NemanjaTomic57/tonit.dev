@@ -1,7 +1,6 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 
 namespace API.Services;
@@ -21,38 +20,73 @@ public class EmailService
     private const string fileName = "Certificates.pdf";
     private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com";
 
+    // Centralized signature HTML
+    private const string signature = @"
+        <br/><br/>
+        <p>Kind regards,</p>
+        <p><strong>Nemanja Tomic</strong><br/>
+        Software Consultant & Developer<br/>
+        <a href='https://www.tonit.dev' target='_blank'>www.tonit.dev</a> &nbsp;|&nbsp;
+        <a href='https://www.tonit.dev/#contact' target='_blank'>Contact Me</a>
+        </p>
+    ";
+
+    public async void SendAppointmentConfirmation(string email, string name, string company, string appointmentTime, string? question)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress(alias, from));
+        message.To.Add(new MailboxAddress(name, email));
+        message.Subject = "Appointment Confirmation";
+
+        var body = new TextPart("html")
+        {
+            Text = $@"
+            <p>Dear {name},</p>  
+            <br/>
+            <p>Thank you for scheduling a consultation with me. I’m looking forward to our conversation.</p>
+            <p>Here is a summary of your booking:</p>
+            <ul>
+                <li><strong>Name:</strong> {name}</li>
+                <li><strong>Email:</strong> {email}</li>
+                <li><strong>Company:</strong> {company}</li>
+                <li><strong>Date & Time:</strong> {appointmentTime}</li>
+                <li><strong>Your Message:</strong> {question}</li>
+            </ul>
+            <p>You will receive a Zoom invitation shortly.</p>
+            {signature}
+            "
+        };
+
+        message.Body = body;
+
+        await SendEmail(message);
+    }
+
     public async void SendResume(string email, string name)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(name, email));
-        message.Subject = "Here's the resume you requested";
+        message.Subject = "Requested Resume and Certificates";
 
         var body = new TextPart("html")
         {
             Text = $@"
-            <p>Hello {name}</p>
+            <p>Dear {name},</p>
             <br/>
-            <p>Thank you for reaching out! I've attached my resume and certificates for your review.</p>
-            <br/>
-            <p>If you have any questions or want to connect further, please feel free to reply to this email 
-            or book a call directly on my homepage at https://www.tonit.dev/#contact.</p>
-            <br/>
-            <p>Looking forward to hearing from you.</p>
-            <br/>
-            <p>Best regards,</p>
-            <p>Nemanja</p>
+            <p>Thank you for your interest. Please find attached my resume and certificates for your review.</p>
+            <p>If you have any questions or would like to discuss potential collaboration, feel free to reply to this email 
+            or schedule a call directly via my website at <a href='https://www.tonit.dev/#contact'>tonit.dev</a>.</p>
+            {signature}
             "
         };
 
-        // Backblaze S3 client
         using var s3Client = new AmazonS3Client(b2KeyId, b2AppKey, new AmazonS3Config
         {
             ServiceURL = serviceUrl,
             ForcePathStyle = true,
         });
 
-        // Get pre-signed download URL
         var request = new GetPreSignedUrlRequest
         {
             BucketName = bucketName,
@@ -63,14 +97,12 @@ public class EmailService
 
         var presignedUrl = s3Client.GetPreSignedURL(request);
 
-        // Download file into seekable MemoryStream
         using var httpClient = new HttpClient();
         using var remoteStream = await httpClient.GetStreamAsync(presignedUrl);
         using var memoryStream = new MemoryStream();
         await remoteStream.CopyToAsync(memoryStream);
         memoryStream.Position = 0;
 
-        // Create attachment
         var certificatesAttachment = new MimePart("application", "pdf")
         {
             Content = new MimeContent(memoryStream, ContentEncoding.Default),
@@ -79,7 +111,6 @@ public class EmailService
             FileName = "Certificates.pdf"
         };
 
-        // Combine body + attachment
         var multipart = new Multipart("mixed")
         {
             body,
@@ -94,19 +125,16 @@ public class EmailService
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(null, email));
-        message.Subject = "Confirmation to your subscription";
+        message.Subject = "Subscription Confirmation";
 
         var body = new TextPart("html")
         {
             Text = $@"
-            <p>Hello friend!</p>
-            </br>
-            <p>Thank you so much for subscribing to my blog. It really means a lot to me. Of course writing itself is fun, but its even more fun when you know that people are actually reading your stuff.</p>
-
-            <p>Anyway, I will keep it short this time. If you want to work together on something, feel free to reply directly to this email adress and we can talk about it.</p>
-            </br>
-            <p>Best regards,</p>
-            <p>Nemanja</p>
+            <p>Dear Subscriber,</p>
+            <br/>
+            <p>Thank you for subscribing to my blog. I truly appreciate your interest in my work.</p>
+            <p>If you would like to collaborate or discuss any topic further, feel free to reply directly to this email.</p>
+            {signature}
             "
         };
 
@@ -120,18 +148,17 @@ public class EmailService
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(null, email));
-        message.Subject = "Notification: New Blog Post";
+        message.Subject = "New Blog Post Published";
 
         var body = new TextPart("html")
         {
             Text = $@"
-            <p>Hello friend!</p>
-            </br>
-            <p>I just wanted to notify you of my new blog post. The topic I'm writing about today is:</p>
+            <p>Dear Subscriber,</p>
+            <br/>
+            <p>I’m pleased to inform you that I’ve published a new blog post titled:</p>
             <p><strong>{title}</strong></p>
-            </br>
-            <p>Wish you all the best</p>
-            <p>Nemanja</p>
+            <p>I hope you find it insightful and engaging.</p>
+            {signature}
             "
         };
 
@@ -143,19 +170,13 @@ public class EmailService
         return await SendEmail(message);
     }
 
-
     private async Task<bool> SendEmail(MimeMessage message)
     {
         using var smtp = new SmtpClient();
-
         await smtp.ConnectAsync(host, int.Parse(port), false);
-
         await smtp.AuthenticateAsync(username, password);
-
         await smtp.SendAsync(message);
-
         await smtp.DisconnectAsync(true);
-
         return true;
     }
 }

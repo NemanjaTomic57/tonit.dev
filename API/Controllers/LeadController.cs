@@ -53,25 +53,18 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
     }
 
     [HttpPost("book-appointment")]
-    public async Task<ActionResult<AppointmentDto>> BookAppointment(AppointmentDto dto)
+    public async Task<ActionResult<Appointment>> BookAppointment(Appointment appointment)
     {
-        var appointment = new Appointment
-        {
-            Name = dto.Name,
-            Company = dto.Company,
-            Email = dto.Email,
-            AppointmentTime = dto.AppointmentTimeUtc,
-            Message = dto.Message,
-        };
-
         unit.Repository<Appointment>().Add(appointment);
+
+        emailService.SendAppointmentConfirmation(appointment.Email, appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
 
         if (!await unit.Complete())
         {
             throw new BadHttpRequestException("Failed to book appointment");
         }
 
-        return Ok(dto);
+        return Ok(appointment);
     }
 
     private static List<(DayOfWeek, TimeSpan)> GetWeeklySlogs()
