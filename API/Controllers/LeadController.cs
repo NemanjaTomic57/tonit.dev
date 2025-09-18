@@ -53,14 +53,14 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
     }
 
     [HttpPost("book-appointment")]
-    public async Task<ActionResult<Appointment>> BookAppointment(AppointmentDto dto)
+    public async Task<ActionResult<AppointmentDto>> BookAppointment(AppointmentDto dto)
     {
         var appointment = new Appointment
         {
             Name = dto.Name,
             Company = dto.Company,
             Email = dto.Email,
-            AppointmentTime = dto.AppointmentTime,
+            AppointmentTime = dto.AppointmentTimeUtc,
             Message = dto.Message,
         };
 
@@ -71,7 +71,7 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
             throw new BadHttpRequestException("Failed to book appointment");
         }
 
-        return Ok(appointment);
+        return Ok(dto);
     }
 
     private static List<(DayOfWeek, TimeSpan)> GetWeeklySlogs()

@@ -1,31 +1,21 @@
-interface DateTimeOffsetPayload {
-    dateTime: string; // Local wall-clock time (no offset)
-    offset: string; // Offset from UTC in "+HH:mm" or "-HH:mm" format
-}
+export function formatMeetingTimeToDateTimeOffset(input: string): string {
+    const withoutDay = input.replace(/^[A-Za-z]{3},\s*/, '');
+    const normalized = withoutDay.replace(' at ', ' ');
+    const localDate = new Date(normalized);
+    if (isNaN(localDate.getTime())) {
+        throw new Error('Invalid date format');
+    }
 
-export function formatMeetingTimeToDateTimeOffset(input: string): DateTimeOffsetPayload {
-    const normalized = input.replace(' at ', ' ');
-    const date = new Date(normalized);
+    const pad = (n: number) => String(n).padStart(2, '0');
 
-    // Convert to UTC parts
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-
-    // Get the local offset from the original date
-    const offsetMinutes = -date.getTimezoneOffset(); // positive east of UTC
-    const sign = offsetMinutes >= 0 ? '+' : '-';
-    const abs = Math.abs(offsetMinutes);
-    const offsetHours = String(Math.floor(abs / 60)).padStart(2, '0');
-    const offsetMins = String(abs % 60).padStart(2, '0');
-
-    return {
-        dateTime: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
-        offset: `${sign}${offsetHours}:${offsetMins}`,
-    };
+    return (
+        `${localDate.getUTCFullYear()}-` +
+        `${pad(localDate.getUTCMonth() + 1)}-` +
+        `${pad(localDate.getUTCDate())}T` +
+        `${pad(localDate.getUTCHours())}:` +
+        `${pad(localDate.getUTCMinutes())}:` +
+        `${pad(localDate.getUTCSeconds())}+00:00`
+    );
 }
 
 export function formatDateToLocale(isoDate: string) {

@@ -1,7 +1,9 @@
 'use client';
 
 import { apiUrl } from '@/environment';
+import { routes } from '@/routes';
 import { formatDateTimeToMeetingTime, formatMeetingTimeToDateTimeOffset } from '@/utils/dateTime';
+import { generalErrorToast } from '@/utils/generalErrorToast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -20,11 +22,11 @@ const contactSchema = z.object({
     company: z.string().nonempty('Please enter the company you represent'),
     email: z.email('Please enter a valid email address'),
     appointmentTime: z.string().nonempty('Please select a time for our appointment'),
+    appointmentTimeUtc: z.string().nullish(),
     message: z.string().nullable(),
-    offset: z.string().nullish(),
 });
 
-type ContactSchema = z.infer<typeof contactSchema>;
+export type ContactSchema = z.infer<typeof contactSchema>;
 
 export default function ContactForm({ timeOptions }: Props) {
     const methods = useForm<ContactSchema>({
@@ -33,15 +35,23 @@ export default function ContactForm({ timeOptions }: Props) {
             appointmentTime: '',
         },
     });
-    const { handleSubmit } = methods;
+
+    const {
+        handleSubmit,
+        formState: { isSubmitting },
+    } = methods;
 
     const onSubmit: SubmitHandler<ContactSchema> = async (req) => {
-        const { dateTime, offset } = formatMeetingTimeToDateTimeOffset(req.appointmentTime);
-        req.appointmentTime = dateTime;
-        req.offset = offset;
+        const utc = formatMeetingTimeToDateTimeOffset(req.appointmentTime);
+        req.appointmentTimeUtc = utc;
 
-        const res = await axios.post(apiUrl + 'lead/book-appointment', req);
-        console.log(res);
+        try {
+            const { data } = await axios.post(apiUrl + 'lead/book-appointment', req);
+            sessionStorage.setItem('appointmentData', JSON.stringify(data));
+            window.location.pathname = routes.confirmation;
+        } catch (error) {
+            generalErrorToast();
+        }
     };
 
     timeOptions = timeOptions.map((t) => formatDateTimeToMeetingTime(t));
@@ -64,7 +74,9 @@ export default function ContactForm({ timeOptions }: Props) {
                             <div className="mt-0.5 md:col-span-2">
                                 <InputTextarea label="Message (optional)" inputName="message" />
                             </div>
-                            <Button className="font-aenotik btn-fill-primary btn-lg w-full md:col-span-2">Book A Call</Button>
+                            <Button className="font-aenotik btn-fill-primary btn-lg w-full md:col-span-2" disabled={isSubmitting}>
+                                Book A Call
+                            </Button>
                         </form>
                     </FormProvider>
                 </div>

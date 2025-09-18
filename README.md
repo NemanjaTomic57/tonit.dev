@@ -54,22 +54,21 @@ I've had the pleasure of building APIs in a few different languages so far in my
 
 #### LeadController
 
-- [x] SendResume
-- [ ] BookAppointment
+- ✅ SendResume
+- ⬜ BookAppointment
 
 #### BlogController
 
 Thumbnail should be format 3:1
-
-- [x] GetAllBlogPosts
-- [x] GetBlogPost
-- [x] Subscribe
-- [x] Unsubscribe
+- ✅ CreateBlogPost
+- ⬜ UpdateBlogPost
+- ⬜ DeleteBlogPost
+- ✅ GetAllBlogPosts
+- ✅ GetBlogPost
+- ✅ Subscribe
+- ✅ Unsubscribe
 
 #### AdminController
 
-- [x] Login
-- [x] GetAuthStatus
-- [x] CreateBlogPost
-- [ ] UpdateBlogPost
-- [ ] DeleteBlogPost
+- ✅ Login
+- ✅ GetAuthStatus

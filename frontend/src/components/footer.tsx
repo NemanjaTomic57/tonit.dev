@@ -4,6 +4,7 @@ import { routes } from '@/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import BlogSubscription from './blogSubscription';
+import Icon from './ui/icon';
 import toTopButton from '/public/images/footer__to-top-button.png';
 
 export default function Footer() {
@@ -13,7 +14,11 @@ export default function Footer() {
         <>
             <BlogSubscription />
 
-            <div className="relative container flex h-[80px] items-center justify-end">
+            <div className="relative container flex h-[80px] items-center justify-between">
+                <Link href="https://github.com/NemanjaTomic57/tonit.dev" className="hidden sm:block" target="_blank">
+                    <Icon name="github" size="xl" />
+                </Link>
+
                 <div className="absolute left-1/2 flex -translate-x-1/2 gap-6 text-sm sm:gap-12">
                     <Link href={routes.home} className="hover:underline">
                         Home

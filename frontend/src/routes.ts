@@ -1,7 +1,8 @@
 export const routes = {
-    home: "/",
-    blog: "/blog",
-    contact: "/#contact",
-    admin: "/admin",
-    adminLogin: "/admin/login",
+    home: '/',
+    confirmation: '/confirmation',
+    blog: '/blog',
+    contact: '/#contact',
+    admin: '/admin',
+    adminLogin: '/admin/login',
 };

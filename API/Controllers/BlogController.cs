@@ -36,6 +36,14 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
         return CreatedAtAction(nameof(GetBlogPost), new { slug = blogPost.Slug }, blogPost);
     }
 
+    [HttpGet("get-all")]
+    public async Task<ActionResult<IReadOnlyList<BlogPost>>> GetAllBlogPosts()
+    {
+        var blogPosts = await unit.Repository<BlogPost>().ListAllAsync();
+
+        return Ok(blogPosts);
+    }
+
     [HttpGet("get/{slug}")]
     public async Task<ActionResult<BlogPost>> GetBlogPost(string slug)
     {
@@ -44,14 +52,6 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
         var blogPost = await unit.Repository<BlogPost>().FindAsync(spec);
 
         return Ok(blogPost);
-    }
-
-    [HttpGet("get-all")]
-    public async Task<ActionResult<IReadOnlyList<BlogPost>>> GetAllBlogPosts()
-    {
-        var blogPosts = await unit.Repository<BlogPost>().ListAllAsync();
-
-        return Ok(blogPosts);
     }
 
     [HttpPost("subscribe")]

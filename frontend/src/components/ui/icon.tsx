@@ -1,10 +1,11 @@
-import { IconType } from "react-icons";
-import { FaAngleDown } from "react-icons/fa6";
-import { LuLoaderCircle } from "react-icons/lu";
+import { IconType } from 'react-icons';
+import { FaAngleDown, FaGithub } from 'react-icons/fa6';
+import { LuLoaderCircle } from 'react-icons/lu';
 
 const icons: { [key: string]: IconType } = {
     angleDown: FaAngleDown,
     loader: LuLoaderCircle,
+    github: FaGithub,
 };
 
 interface Props {
@@ -16,37 +17,30 @@ interface Props {
     onClick?: () => void;
 }
 
-export default function Icon({
-    name,
-    size,
-    sizeComputed,
-    color,
-    className,
-    onClick,
-}: Props) {
+export default function Icon({ name, size, sizeComputed, color, className, onClick }: Props) {
     const SelectedIcon = icons[name];
 
-    if (!SelectedIcon) console.error("Icon not found: " + { name });
+    if (!SelectedIcon) console.error('Icon not found: ' + { name });
 
     if (!sizeComputed) {
         switch (size) {
-            case "xs":
+            case 'xs':
                 sizeComputed = 16;
                 break;
 
-            case "sm":
+            case 'sm':
                 sizeComputed = 20;
                 break;
 
-            case "base":
+            case 'base':
                 sizeComputed = 24;
                 break;
 
-            case "lg":
+            case 'lg':
                 sizeComputed = 30;
                 break;
 
-            case "xl":
+            case 'xl':
                 sizeComputed = 38;
                 break;
 
