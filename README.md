@@ -55,7 +55,7 @@ I've had the pleasure of building APIs in a few different languages so far in my
 #### LeadController
 
 - ✅ SendResume
-- ⬜ BookAppointment
+- ✅ BookAppointment
 
 #### BlogController
 
