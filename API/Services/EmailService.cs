@@ -50,7 +50,7 @@ public class EmailService
                 <li><strong>Email:</strong> {email}</li>
                 <li><strong>Company:</strong> {company}</li>
                 <li><strong>Date & Time:</strong> {appointmentTime}</li>
-                <li><strong>Your Message:</strong> {question}</li>
+            {(string.IsNullOrWhiteSpace(question) ? "" : $"<li><strong>Your Message:</strong> {question}</li>")}            
             </ul>
             <p>You will receive a Zoom invitation shortly.</p>
             {signature}
