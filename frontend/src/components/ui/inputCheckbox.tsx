@@ -5,16 +5,14 @@ import { useFormContext } from 'react-hook-form';
 import InputValidationError from './inputValidationError';
 
 interface Props {
+    label: string;
     inputName: string;
-    type?: string;
-    button?: boolean;
-    buttonClassName?: string;
     inputClassName?: string;
     className?: string;
     errorClassName?: string;
 }
 
-export default function InputCalendar({ inputName, inputClassName, className, errorClassName }: Props) {
+export default function InputCheckbox({ label, inputName, inputClassName, className, errorClassName }: Props) {
     const {
         register,
         formState: { errors },
@@ -23,8 +21,9 @@ export default function InputCalendar({ inputName, inputClassName, className, er
 
     return (
         <div>
-            <div className={clsx('form-input-standard w-fit!', className)}>
-                <input {...register(inputName)} type="date" className={inputClassName} />
+            <div className={clsx('flex items-center gap-2', className)}>
+                <input {...register(inputName)} id={inputName} type="checkbox" className={inputClassName} />
+                <label htmlFor={inputName}>{label}</label>
             </div>
             <InputValidationError className={errorClassName}>{errorMessage}</InputValidationError>
         </div>

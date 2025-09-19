@@ -6,5 +6,5 @@ export interface Blog {
     heading: string;
     markdown: string;
     slug: string;
-    views: number;
+    hidden: boolean;
 }

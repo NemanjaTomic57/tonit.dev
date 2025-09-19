@@ -11,6 +11,12 @@ public class GenericRepository<T>(PostgresContext context) where T : BaseEntity
         context.Set<T>().Add(entity);
     }
 
+    public void Update(T entity)
+    {
+        context.Set<T>().Attach(entity);
+        context.Entry(entity).State = EntityState.Modified;
+    }
+
     public async Task<T?> FindAsync(BaseSpecification<T> spec)
     {
         return await ApplySpecification(spec).FirstOrDefaultAsync();

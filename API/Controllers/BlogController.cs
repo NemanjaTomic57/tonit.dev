@@ -35,6 +35,20 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
         return CreatedAtAction(nameof(GetBlogPost), new { slug = blogPost.Slug }, blogPost);
     }
 
+    [Authorize]
+    [HttpPut("update")]
+    public async Task<ActionResult<BlogPost>> UpdateBlogPost(BlogPost blogPost)
+    {
+        unit.Repository<BlogPost>().Update(blogPost);
+
+        if (!await unit.Complete())
+        {
+            throw new BadHttpRequestException("Failed to update blog post");
+        }
+
+        return Ok(blogPost);
+    }
+
     [HttpGet("get-all")]
     public async Task<ActionResult<IReadOnlyList<BlogPost>>> GetAllBlogPosts()
     {

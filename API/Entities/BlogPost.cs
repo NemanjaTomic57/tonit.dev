@@ -8,5 +8,5 @@ public class BlogPost : BaseEntity
     public required string ThumbnailSlug { get; set; }
     public required string Markdown { get; set; }
     public required string Slug { get; set; }
-    public int Views { get; set; } = 0;
+    public bool Hidden { get; set; } = false;
 }
