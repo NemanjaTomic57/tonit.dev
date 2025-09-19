@@ -12,6 +12,7 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
     public ActionResult SendResume(EmailDto dto)
     {
         emailService.SendResume(dto.Email, dto.Name);
+        emailService.SendResume("nemanja.tomic@ik.me", "Somebody Requested Your Reumse");
 
         return Ok();
     }
@@ -58,6 +59,8 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
         unit.Repository<Appointment>().Add(appointment);
 
         emailService.SendAppointmentConfirmation(appointment.Email, appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
+        emailService.SendAppointmentConfirmation("nemanja.tomic@tonit.dev", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
+        emailService.SendAppointmentConfirmation("nemanja.tomic@ik.me", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
 
         if (!await unit.Complete())
         {

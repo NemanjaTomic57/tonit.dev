@@ -59,7 +59,6 @@ I've had the pleasure of building APIs in a few different languages so far in my
 
 #### BlogController
 
-Thumbnail should be format 3:1
 - ✅ CreateBlogPost
 - ⬜ UpdateBlogPost
 - ⬜ DeleteBlogPost
