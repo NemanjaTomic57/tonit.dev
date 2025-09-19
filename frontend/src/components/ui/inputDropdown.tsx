@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import clsx from "clsx";
-import { Fragment, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import Icon from "./icon";
-import InputValidationError from "./inputValidationError";
+import { useOnClickOutside } from '@/hooks/useOnClickOutside';
+import clsx from 'clsx';
+import { Fragment, useRef, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import Icon from './icon';
+import InputValidationError from './inputValidationError';
 
 interface Props {
     inputName: string;
@@ -13,11 +13,7 @@ interface Props {
     options: string[];
 }
 
-export default function InputDropdown({
-    inputName,
-    initialText,
-    options,
-}: Props) {
+export default function InputDropdown({ inputName, initialText, options }: Props) {
     const {
         setValue,
         formState: { errors },
@@ -47,7 +43,7 @@ export default function InputDropdown({
     // Handle keydown event for keyboard users
     function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
         if (!showDd) {
-            if (e.key === "Enter" || e.key === " ") {
+            if (e.key === 'Enter' || e.key === ' ') {
                 setShowDd(true);
                 setHighlightIndex(0);
                 e.preventDefault();
@@ -55,24 +51,18 @@ export default function InputDropdown({
             return;
         }
 
-        if (e.key === "ArrowDown") {
-            setHighlightIndex((prev) =>
-                prev === null ? 0 : (prev + 1) % options.length,
-            );
+        if (e.key === 'ArrowDown') {
+            setHighlightIndex((prev) => (prev === null ? 0 : (prev + 1) % options.length));
             e.preventDefault();
-        } else if (e.key === "ArrowUp") {
-            setHighlightIndex((prev) =>
-                prev === null
-                    ? options.length - 1
-                    : (prev - 1 + options.length) % options.length,
-            );
+        } else if (e.key === 'ArrowUp') {
+            setHighlightIndex((prev) => (prev === null ? options.length - 1 : (prev - 1 + options.length) % options.length));
             e.preventDefault();
-        } else if (e.key === "Enter" || e.key === " ") {
+        } else if (e.key === 'Enter' || e.key === ' ') {
             if (highlightIndex !== null) {
                 handleClick(options[highlightIndex]);
             }
             e.preventDefault();
-        } else if (e.key === "Escape") {
+        } else if (e.key === 'Escape') {
             setShowDd(false);
             e.preventDefault();
         }
@@ -92,40 +82,26 @@ export default function InputDropdown({
             >
                 <div
                     className={clsx(
-                        "form-input-standard flex gap-3 cursor-pointer items-center justify-between",
-                        showDd && "rounded-b-none! border-b-transparent!",
+                        'form-input-standard flex cursor-pointer items-center justify-between gap-3',
+                        showDd && 'rounded-b-none! border-b-transparent!',
                     )}
                 >
-                    <div
-                        className={clsx(
-                            "dropdown-input truncate",
-                            activeText === initialText && "placeholder",
-                        )}
-                    >
-                        {activeText}
-                    </div>
-                    <Icon
-                        name="angleDown"
-                        size="xs"
-                        color="var(--gray-tone)"
-                        className="pr-4"
-                    />
+                    <div className={clsx('dropdown-input truncate select-none', activeText === initialText && 'placeholder')}>{activeText}</div>
+                    <Icon name="angleDown" size="xs" color="var(--gray-tone)" className="pr-4" />
                 </div>
 
                 {showDd && (
-                    <div className="absolute z-10 border-1 border-t-0 border-gray-tint/80 rounded-b-lg bg-background grid w-full">
+                    <div className="border-gray-tint/80 bg-background absolute z-10 grid w-full rounded-b-lg border-1 border-t-0">
                         {options.map((option, index) => (
                             <Fragment key={index}>
-                                <div className="h-[1px] mx-2 bg-gray-tint/20 last:hidden"></div>
+                                <div className="bg-gray-tint/20 mx-2 h-[1px] last:hidden"></div>
                                 <button
                                     type="button"
                                     onClick={() => handleClick(option)}
                                     className={clsx(
-                                        "py-2 text-left cursor-pointer px-2 sm:px-5 text-gray-tone text-sm font-bold hover:bg-gray-tint/20 outline-none",
-                                        activeText === option &&
-                                            "bg-gray-tint/10",
-                                        highlightIndex === index &&
-                                            "bg-gray-tint/20",
+                                        'text-gray-tone hover:bg-gray-tint/20 cursor-pointer px-2 py-2 text-left text-sm font-bold outline-none sm:px-5',
+                                        activeText === option && 'bg-gray-tint/10',
+                                        highlightIndex === index && 'bg-gray-tint/20',
                                     )}
                                 >
                                     {option}

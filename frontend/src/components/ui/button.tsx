@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function Button({ href, onClick, className, disabled, children }: Props) {
-    const btnClassName = 'block rounded-sm text-center font-bold cursor-pointer transition-all transition-duration-200';
+    const btnClassName = 'block rounded-sm text-center font-bold cursor-pointer transition-all transition-duration-200 select-none!';
 
     return (
         <>

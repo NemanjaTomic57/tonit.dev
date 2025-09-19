@@ -34,7 +34,7 @@ export default function Header() {
                                 key={index}
                                 href={item.href}
                                 className={clsx(
-                                    'rounded-sm px-4 py-1.5 transition-colors duration-200',
+                                    'rounded-sm px-4 py-1.5 transition-colors duration-200 select-none',
                                     pathname === item.href || (pathname.includes(item.href) && item.href !== '/')
                                         ? 'bg-background font-bold'
                                         : 'hover:bg-white-transparent-tone',

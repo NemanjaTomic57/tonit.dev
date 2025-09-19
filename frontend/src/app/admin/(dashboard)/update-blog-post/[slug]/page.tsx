@@ -70,6 +70,7 @@ export default function UpdateBlogPost() {
                 console.log(blogPost);
             } catch (error) {
                 generalErrorToast();
+                console.error(error);
             } finally {
                 setLoading(false);
             }
@@ -89,8 +90,8 @@ export default function UpdateBlogPost() {
             });
             toast.success('Post uploaded');
         } catch (error) {
-            console.error(error);
             generalErrorToast();
+            console.error(error);
         }
     };
 

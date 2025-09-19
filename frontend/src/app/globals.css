@@ -88,7 +88,6 @@ img {
 
 button {
     pointer-events: all;
-    user-select: all;
 }
 
 .link {

@@ -51,6 +51,7 @@ export default function ContactForm({ timeOptions }: Props) {
             window.location.pathname = routes.confirmation;
         } catch (error) {
             generalErrorToast();
+            console.error(error);
         }
     };
 
