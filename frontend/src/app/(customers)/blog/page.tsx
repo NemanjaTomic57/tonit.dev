@@ -10,7 +10,7 @@ export default async function BlogPage() {
 
     return (
         <div className="container-sm py-container-sm-vert">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-x-4 gap-y-8">
                 {blogPosts.map((blogPost) => (
                     <Link key={blogPost.id} href={'blog/' + blogPost.slug} className="flex flex-col">
                         <div className="relative mb-4 aspect-12/8 overflow-hidden rounded-lg">
