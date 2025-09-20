@@ -5,7 +5,6 @@ import Button from '@/components/ui/button';
 import ButtonDisabledText from '@/components/ui/buttonDisabledText';
 import InputCalendar from '@/components/ui/inputCalendar';
 import InputText from '@/components/ui/inputText';
-import InputTextarea from '@/components/ui/inputTextarea';
 import { apiUrl } from '@/environment';
 import { generalErrorToast } from '@/utils/generalErrorToast';
 import { slugify } from '@/utils/slugs';
@@ -35,6 +34,7 @@ export default function Admin() {
         },
     });
     const {
+        register,
         handleSubmit,
         watch,
         formState: { isSubmitting },
@@ -72,8 +72,8 @@ export default function Admin() {
                         {isSubmitting ? <ButtonDisabledText /> : 'Create Post'}
                     </Button>
                 </div>
-                <div className="grid grid-cols-[800px_700px] gap-20">
-                    <InputTextarea label="Markdown" inputName="markdown" className="resize-y!" rows={20} />
+                <div className="grid grid-cols-[800px_700px] items-stretch gap-20">
+                    <textarea {...register('markdown')} placeholder="Markdown" className="border-gray-tint w-full border-1 p-2" />
                     <Markdown markdown={markdown} />
                 </div>
             </form>

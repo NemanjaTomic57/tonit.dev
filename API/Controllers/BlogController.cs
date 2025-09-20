@@ -52,7 +52,8 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
     [HttpGet("get-all")]
     public async Task<ActionResult<IReadOnlyList<BlogPost>>> GetAllBlogPosts()
     {
-        var blogPosts = await unit.Repository<BlogPost>().ListAllAsync();
+        var spec = new BlogSpecification(null);
+        var blogPosts = await unit.Repository<BlogPost>().ListAsync(spec);
 
         return Ok(blogPosts);
     }

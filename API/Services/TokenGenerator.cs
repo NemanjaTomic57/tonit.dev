@@ -11,10 +11,6 @@ public class TokenGenerator
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")!);
-        Console.WriteLine(userId);
-        Console.WriteLine(userId);
-        Console.WriteLine(userId);
-        Console.WriteLine(email);
 
         var claims = new List<Claim>
         {

@@ -1,5 +1,7 @@
 import RootContextProvider from '@/components/contextProviders/rootContextProvider';
 import type { Metadata } from 'next';
+import 'prismjs';
+import 'prismjs/themes/prism.css'; // you can swap for prism-okaidia.css, prism-tomorrow.css, etc.
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
