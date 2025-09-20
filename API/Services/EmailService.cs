@@ -143,12 +143,13 @@ public class EmailService
         return await SendEmail(message);
     }
 
-    public async Task<bool> SendNewBlogPostNotification(string email, string title)
+    public async Task<bool> SendNewBlogPostNotification(string email, string title, string href)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(null, email));
         message.Subject = "New Blog Post Published";
+        href = "https://tonit.dev/blog/" + href;
 
         var body = new TextPart("html")
         {
@@ -157,11 +158,14 @@ public class EmailService
             <br/>
             <p>I’m pleased to inform you that I’ve published a new blog post titled:</p>
             <p><strong>{title}</strong></p>
+            <p>
+                You can read it here: 
+                <a href=""{href}"" target=""_blank"">{href}</a>
+            </p>
             <p>I hope you find it insightful and engaging.</p>
             {signature}
-            "
+        "
         };
-
         message.Body = body;
 
         var unsubscribeUrl = $"https://tonit.dev/blog/unsubscribe?email={Uri.EscapeDataString(email)}";
