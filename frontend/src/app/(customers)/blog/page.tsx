@@ -1,12 +1,14 @@
 import Author from '@/components/blog/author';
 import { apiUrl } from '@/environment';
 import { Blog } from '@/models/blog';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function BlogPage() {
-    const blogPosts = await axios.get(apiUrl + 'blog/get-all').then((r) => r.data as Blog[]);
+    const res = await fetch(apiUrl + 'blog/get-all', {
+        cache: 'no-store',
+    });
+    const blogPosts: Blog[] = await res.json();
 
     return (
         <div className="container-sm py-container-sm-vert">

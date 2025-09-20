@@ -1,11 +1,13 @@
 import { apiUrl } from '@/environment';
 import { Blog } from '@/models/blog';
 import { routes } from '@/routes';
-import axios from 'axios';
 import Link from 'next/link';
 
 export default async function UpdateBlogPost() {
-    const blogPosts = await axios.get(apiUrl + 'blog/get-all').then((r) => r.data as Blog[]);
+    const res = await fetch(apiUrl + 'blog/get-all', {
+        cache: 'no-store',
+    });
+    const blogPosts: Blog[] = await res.json();
 
     return (
         <table className="h-fit">
