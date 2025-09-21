@@ -9,10 +9,15 @@ namespace API.Controllers;
 public class LeadController(UnitOfWork unit, EmailService emailService) : BaseApiController
 {
     [HttpPost("send-resume")]
-    public ActionResult SendResume(EmailDto dto)
+    public async Task<ActionResult> SendResume(EmailDto dto)
     {
-        emailService.SendResume(dto.Email, dto.Name);
-        emailService.SendResume("nemanja.tomic@ik.me", "Somebody Requested Your Reumse");
+        var result = await emailService.SendResume(dto.Email, dto.Name);
+        await emailService.SendNewBlogPostNotification("nemanja.tomic@ik.me", "Somebody Requested Your Resume", "https://tonit.dev");
+
+        if (!result)
+        {
+            throw new BadHttpRequestException("Failed to send resume", 500);
+        }
 
         return Ok();
     }
@@ -58,13 +63,18 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
     {
         unit.Repository<Appointment>().Add(appointment);
 
-        emailService.SendAppointmentConfirmation(appointment.Email, appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
-        emailService.SendAppointmentConfirmation("nemanja.tomic@tonit.dev", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
-        emailService.SendAppointmentConfirmation("nemanja.tomic@ik.me", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
-
         if (!await unit.Complete())
         {
-            throw new BadHttpRequestException("Failed to book appointment");
+            throw new BadHttpRequestException("Failed to book appointment", 500);
+        }
+
+        var result = await emailService.SendAppointmentConfirmation(appointment.Email, appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
+        await emailService.SendAppointmentConfirmation("nemanja.tomic@tonit.dev", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
+        await emailService.SendAppointmentConfirmation("nemanja.tomic@ik.me", appointment.Name, appointment.Company, appointment.AppointmentTime, appointment.Message);
+
+        if (!result)
+        {
+            throw new BadHttpRequestException("Failed to send email", 500);
         }
 
         return Ok(appointment);

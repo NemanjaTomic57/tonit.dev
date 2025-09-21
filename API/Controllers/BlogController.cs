@@ -87,7 +87,12 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
             throw new BadHttpRequestException("Failed to subscribe to blog", 500);
         }
 
-        await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
+        var result = await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
+
+        if (!result)
+        {
+            throw new BadHttpRequestException("Failed to send email", 500);
+        }
 
         return Ok("Subscribed to blog");
     }

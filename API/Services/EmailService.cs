@@ -10,19 +10,18 @@ public class EmailService
     private readonly string host = Environment.GetEnvironmentVariable("SMTP_HOST")!;
     private readonly string port = Environment.GetEnvironmentVariable("SMTP_PORT")!;
     private readonly string from = Environment.GetEnvironmentVariable("SMTP_FROM")!;
-    private readonly string alias = Environment.GetEnvironmentVariable("SMTP_HOST")!;
+    private readonly string alias = Environment.GetEnvironmentVariable("SMTP_ALIAS")!;
     private readonly string username = Environment.GetEnvironmentVariable("SMTP_USERNAME")!;
     private readonly string password = Environment.GetEnvironmentVariable("SMTP_PASSWORD")!;
 
     private readonly string b2KeyId = Environment.GetEnvironmentVariable("BACKBLAZE_KEYID")!;
     private readonly string b2AppKey = Environment.GetEnvironmentVariable("BACKBLAZE_APPKEY")!;
-    private const string bucketName = "tonit-dev";
-    private const string fileNameCertification = "Certification.pdf";
-    private const string fileNameResume = "Resume.pdf";
-    private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com";
+    private const string BucketName = "tonit-dev";
+    private const string ResumeFileName = "Resume.pdf";
+    private const string CertificatesFileName = "Certification.pdf";
+    private const string ServiceUrl = "https://s3.eu-central-003.backblazeb2.com";
 
-    // Centralized signature HTML
-    private const string signature = @"
+    private const string SignatureHtml = @"
         <br/><br/>
         <p>Kind regards,</p>
         <p><strong>Nemanja Tomic</strong><br/>
@@ -32,16 +31,11 @@ public class EmailService
         </p>
     ";
 
-    public async void SendAppointmentConfirmation(string email, string name, string company, string appointmentTime, string? question)
+    public async Task<bool> SendAppointmentConfirmation(string email, string name, string company, string appointmentTime, string? question)
     {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(alias, from));
-        message.To.Add(new MailboxAddress(name, email));
-        message.Subject = "Appointment Confirmation";
+        var message = CreateBasicMessage(email, name, "Appointment Confirmation");
 
-        var body = new TextPart("html")
-        {
-            Text = $@"
+        var bodyHtml = $@"
             <p>Dear {name},</p>  
             <br/>
             <p>Thank you for scheduling a consultation with me. I’m looking forward to our conversation.</p>
@@ -51,24 +45,19 @@ public class EmailService
                 <li><strong>Email:</strong> {email}</li>
                 <li><strong>Company:</strong> {company}</li>
                 <li><strong>Date & Time:</strong> {appointmentTime}</li>
-            {(string.IsNullOrWhiteSpace(question) ? "" : $"<li><strong>Your Message:</strong> {question}</li>")}            
+                {(string.IsNullOrWhiteSpace(question) ? "" : $"<li><strong>Your Message:</strong> {question}</li>")}
             </ul>
             <p>You will receive a Zoom invitation shortly.</p>
-            {signature}
-            "
-        };
+            {SignatureHtml}";
 
-        message.Body = body;
+        message.Body = new TextPart("html") { Text = bodyHtml };
 
-        await SendEmail(message);
+        return await SendEmailAsync(message);
     }
 
-    public async void SendResume(string email, string name)
+    public async Task<bool> SendResume(string email, string name)
     {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(alias, from));
-        message.To.Add(new MailboxAddress(name, email));
-        message.Subject = "Requested Resume and Certificates";
+        var message = CreateBasicMessage(email, name, "Requested Resume and Certification");
 
         var body = new TextPart("html")
         {
@@ -76,67 +65,48 @@ public class EmailService
             <p>Dear {name},</p>
             <br/>
             <p>Thank you for your interest. Please find attached my resume and certificates for your review.</p>
-            <p>If you have any questions or would like to discuss potential collaboration, feel free to reply to this email 
-            or schedule a call directly via my website at <a href='https://www.tonit.dev/#contact'>tonit.dev</a>.</p>
-            {signature}
-            "
+            <p>If you have any questions or would like to discuss potential collaboration, feel free to reply 
+            to this email or schedule a call directly via my website at 
+            <a href='https://www.tonit.dev/#contact'>tonit.dev</a>.</p>
+            {SignatureHtml}"
         };
 
-        using var s3Client = new AmazonS3Client(b2KeyId, b2AppKey, new AmazonS3Config
-        {
-            ServiceURL = serviceUrl,
-            ForcePathStyle = true,
-        });
+        using var s3Client = CreateS3Client();
+        var resumeAttachment = await GetPdfAttachmentAsync(s3Client, ResumeFileName, "Resume.pdf");
+        var certificatesAttachment = await GetPdfAttachmentAsync(s3Client, CertificatesFileName, "Certification.pdf");
 
-        var resumeAttachment = await GetPdfAttachment(s3Client, fileNameResume, "Resume.pdf");
-        var certificatesAttachment = await GetPdfAttachment(s3Client, fileNameCertification, "Certificates.pdf");
-
-        var multipart = new Multipart("mixed")
+        message.Body = new Multipart("mixed")
         {
             body,
             resumeAttachment,
             certificatesAttachment
         };
 
-        message.Body = multipart;
-
-        await SendEmail(message);
+        return await SendEmailAsync(message);
     }
 
     public async Task<bool> SendSubscriptionConfirmation(string email)
     {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(alias, from));
-        message.To.Add(new MailboxAddress(null, email));
-        message.Subject = "Subscription Confirmation";
+        var message = CreateBasicMessage(email, null, "Subscription Confirmation");
 
-        var body = new TextPart("html")
-        {
-            Text = $@"
+        var bodyHtml = $@"
             <p>Dear Subscriber,</p>
             <br/>
             <p>Thank you for subscribing to my blog. I truly appreciate your interest in my work.</p>
             <p>If you would like to collaborate or discuss any topic further, feel free to reply directly to this email.</p>
-            {signature}
-            "
-        };
+            {SignatureHtml}";
 
-        message.Body = body;
+        message.Body = new TextPart("html") { Text = bodyHtml };
 
-        return await SendEmail(message);
+        return await SendEmailAsync(message);
     }
 
     public async Task<bool> SendNewBlogPostNotification(string email, string title, string slug)
     {
-        var href = "https://tonit.dev/blog/" + slug;
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(alias, from));
-        message.To.Add(new MailboxAddress(null, email));
-        message.Subject = "New Blog Post Published";
+        var message = CreateBasicMessage(email, null, "New Blog Post Published");
 
-        var body = new TextPart("html")
-        {
-            Text = $@"
+        var href = $"https://tonit.dev/blog/{slug}";
+        var bodyHtml = $@"
             <p>Dear Subscriber,</p>
             <br/>
             <p>I’m pleased to inform you that I’ve published a new blog post titled:</p>
@@ -146,32 +116,47 @@ public class EmailService
                 <a href=""{href}"" target=""_blank"">{href}</a>
             </p>
             <p>I hope you find it insightful and engaging.</p>
-            {signature}
-        "
-        };
-        message.Body = body;
+            {SignatureHtml}";
 
+        message.Body = new TextPart("html") { Text = bodyHtml };
+
+        // Add unsubscribe header
         var unsubscribeUrl = $"https://tonit.dev/blog/unsubscribe?email={Uri.EscapeDataString(email)}";
         message.Headers.Add("List-Unsubscribe", $"<{unsubscribeUrl}>");
 
-        return await SendEmail(message);
+        return await SendEmailAsync(message);
     }
 
-    private static async Task<MimePart> GetPdfAttachment(AmazonS3Client s3Client, string key, string fileName)
+    private MimeMessage CreateBasicMessage(string recipientEmail, string? recipientName, string subject)
     {
-        var request = new GetPreSignedUrlRequest
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress(alias, from));
+        message.To.Add(new MailboxAddress(recipientName, recipientEmail));
+        message.Subject = subject;
+        return message;
+    }
+
+    private AmazonS3Client CreateS3Client() =>
+        new(b2KeyId, b2AppKey, new AmazonS3Config
         {
-            BucketName = bucketName,
+            ServiceURL = ServiceUrl,
+            ForcePathStyle = true,
+        });
+
+    private static async Task<MimePart> GetPdfAttachmentAsync(AmazonS3Client s3Client, string key, string fileName)
+    {
+        var presignedUrl = s3Client.GetPreSignedURL(new GetPreSignedUrlRequest
+        {
+            BucketName = BucketName,
             Key = key,
             Expires = DateTime.UtcNow.AddMinutes(5),
             Verb = HttpVerb.GET,
-        };
-
-        var presignedUrl = s3Client.GetPreSignedURL(request);
+        });
 
         using var httpClient = new HttpClient();
         using var remoteStream = await httpClient.GetStreamAsync(presignedUrl);
-        using var memoryStream = new MemoryStream();
+
+        var memoryStream = new MemoryStream(); // not disposed here!
         await remoteStream.CopyToAsync(memoryStream);
         memoryStream.Position = 0;
 
@@ -184,7 +169,7 @@ public class EmailService
         };
     }
 
-    private async Task<bool> SendEmail(MimeMessage message)
+    private async Task<bool> SendEmailAsync(MimeMessage message)
     {
         using var smtp = new SmtpClient();
         await smtp.ConnectAsync(host, int.Parse(port), false);

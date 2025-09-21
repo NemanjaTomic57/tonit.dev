@@ -6,9 +6,11 @@ import { formatDateTimeToMeetingTime, formatMeetingTimeToDateTimeOffset } from '
 import { generalErrorToast } from '@/utils/generalErrorToast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import clsx from 'clsx';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
 import Button from './ui/button';
+import ButtonDisabledText from './ui/buttonDisabledText';
 import InputDropdown from './ui/inputDropdown';
 import InputText from './ui/inputText';
 import InputTextarea from './ui/inputTextarea';
@@ -75,8 +77,14 @@ export default function ContactForm({ timeOptions }: Props) {
                             <div className="mt-0.5 md:col-span-2">
                                 <InputTextarea label="Message (optional)" inputName="message" />
                             </div>
-                            <Button className="font-aenotik btn-fill-primary btn-lg w-full md:col-span-2" disabled={isSubmitting}>
-                                Book A Call
+                            <Button
+                                className={clsx(
+                                    'font-aenotik btn-fill-primary btn-lg w-full md:col-span-2',
+                                    isSubmitting && 'btn-fill-primary-submitting',
+                                )}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? <ButtonDisabledText /> : 'Book a Call'}
                             </Button>
                         </form>
                     </FormProvider>
