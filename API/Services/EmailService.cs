@@ -17,7 +17,8 @@ public class EmailService
     private readonly string b2KeyId = Environment.GetEnvironmentVariable("BACKBLAZE_KEYID")!;
     private readonly string b2AppKey = Environment.GetEnvironmentVariable("BACKBLAZE_APPKEY")!;
     private const string bucketName = "tonit-dev";
-    private const string fileName = "Certificates.pdf";
+    private const string fileNameCertification = "Certification.pdf";
+    private const string fileNameResume = "Resume.pdf";
     private const string serviceUrl = "https://s3.eu-central-003.backblazeb2.com";
 
     // Centralized signature HTML
@@ -87,37 +88,19 @@ public class EmailService
             ForcePathStyle = true,
         });
 
-        var request = new GetPreSignedUrlRequest
-        {
-            BucketName = bucketName,
-            Key = fileName,
-            Expires = DateTime.UtcNow.AddMinutes(5),
-            Verb = HttpVerb.GET,
-        };
-
-        var presignedUrl = s3Client.GetPreSignedURL(request);
-
-        using var httpClient = new HttpClient();
-        using var remoteStream = await httpClient.GetStreamAsync(presignedUrl);
-        using var memoryStream = new MemoryStream();
-        await remoteStream.CopyToAsync(memoryStream);
-        memoryStream.Position = 0;
-
-        var certificatesAttachment = new MimePart("application", "pdf")
-        {
-            Content = new MimeContent(memoryStream, ContentEncoding.Default),
-            ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-            ContentTransferEncoding = ContentEncoding.Base64,
-            FileName = "Certificates.pdf"
-        };
+        var resumeAttachment = await GetPdfAttachment(s3Client, fileNameResume, "Resume.pdf");
+        var certificatesAttachment = await GetPdfAttachment(s3Client, fileNameCertification, "Certificates.pdf");
 
         var multipart = new Multipart("mixed")
         {
             body,
+            resumeAttachment,
             certificatesAttachment
         };
 
         message.Body = multipart;
+
+        await SendEmail(message);
     }
 
     public async Task<bool> SendSubscriptionConfirmation(string email)
@@ -172,6 +155,33 @@ public class EmailService
         message.Headers.Add("List-Unsubscribe", $"<{unsubscribeUrl}>");
 
         return await SendEmail(message);
+    }
+
+    private static async Task<MimePart> GetPdfAttachment(AmazonS3Client s3Client, string key, string fileName)
+    {
+        var request = new GetPreSignedUrlRequest
+        {
+            BucketName = bucketName,
+            Key = key,
+            Expires = DateTime.UtcNow.AddMinutes(5),
+            Verb = HttpVerb.GET,
+        };
+
+        var presignedUrl = s3Client.GetPreSignedURL(request);
+
+        using var httpClient = new HttpClient();
+        using var remoteStream = await httpClient.GetStreamAsync(presignedUrl);
+        using var memoryStream = new MemoryStream();
+        await remoteStream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
+
+        return new MimePart("application", "pdf")
+        {
+            Content = new MimeContent(memoryStream, ContentEncoding.Default),
+            ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+            ContentTransferEncoding = ContentEncoding.Base64,
+            FileName = fileName
+        };
     }
 
     private async Task<bool> SendEmail(MimeMessage message)
