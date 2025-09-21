@@ -143,13 +143,13 @@ public class EmailService
         return await SendEmail(message);
     }
 
-    public async Task<bool> SendNewBlogPostNotification(string email, string title, string href)
+    public async Task<bool> SendNewBlogPostNotification(string email, string title, string slug)
     {
+        var href = "https://tonit.dev/blog/" + slug;
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(alias, from));
         message.To.Add(new MailboxAddress(null, email));
         message.Subject = "New Blog Post Published";
-        href = "https://tonit.dev/blog/" + href;
 
         var body = new TextPart("html")
         {

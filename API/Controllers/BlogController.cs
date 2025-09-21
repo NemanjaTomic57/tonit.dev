@@ -24,7 +24,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         foreach (var sub in subscribers)
         {
-            var result = await emailService.SendNewBlogPostNotification(sub.Email, blogPost.Heading);
+            var result = await emailService.SendNewBlogPostNotification(sub.Email, blogPost.Heading, blogPost.Slug);
 
             if (!result)
             {
