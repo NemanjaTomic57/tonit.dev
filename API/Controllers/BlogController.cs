@@ -108,7 +108,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
         if (subscriber == null)
         {
             return StatusCode(StatusCodes.Status404NotFound, "Email not found");
-        } 
+        }
 
         unit.Repository<BlogSubscription>().Remove(subscriber);
 
