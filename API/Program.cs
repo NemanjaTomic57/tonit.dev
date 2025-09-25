@@ -67,7 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("DefaultPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:3000", "https://*.tonit.dev")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
