@@ -72,8 +72,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-    .WithOrigins("http://localhost:3000", "https://tonit.dev", "https://www.tonit.dev"));
+app.UseCors(opt => opt.WithOrigins("http://localhost:3000", "https://tonit.dev", "https://www.tonit.dev")
+    .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.UseAuthentication();
 app.UseAuthorization();
