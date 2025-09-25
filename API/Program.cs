@@ -67,8 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("DefaultPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://tonit.dev")
-            .SetIsOriginAllowedToAllowWildcardSubdomains()
+        policy.WithOrigins("http://localhost:3000", "https://tonit.dev", "https://www.tonit.dev")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -77,14 +76,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseCors("DefaultPolicy");
+
 if (app.Environment.IsDevelopment())
 {
     // Accessible at /scalar
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
-app.UseCors("DefaultPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

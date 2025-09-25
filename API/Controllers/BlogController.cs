@@ -3,6 +3,7 @@ using API.Entities;
 using API.Services;
 using API.Specifications;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Data;
@@ -17,7 +18,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         if (!await unit.Complete())
         {
-            throw new BadHttpRequestException("Failed to create blog post", 500);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create blog post");
         }
 
         var subscribers = await unit.Repository<BlogSubscription>().ListAllAsync();
@@ -28,7 +29,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
             if (!result)
             {
-                throw new BadHttpRequestException("Failed to send email", 503);
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Failed to send email");
             }
         }
 
@@ -43,7 +44,7 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         if (!await unit.Complete())
         {
-            throw new BadHttpRequestException("Failed to update blog post");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to update blog post");
         }
 
         return Ok(blogPost);
@@ -77,21 +78,21 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
 
         if (exists != null)
         {
-            throw new BadHttpRequestException("Email already subscribed", 400);
+            return StatusCode(StatusCodes.Status400BadRequest, "Email already subscribed");
         }
 
         unit.Repository<BlogSubscription>().Add(blogSubscription);
 
         if (!await unit.Complete())
         {
-            throw new BadHttpRequestException("Failed to subscribe to blog", 500);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to subscribe to blog");
         }
 
         var result = await emailService.SendSubscriptionConfirmation(blogSubscription.Email);
 
         if (!result)
         {
-            throw new BadHttpRequestException("Failed to send email", 500);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to send email");
         }
 
         return Ok("Subscribed to blog");
@@ -102,14 +103,18 @@ public class BlogController(UnitOfWork unit, EmailService emailService) : BaseAp
     {
         var spec = new BlogSubscriptionSpecification(Uri.UnescapeDataString(email));
 
-        var subscriber = await unit.Repository<BlogSubscription>().FindAsync(spec)
-            ?? throw new BadHttpRequestException("Email not found", 404);
+        var subscriber = await unit.Repository<BlogSubscription>().FindAsync(spec);
+
+        if (subscriber == null)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, "Email not found");
+        } 
 
         unit.Repository<BlogSubscription>().Remove(subscriber);
 
         if (!await unit.Complete())
         {
-            throw new BadHttpRequestException("Failed to unsubscribe from blog", 500);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to unsubscribe from blog");
         }
 
         return Ok("Unsubscribed from blog");
