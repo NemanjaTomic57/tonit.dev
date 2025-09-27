@@ -15,7 +15,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <h3 className="mb-4!">{blogPost.heading}</h3>
                 <Author blog={blogPost} />
             </div>
-            <div className="relative mx-auto my-4 aspect-7/3 max-h-[400px] overflow-hidden rounded-xl sm:my-8">
+            <div className="relative mx-auto my-4 aspect-3/2 max-h-[600px] overflow-hidden rounded-xl sm:my-8">
                 <Image src={blogPost.thumbnailSlug} alt="Thumbnail" fill className="object-cover" />
             </div>
             <Markdown markdown={blogPost.markdown} />
