@@ -84,14 +84,14 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
     {
         return
         [
-            (DayOfWeek.Tuesday,   new TimeSpan(8, 0, 0)),
-            (DayOfWeek.Tuesday,   new TimeSpan(14, 0, 0)),
+            (DayOfWeek.Tuesday,   new TimeSpan(7, 0, 0)),
+            (DayOfWeek.Tuesday,   new TimeSpan(15, 0, 0)),
             (DayOfWeek.Wednesday, new TimeSpan(7, 0, 0)),
-            (DayOfWeek.Wednesday, new TimeSpan(14, 30, 0)),
-            (DayOfWeek.Thursday,  new TimeSpan(7, 0, 0)),
-            (DayOfWeek.Thursday,  new TimeSpan(11, 0, 0)),
+            (DayOfWeek.Wednesday, new TimeSpan(15, 30, 0)),
+            // (DayOfWeek.Thursday,  new TimeSpan(7, 0, 0)),
+            (DayOfWeek.Thursday,  new TimeSpan(15, 0, 0)),
             (DayOfWeek.Friday,    new TimeSpan(7, 0, 0)),
-            (DayOfWeek.Friday,    new TimeSpan(14, 0, 0))
+            (DayOfWeek.Friday,    new TimeSpan(15, 0, 0))
         ];
     }
 }
