@@ -13,18 +13,10 @@ import ButtonDisabledText from './ui/buttonDisabledText';
 import InputText from './ui/inputText';
 import InputTextarea from './ui/inputTextarea';
 
-// interface Props {
-//     timeOptions: string[];
-// }
-
 const contactSchema = z.object({
     email: z.email('Please enter a valid email address'),
     phoneNumber: z.string().nullable(),
     content: z.string().nonempty('Please enter your message'),
-    // name: z.string().nonempty('Please enter your name'),
-    // company: z.string().nonempty('Please enter the company you represent'),
-    // appointmentTime: z.string().nonempty('Please select a time for our appointment'),
-    // appointmentTimeUtc: z.string().nullish(),
 });
 
 export type ContactSchema = z.infer<typeof contactSchema>;
@@ -43,15 +35,11 @@ export default function ContactForm() {
         try {
             await axios.post(apiUrl + 'lead/message', req);
             toast.success('Your message has been sent.');
-            // sessionStorage.setItem('appointmentData', JSON.stringify(data));
-            // window.location.pathname = routes.confirmation;
         } catch (error) {
             generalErrorToast();
             console.error(error);
         }
     };
-
-    // timeOptions = timeOptions.map((t) => formatDateTimeToMeetingTime(t));
 
     return (
         <div id="contact" className="bg-primary-tint">
@@ -69,10 +57,6 @@ export default function ContactForm() {
                             <div className="mt-0.5 md:col-span-2">
                                 <InputTextarea label="Message" inputName="content" />
                             </div>
-                            {/*                             
-                            <InputText label="Company" inputName="company" />
-                            <InputDropdown inputName="appointmentTime" initialText="Date & Time" options={timeOptions} />
-                            */}
                             <Button
                                 className={clsx(
                                     'font-aenotik btn-fill-primary btn-lg w-full md:col-span-2',

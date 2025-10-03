@@ -137,7 +137,7 @@ export default async function Home() {
                 <Image src={codeSnippet} alt="Team working on a project" className="hidden lg:block" />
             </div>
 
-            <ContactForm timeOptions={timeOptions} />
+            <ContactForm />
         </>
     );
 }
