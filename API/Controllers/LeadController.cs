@@ -1,3 +1,4 @@
+using System.Net;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -78,6 +79,20 @@ public class LeadController(UnitOfWork unit, EmailService emailService) : BaseAp
         }
 
         return Ok(appointment);
+    }
+
+    [HttpPost("message")]
+    public async Task<ActionResult<Message>> CreateMessage(Message message)
+    {
+        unit.Repository<Message>().Add(message);
+        await emailService.SendLeadMessageToMyself(message);
+
+        if (!await unit.Complete())
+        {
+            return StatusCode(500, "Failed to create message");
+        }
+
+        return Ok(message);
     }
 
     private static List<(DayOfWeek, TimeSpan)> GetWeeklySlogs()

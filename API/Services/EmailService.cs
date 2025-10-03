@@ -1,5 +1,6 @@
 using Amazon.S3;
 using Amazon.S3.Model;
+using API.Entities;
 using MailKit.Net.Smtp;
 using MimeKit;
 
@@ -49,6 +50,27 @@ public class EmailService
             </ul>
             <p>You will receive a Zoom invitation shortly.</p>
             {SignatureHtml}";
+
+        message.Body = new TextPart("html") { Text = bodyHtml };
+
+        return await SendEmailAsync(message);
+    }
+
+    public async Task<bool> SendLeadMessageToMyself(Message leadMessage)
+    {
+        var message = CreateBasicMessage("nemanja.tomic@ik.me", "Nemanja Tomic", "Tonit.dev: Someone submitted a message on your homepage!");
+
+        var bodyHtml = $@"
+        <p>Hello Nemo</p>
+        <br/>
+        <p>I am pleased to inform you that somebody just submitted a message on your homepage tonit.dev.</p>
+        <p><strong>Email:</strong> {leadMessage.Email}</p>
+        <p><strong>Phone number:</strong> {leadMessage.PhoneNumber}</p>
+        <p><strong>Message content:</strong> {leadMessage.Content}</p>
+        <br/>
+        <p>Kind regards</p>
+        <p>Your personal assistent</p>
+        ";
 
         message.Body = new TextPart("html") { Text = bodyHtml };
 
