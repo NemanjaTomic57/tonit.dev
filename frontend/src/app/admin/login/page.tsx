@@ -6,7 +6,6 @@ import { apiUrl } from '@/environment';
 import { routes } from '@/routes';
 import { generalErrorToast } from '@/utils/generalErrorToast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
 
@@ -25,8 +24,14 @@ export default function Login() {
 
     const onSubmit: SubmitHandler<Schema> = async (req) => {
         try {
-            const { data } = await axios.post(apiUrl + 'admin/login', req);
-            localStorage.setItem('jwt', data.token);
+            await fetch(apiUrl + 'admin/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(req),
+            });
             window.location.pathname = routes.admin;
         } catch (error) {
             console.error(error);

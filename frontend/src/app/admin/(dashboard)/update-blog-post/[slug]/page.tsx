@@ -81,12 +81,14 @@ export default function UpdateBlogPost() {
 
     const onSubmit: SubmitHandler<Schema> = async (req) => {
         req.slug = slugify(req.heading);
-        const token = localStorage.getItem('jwt');
         try {
-            await axios.put(apiUrl + 'blog/update', req, {
+            await fetch(apiUrl + 'blog/update', {
+                credentials: 'include',
+                method: 'PUT',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(req),
             });
             toast.success('Post uploaded');
         } catch (error) {

@@ -43,12 +43,9 @@ export default function Admin() {
 
     const onSubmit: SubmitHandler<Schema> = async (req) => {
         req.slug = slugify(req.heading);
-        const token = localStorage.getItem('jwt');
         try {
             await axios.post(apiUrl + 'blog/create', req, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                withCredentials: true,
             });
             toast.success('Post uploaded');
         } catch (error) {

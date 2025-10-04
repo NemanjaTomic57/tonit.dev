@@ -21,7 +21,7 @@ export default function Header() {
 
             <header className="relative">
                 <div className="absolute top-0 -z-10 h-[400px] w-full">
-                    <Image src="/images/hero__overlay.png" alt="" fill />
+                    <Image src="/images/hero__overlay.png" alt="" fill priority />
                 </div>
                 <div className="container flex h-[70px] w-full items-center justify-between">
                     <Link href="https://github.com/NemanjaTomic57/tonit.dev" className="hidden sm:block" target="_blank">

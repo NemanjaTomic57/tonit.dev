@@ -8,6 +8,7 @@ export default async function BlogPage() {
     const res = await fetch(apiUrl + 'blog/get-all', {
         cache: 'no-store',
     });
+
     const blogPosts: Blog[] = await res.json();
 
     return (

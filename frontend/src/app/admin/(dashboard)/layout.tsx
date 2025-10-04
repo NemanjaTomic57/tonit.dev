@@ -1,13 +1,10 @@
 'use client';
 
 import Button from '@/components/ui/button';
-import { useAdminGuard } from '@/hooks/useAdminGuard';
 import { routes } from '@/routes';
 import { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
-    useAdminGuard();
-
     return (
         <div className="container py-8">
             <div className="grid grid-cols-[200px_1fr] gap-4">

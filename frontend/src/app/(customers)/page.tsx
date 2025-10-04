@@ -2,18 +2,13 @@ import ContactForm from '@/components/contactForm';
 import TechStack from '@/components/techStack';
 import Button from '@/components/ui/button';
 import ButtonShowResumePopup from '@/components/ui/buttonShowResumePopup';
-import { apiUrl } from '@/environment';
 import { routes } from '@/routes';
-import axios from 'axios';
 import Image from 'next/image';
 import codeSnippet from '/public/images/code-snippet.png';
 import headshot from '/public/images/headshot.png';
 import teamMeeting from '/public/images/team-meeting.png';
 
 export default async function Home() {
-    const r = await axios.get(apiUrl + 'lead/appointment-datetimes');
-    const timeOptions = r.data;
-
     return (
         <>
             <div className="relative mt-8 sm:mt-0 sm:h-[60dvh]">
@@ -43,8 +38,8 @@ export default async function Home() {
             </div>
 
             <div className="relative">
-                <div className="absolute -top-[200px] left-0 -z-10">
-                    <Image src="/images/hero__ellipses-blue.png" alt="" height={800} width={400} />
+                <div className="absolute -top-full left-0 -z-10">
+                    <Image src="/images/hero__ellipses-blue.png" alt="" height={800} width={400} className="w-auto" />
                 </div>
                 <div className="container-sm py-container-sm-vert mx-auto grid items-center gap-6 sm:gap-8 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px] lg:gap-16">
                     <div>
