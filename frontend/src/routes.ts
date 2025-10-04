@@ -2,7 +2,7 @@ export const routes = {
     home: '/',
     blog: '/blog',
     contact: '/#contact',
-    admin: '/admin',
-    updateBlogPost: '/admin/update-blog-post',
+    createBlogPost: '/admin/blog',
+    updateBlogPost: '/admin/blog/update',
     adminLogin: '/admin/login',
 };

@@ -32,7 +32,7 @@ export default function Login() {
                 },
                 body: JSON.stringify(req),
             });
-            window.location.pathname = routes.admin;
+            window.location.pathname = routes.createBlogPost;
         } catch (error) {
             console.error(error);
             generalErrorToast();

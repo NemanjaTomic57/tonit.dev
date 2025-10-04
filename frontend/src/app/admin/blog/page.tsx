@@ -9,7 +9,6 @@ import { apiUrl } from '@/environment';
 import { generalErrorToast } from '@/utils/generalErrorToast';
 import { slugify } from '@/utils/slugs';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import clsx from 'clsx';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -26,7 +25,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default function Admin() {
+export default function CreateBlogPost() {
     const methods = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -43,13 +42,20 @@ export default function Admin() {
 
     const onSubmit: SubmitHandler<Schema> = async (req) => {
         req.slug = slugify(req.heading);
-        try {
-            await axios.post(apiUrl + 'blog/create', req, {
-                withCredentials: true,
-            });
-            toast.success('Post uploaded');
-        } catch (error) {
-            console.error(error);
+        const res = await fetch(apiUrl + 'blog/create', {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req),
+        });
+
+        if (res.status === 201) {
+            toast.success('Post uploaded.');
+        } else if (res.status === 401) {
+            toast.error('You do not belong here.');
+        } else {
             generalErrorToast();
         }
     };

@@ -20,7 +20,21 @@ public class AdminController(SignInManager<AppUser> signInManager, TokenGenerato
 
         var token = tokenGenerator.GenerateToken(user.Id, user.Email!);
 
-        return Ok(new { token });
+        var isDev = Environment.GetEnvironmentVariable("Environment") == "Development";
+        Console.WriteLine(isDev);
+
+        // Create cookie options
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.UtcNow.AddHours(1),
+        };
+
+        Response.Cookies.Append("jwt", token, cookieOptions);
+
+        return Ok(new { message = "Login successful" });
     }
 
     [HttpGet("auth-status")]

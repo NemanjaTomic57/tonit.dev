@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="container py-8">
             <div className="grid grid-cols-[200px_1fr] gap-4">
                 <div className="flex flex-col gap-2">
-                    <Button href={routes.admin} className="btn-fill-primary btn-lg">
+                    <Button href={routes.createBlogPost} className="btn-fill-primary btn-lg">
                         Create Post
                     </Button>
                     <Button href={routes.updateBlogPost} className="btn-fill-primary btn-lg">
