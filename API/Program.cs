@@ -86,21 +86,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-
-
-var forwardedHeaderOptions = new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-};
-forwardedHeaderOptions.KnownNetworks.Clear(); // Trust all networks (safe inside Docker)
-forwardedHeaderOptions.KnownProxies.Clear();
-
-app.UseForwardedHeaders(forwardedHeaderOptions);
-
-// Optional: only redirect to HTTPS if original request was HTTPS
 app.UseHttpsRedirection();
-
-
 
 app.UseAuthentication();
 app.UseAuthorization();
