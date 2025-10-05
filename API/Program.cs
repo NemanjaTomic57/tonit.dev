@@ -4,6 +4,7 @@ using API.Objects.Entities;
 using API.Services;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,6 +85,22 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+
+
+var forwardedHeaderOptions = new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+};
+forwardedHeaderOptions.KnownNetworks.Clear(); // Trust all networks (safe inside Docker)
+forwardedHeaderOptions.KnownProxies.Clear();
+
+app.UseForwardedHeaders(forwardedHeaderOptions);
+
+// Optional: only redirect to HTTPS if original request was HTTPS
+app.UseHttpsRedirection();
+
+
 
 app.UseAuthentication();
 app.UseAuthorization();
