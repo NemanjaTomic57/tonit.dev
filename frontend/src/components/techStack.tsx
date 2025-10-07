@@ -50,7 +50,7 @@ export default function TechStack() {
                                 ))}
                             </ul>
                             <Button href={routes.contact} className="btn-fill-primary btn-lg mt-auto w-fit">
-                                Book A Call
+                                Contact
                             </Button>
                         </div>
 
@@ -81,7 +81,7 @@ export default function TechStack() {
                                     ))}
                                 </ul>
                                 <Button href={routes.contact} className="btn-fill-primary btn-lg mt-auto w-fit">
-                                    Book A Call
+                                    Contact
                                 </Button>
                             </div>
                         </SwiperSlide>

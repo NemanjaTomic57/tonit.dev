@@ -52,7 +52,7 @@ export default function Header() {
                     </div>
 
                     <Button href={routes.contact} className="btn-fill-primary btn-base hidden sm:block">
-                        Book A Call
+                        Contact
                     </Button>
                 </div>
             </header>

@@ -64,7 +64,7 @@ export default function ContactForm() {
                                 )}
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? <ButtonDisabledText /> : 'Book a Call'}
+                                {isSubmitting ? <ButtonDisabledText /> : 'Contact'}
                             </Button>
                         </form>
                     </FormProvider>

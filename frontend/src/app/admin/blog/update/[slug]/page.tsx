@@ -9,7 +9,7 @@ import InputText from '@/components/ui/inputText';
 import InputTextarea from '@/components/ui/inputTextarea';
 import { apiUrl } from '@/environment';
 import { Blog } from '@/models/blog';
-import { generalErrorToast } from '@/utils/generalErrorToast';
+import { generalErrorToast, notLoggedInToast } from '@/utils/generalErrorToast';
 import { slugify } from '@/utils/slugs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -81,19 +81,21 @@ export default function UpdateBlogPost() {
 
     const onSubmit: SubmitHandler<Schema> = async (req) => {
         req.slug = slugify(req.heading);
-        try {
-            await fetch(apiUrl + 'blog/update', {
-                credentials: 'include',
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(req),
-            });
-            toast.success('Post uploaded');
-        } catch (error) {
+        const res = await fetch(apiUrl + 'blog/update', {
+            credentials: 'include',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req),
+        });
+
+        if (res.status === 200) {
+            toast.success('Post uploaded.');
+        } else if (res.status === 401) {
+            notLoggedInToast();
+        } else {
             generalErrorToast();
-            console.error(error);
         }
     };
 

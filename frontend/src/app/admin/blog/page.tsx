@@ -6,7 +6,7 @@ import ButtonDisabledText from '@/components/ui/buttonDisabledText';
 import InputCalendar from '@/components/ui/inputCalendar';
 import InputText from '@/components/ui/inputText';
 import { apiUrl } from '@/environment';
-import { generalErrorToast } from '@/utils/generalErrorToast';
+import { generalErrorToast, notLoggedInToast } from '@/utils/generalErrorToast';
 import { slugify } from '@/utils/slugs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
@@ -54,7 +54,7 @@ export default function CreateBlogPost() {
         if (res.status === 201) {
             toast.success('Post uploaded.');
         } else if (res.status === 401) {
-            toast.error('You do not belong here.');
+            notLoggedInToast();
         } else {
             generalErrorToast();
         }

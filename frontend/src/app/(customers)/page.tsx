@@ -72,7 +72,7 @@ export default async function Home() {
                             <h2 className="mb-0!">Choose Me</h2>
                         </div>
                         <Button href={routes.contact} className="btn-fill-primary btn-lg mb-2">
-                            Book A Call
+                            Contact
                         </Button>
                     </div>
 

@@ -1,5 +1,9 @@
 import toast from 'react-hot-toast';
 
+export const notLoggedInToast = () => {
+    toast.error('Not logged in.');
+};
+
 export const generalErrorToast = () => {
     toast.error('Something went wrong...');
 };
