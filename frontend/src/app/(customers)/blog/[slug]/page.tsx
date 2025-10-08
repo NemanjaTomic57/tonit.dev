@@ -10,9 +10,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     const blogPost = await axios.get(apiUrl + `blog/get/${slug}`).then((r) => r.data as Blog);
 
     return (
-        <div className="pb-container-sm-vert container pt-8 md:pt-14">
+        <div className="pb-container-sm-vert container pt-3 sm:pt-14">
             <div className="mx-auto max-w-[700px]">
-                <h3 className="mb-4!">{blogPost.heading}</h3>
+                <h1 className="blog-post__heading mb-4!">{blogPost.heading}</h1>
                 <Author blog={blogPost} />
             </div>
             <div className="relative mx-auto my-4 aspect-3/2 max-h-[600px] overflow-hidden rounded-xl sm:my-8">
