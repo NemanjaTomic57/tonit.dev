@@ -1,5 +1,9 @@
 # Project tonit.dev
 
+[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Node.js 22.x](https://img.shields.io/badge/Node.js-22.x-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![PostgreSQL 17](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
 This project is the codebase for my homepage tonit.dev, where I run my blog and aquire customers for contract work. Everything is open-source, and I take best practices very seriously. Take a look and if you like what you see, let's work together!
 
 ## Technologies
